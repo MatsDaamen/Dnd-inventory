@@ -1,4 +1,4 @@
-﻿using Dnd_Inventory_DAL.Entities;
+﻿using Dnd_Inventory_Logic.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dnd_Inventory_API
@@ -13,5 +13,7 @@ namespace Dnd_Inventory_API
         public DbSet<Session> Sessions { get; set; }
 
         public DbSet<SessionJoinKey> JoinKeys { get; set; }
+
+        public DbSet<SessionUsers> SessionUsers { get; set; }
     }
 }

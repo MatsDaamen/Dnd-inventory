@@ -3,26 +3,23 @@ using System;
 using Dnd_Inventory_API;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Dnd_Inventory_DAL.Migrations
+namespace Dnd_Inventory_Logic.Migrations
 {
     [DbContext(typeof(InventoryDbContext))]
-    [Migration("20231006095701_initialMigration")]
-    partial class initialMigration
+    partial class InventoryDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Dnd_Inventory_DAL.Entities.Session", b =>
+            modelBuilder.Entity("Dnd_Inventory_Logic.Entities.Session", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,7 +37,7 @@ namespace Dnd_Inventory_DAL.Migrations
                     b.ToTable("Sessions");
                 });
 
-            modelBuilder.Entity("Dnd_Inventory_DAL.Entities.SessionJoinKey", b =>
+            modelBuilder.Entity("Dnd_Inventory_Logic.Entities.SessionJoinKey", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -67,13 +64,29 @@ namespace Dnd_Inventory_DAL.Migrations
                     b.ToTable("JoinKeys");
                 });
 
-            modelBuilder.Entity("Dnd_Inventory_DAL.Entities.SessionJoinKey", b =>
+            modelBuilder.Entity("Dnd_Inventory_Logic.Entities.SessionUsers", b =>
                 {
-                    b.HasOne("Dnd_Inventory_DAL.Entities.Session", null)
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("SessionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("SessionId");
+
+                    b.ToTable("SessionUsers");
+                });
+
+            modelBuilder.Entity("Dnd_Inventory_Logic.Entities.SessionJoinKey", b =>
+                {
+                    b.HasOne("Dnd_Inventory_Logic.Entities.Session", null)
                         .WithMany("SessionJoinKeys")
                         .HasForeignKey("JoinKeyId");
 
-                    b.HasOne("Dnd_Inventory_DAL.Entities.Session", "Session")
+                    b.HasOne("Dnd_Inventory_Logic.Entities.Session", "Session")
                         .WithMany()
                         .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -82,7 +95,18 @@ namespace Dnd_Inventory_DAL.Migrations
                     b.Navigation("Session");
                 });
 
-            modelBuilder.Entity("Dnd_Inventory_DAL.Entities.Session", b =>
+            modelBuilder.Entity("Dnd_Inventory_Logic.Entities.SessionUsers", b =>
+                {
+                    b.HasOne("Dnd_Inventory_Logic.Entities.Session", "Session")
+                        .WithMany()
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Session");
+                });
+
+            modelBuilder.Entity("Dnd_Inventory_Logic.Entities.Session", b =>
                 {
                     b.Navigation("SessionJoinKeys");
                 });

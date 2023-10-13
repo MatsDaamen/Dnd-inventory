@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Dnd_Inventory_API;
-using Dnd_Inventory_DAL.Entities;
+using Dnd_Inventory_Logic.Entities;
 using Dnd_Inventory_Logic.Interfaces.Repositories;
 
 namespace Dnd_Inventory_DAL.Repositiories
@@ -68,5 +68,24 @@ namespace Dnd_Inventory_DAL.Repositiories
 
             return joinKey != null && joinKey.UsesLeft > 0;
         }
+
+        public void JoinSession(int sessionId, int userId)
+        {
+            Session? session = _db.Sessions.FirstOrDefault(item => item.Id == sessionId);
+
+            if (session == null)
+                throw new Exception("session doesn't exists");
+
+            SessionUsers sessionUsers = new SessionUsers
+            {
+                Session = session,
+                UserId = userId
+            };
+
+            _db.Add(sessionUsers);
+            _db.SaveChanges();
+        }
+
+
     }
 }

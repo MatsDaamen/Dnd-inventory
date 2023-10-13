@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dnd_Inventory_DAL.Entities
+namespace Dnd_Inventory_Logic.Entities
 {
     public class SessionJoinKey
     {

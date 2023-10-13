@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dnd_Inventory_Logic.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +9,17 @@ namespace Dnd_Inventory_Logic.Interfaces.Services
 {
     public interface ISessionService
     {
-        public void CreateSession(string name, int createdBy);
+        public Session Get(int id);
+        public List<Session> Get();
 
-        public Guid CreateSessionJoinKey(int sessionId, int AmountOfUses, int createdBy);
+        public void Create(string name, int createdBy);
 
-        public void JoinSession(int sessionId, Guid sessionJoinKey, int userId);
+        public Guid CreateJoinKey(int sessionId, int AmountOfUses, int createdBy);
 
-        public void DeleteSession(int sessionId);
+        public void Join(int sessionId, Guid sessionJoinKey, int userId);
 
-        public void DeleteSessionJoinKey(Guid sessionJoinKey);
+        public void Delete(int sessionId);
+
+        public void DeleteJoinKey(Guid sessionJoinKey);
     }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dnd_Inventory_DAL.Entities
+namespace Dnd_Inventory_Logic.Entities
 {
     public class Session
     {
@@ -15,6 +15,6 @@ namespace Dnd_Inventory_DAL.Entities
         public int CreatedBy { get; set; }
 
         [ForeignKey("JoinKeyId")]
-        public virtual List<SessionJoinKey> SessionJoinKeys { get; set;}
+        public virtual List<SessionJoinKey> SessionJoinKeys { get; set; }
     }
 }

@@ -4,10 +4,10 @@ using MySql.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace Dnd_Inventory_DAL.Migrations
+namespace Dnd_Inventory_Logic.Migrations
 {
     /// <inheritdoc />
-    public partial class initialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -58,6 +58,26 @@ namespace Dnd_Inventory_DAL.Migrations
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "SessionUsers",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    SessionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SessionUsers", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_SessionUsers_Sessions_SessionId",
+                        column: x => x.SessionId,
+                        principalTable: "Sessions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
             migrationBuilder.CreateIndex(
                 name: "IX_JoinKeys_JoinKeyId",
                 table: "JoinKeys",
@@ -67,6 +87,11 @@ namespace Dnd_Inventory_DAL.Migrations
                 name: "IX_JoinKeys_SessionId",
                 table: "JoinKeys",
                 column: "SessionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SessionUsers_SessionId",
+                table: "SessionUsers",
+                column: "SessionId");
         }
 
         /// <inheritdoc />
@@ -74,6 +99,9 @@ namespace Dnd_Inventory_DAL.Migrations
         {
             migrationBuilder.DropTable(
                 name: "JoinKeys");
+
+            migrationBuilder.DropTable(
+                name: "SessionUsers");
 
             migrationBuilder.DropTable(
                 name: "Sessions");

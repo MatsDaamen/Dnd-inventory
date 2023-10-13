@@ -1,4 +1,4 @@
-﻿using Dnd_Inventory_DAL.Entities;
+﻿using Dnd_Inventory_Logic.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

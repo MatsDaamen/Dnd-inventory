@@ -1,4 +1,4 @@
-﻿using Dnd_Inventory_DAL.Entities;
+﻿using Dnd_Inventory_Logic.Entities;
 using Dnd_Inventory_Logic.Interfaces.Repositories;
 using Dnd_Inventory_Logic.Interfaces.Services;
 using System;
@@ -12,12 +12,23 @@ namespace Dnd_Inventory_Logic.Services
     public class SessionService : ISessionService
     {
         private ISessionRepository _sessionRepository;
+
         public SessionService(ISessionRepository sessionRepository) 
         {
             _sessionRepository = sessionRepository;
         }
 
-        public void CreateSession(string name, int createdBy)
+        public Session Get(int id)
+        {
+            return _sessionRepository.Get(id);
+        }
+
+        public List<Session> Get()
+        {
+            return _sessionRepository.GetAll();
+        }
+
+        public void Create(string name, int createdBy)
         {
             Session session = new Session
             {
@@ -28,13 +39,9 @@ namespace Dnd_Inventory_Logic.Services
             _sessionRepository.CreateSession(session);
         }
 
-        public Guid CreateSessionJoinKey(int sessionId, int AmountOfUses, int createdBy)
+        public Guid CreateJoinKey(int sessionId, int AmountOfUses, int createdBy)
         {
             Session session = _sessionRepository.Get(sessionId);
-
-            if (session.CreatedBy != createdBy)
-                //TODO: THROW ERROR
-                throw new Exception("key created by none-owner");
 
             SessionJoinKey sessionJoinKey = new SessionJoinKey
             {
@@ -48,20 +55,22 @@ namespace Dnd_Inventory_Logic.Services
             return sessionJoinKey.JoinKey;
         }
 
-        public void DeleteSession(int sessionId)
+        public void Delete(int sessionId)
         {
             _sessionRepository.DeleteSession(sessionId);
         }
 
-        public void DeleteSessionJoinKey(Guid sessionJoinKey)
+        public void DeleteJoinKey(Guid sessionJoinKey)
         {
             _sessionRepository.DeleteSessionJoinKey(sessionJoinKey);
         }
 
-        public void JoinSession(int sessionId, Guid sessionJoinKey, int userId)
+        public void Join(int sessionId, Guid sessionJoinKey, int userId)
         {
             if (!_sessionRepository.ValidateJoinKey(sessionId, sessionJoinKey))
                 throw new Exception("join code not valide");
+
+            _sessionRepository.JoinSession(sessionId, userId);
         }
     }
 }
