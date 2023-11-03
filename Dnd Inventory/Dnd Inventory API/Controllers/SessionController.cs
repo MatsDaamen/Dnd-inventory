@@ -1,8 +1,6 @@
 ﻿using Dnd_Inventory_API.Dtos.Session.GET;
-using Dnd_Inventory_Logic.Entities;
+using Dnd_Inventory_Logic.DomainModels;
 using Dnd_Inventory_Logic.Interfaces.Services;
-using Dnd_Inventory_Logic.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dnd_Inventory_API.Controllers
@@ -21,9 +19,9 @@ namespace Dnd_Inventory_API.Controllers
         [HttpGet]
         public List<SessionDTO> Get()
         {
-            List<Session> session = _sessionService.Get();
-
-            List<SessionDTO> sessionDTOs = session.Select(session => new SessionDTO
+            List<SessionModel> sessionModels = _sessionService.Get();
+                
+            List<SessionDTO> sessionDTOs = sessionModels.Select(session => new SessionDTO
             {
                 Id = session.Id,
                 Name = session.Name,
@@ -36,7 +34,7 @@ namespace Dnd_Inventory_API.Controllers
         [HttpGet("{id}")]
         public SessionDTO Get(int id)
         {
-            Session session = _sessionService.Get(id);
+            SessionModel session = _sessionService.Get(id);
 
             SessionDTO sessionDTO = new SessionDTO
             {

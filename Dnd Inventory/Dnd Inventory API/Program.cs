@@ -1,4 +1,4 @@
-using Dnd_Inventory_API;
+using Dnd_Inventory_DAL;
 using Dnd_Inventory_DAL.Repositiories;
 using Dnd_Inventory_Logic.Interfaces.Repositories;
 using Dnd_Inventory_Logic.Interfaces.Services;

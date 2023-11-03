@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Dnd_Inventory_Logic.Entities
+namespace Dnd_Inventory_DAL.Entities
 {
     public class SessionUsers
     {

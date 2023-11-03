@@ -1,4 +1,4 @@
-﻿using Dnd_Inventory_Logic.Entities;
+﻿using Dnd_Inventory_Logic.DomainModels;
 using Dnd_Inventory_Logic.Interfaces.Repositories;
 using Dnd_Inventory_Logic.Interfaces.Services;
 using System;
@@ -18,19 +18,19 @@ namespace Dnd_Inventory_Logic.Services
             _sessionRepository = sessionRepository;
         }
 
-        public Session Get(int id)
+        public SessionModel Get(int id)
         {
             return _sessionRepository.Get(id);
         }
 
-        public List<Session> Get()
+        public List<SessionModel> Get()
         {
             return _sessionRepository.GetAll();
         }
 
         public void Create(string name, int createdBy)
         {
-            Session session = new Session
+            SessionModel session = new SessionModel
             {
                 Name = name,
                 CreatedBy = createdBy,
@@ -41,9 +41,9 @@ namespace Dnd_Inventory_Logic.Services
 
         public Guid CreateJoinKey(int sessionId, int AmountOfUses, int createdBy)
         {
-            Session session = _sessionRepository.Get(sessionId);
+            SessionModel session = _sessionRepository.Get(sessionId);
 
-            SessionJoinKey sessionJoinKey = new SessionJoinKey
+            SessionJoinKeyModel sessionJoinKey = new SessionJoinKeyModel
             {
                 JoinKey = Guid.NewGuid(),
                 UsesLeft = AmountOfUses,

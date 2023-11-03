@@ -1,4 +1,4 @@
-﻿using Dnd_Inventory_Logic.Entities;
+﻿using Dnd_Inventory_Logic.DomainModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +9,8 @@ namespace Dnd_Inventory_Logic.Interfaces.Services
 {
     public interface ISessionService
     {
-        public Session Get(int id);
-        public List<Session> Get();
+        public SessionModel Get(int id);
+        public List<SessionModel> Get();
 
         public void Create(string name, int createdBy);
 

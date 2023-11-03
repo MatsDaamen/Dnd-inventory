@@ -1,7 +1,7 @@
-﻿using Dnd_Inventory_Logic.Entities;
+﻿using Dnd_Inventory_DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Dnd_Inventory_API
+namespace Dnd_Inventory_DAL
 {
     public class InventoryDbContext : DbContext
     {

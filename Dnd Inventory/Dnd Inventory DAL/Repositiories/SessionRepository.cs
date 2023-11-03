@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Dnd_Inventory_API;
-using Dnd_Inventory_Logic.Entities;
+using Dnd_Inventory_DAL.Entities;
+using Dnd_Inventory_Logic.DomainModels;
 using Dnd_Inventory_Logic.Interfaces.Repositories;
 
 namespace Dnd_Inventory_DAL.Repositiories
@@ -16,24 +16,50 @@ namespace Dnd_Inventory_DAL.Repositiories
             _db = db;
         }
 
-        public Session Get(int sessionId)
+        public SessionModel Get(int sessionId)
         {
-            return _db.Sessions.First(session => session.Id == sessionId);
+            Session dbSession = _db.Sessions.First(session => session.Id == sessionId);
+
+            SessionModel sessionModel = new SessionModel
+            {
+                Id = dbSession.Id,
+                Name = dbSession.Name,
+                CreatedBy = dbSession.CreatedBy
+            };
+
+            return sessionModel;
         }
 
-        public List<Session> GetAll()
+        public List<SessionModel> GetAll()
         {
-            return _db.Sessions.ToList();
+            return _db.Sessions.Select(dbSession => new SessionModel
+            {
+                Id = dbSession.Id,
+                Name = dbSession.Name,
+                CreatedBy = dbSession.CreatedBy
+            }).ToList();
         }
 
-        public void CreateSession(Session session)
+        public void CreateSession(SessionModel sessionModel)
         {
+            Session session = new Session
+            {
+                Name = sessionModel.Name,
+                CreatedBy = sessionModel.CreatedBy,
+            };
+
             _db.Add(session);
             _db.SaveChanges();
         }
 
-        public Guid CreateSessionJoinKey(SessionJoinKey sessionJoinKey)
+        public Guid CreateSessionJoinKey(SessionJoinKeyModel sessionJoinKeyModel)
         {
+            SessionJoinKey sessionJoinKey = new SessionJoinKey
+            {
+                JoinKey = sessionJoinKeyModel.JoinKey,
+                UsesLeft = sessionJoinKeyModel.UsesLeft
+            };
+
             _db.Add(sessionJoinKey);
             _db.SaveChanges();
 
@@ -66,6 +92,7 @@ namespace Dnd_Inventory_DAL.Repositiories
         {
             SessionJoinKey? joinKey = _db.JoinKeys.FirstOrDefault(joinkey => joinkey.JoinKey == sessionJoinKey && joinkey.Session.Id == sessionId);
 
+
             return joinKey != null && joinKey.UsesLeft > 0;
         }
 
@@ -85,7 +112,5 @@ namespace Dnd_Inventory_DAL.Repositiories
             _db.Add(sessionUsers);
             _db.SaveChanges();
         }
-
-
     }
 }

@@ -1,5 +1,4 @@
-﻿using Dnd_Inventory_Logic.Entities;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dnd_Inventory_API.Dtos.Session.GET
 {

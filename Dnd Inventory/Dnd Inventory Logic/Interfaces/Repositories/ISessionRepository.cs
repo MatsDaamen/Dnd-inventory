@@ -1,4 +1,4 @@
-﻿using Dnd_Inventory_Logic.Entities;
+﻿using Dnd_Inventory_Logic.DomainModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +9,13 @@ namespace Dnd_Inventory_Logic.Interfaces.Repositories
 {
     public interface ISessionRepository
     {
-        public List<Session> GetAll();
+        public List<SessionModel> GetAll();
 
-        public Session Get(int sessionId);
+        public SessionModel Get(int sessionId);
 
-        public void CreateSession(Session session);
+        public void CreateSession(SessionModel session);
 
-        public Guid CreateSessionJoinKey(SessionJoinKey sessionJoinKey);
+        public Guid CreateSessionJoinKey(SessionJoinKeyModel sessionJoinKey);
 
         public bool ValidateJoinKey(int sessionId, Guid sessionJoinKey);
 
