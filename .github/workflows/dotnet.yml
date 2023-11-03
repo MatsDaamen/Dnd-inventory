@@ -3,11 +3,7 @@
 
 name: .NET
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -15,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
@@ -25,4 +21,4 @@ jobs:
     - name: Build
       run: dotnet build "Dnd Inventory/Dnd Inventory.sln" --no-restore
     - name: Test
-      run: dotnet test "Dnd Inventory/Dnd Inventory.sln" --no-build --verbosity normal
+      run: dotnet test "Dnd Inventory/Tests/Tests.csproj" --no-build --no-restore --verbosity normal
