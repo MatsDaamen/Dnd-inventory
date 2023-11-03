@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dnd Inventory Logic", "Dnd Inventory Logic\Dnd Inventory Logic.csproj", "{FDE8F58E-043D-4FB8-88F2-7FBE9E64987B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dnd Inventory Logic", "Dnd Inventory Logic\Dnd Inventory Logic.csproj", "{FDE8F58E-043D-4FB8-88F2-7FBE9E64987B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dnd Inventory API", "Dnd Inventory API\Dnd Inventory API.csproj", "{B79BCC54-A8C6-4999-8A49-019F6EF1B36B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dnd Inventory API", "Dnd Inventory API\Dnd Inventory API.csproj", "{B79BCC54-A8C6-4999-8A49-019F6EF1B36B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F90DF8E7-07D4-4CBF-A7EF-4E64C647DE7F} = {F90DF8E7-07D4-4CBF-A7EF-4E64C647DE7F}
 		{FDE8F58E-043D-4FB8-88F2-7FBE9E64987B} = {FDE8F58E-043D-4FB8-88F2-7FBE9E64987B}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dnd Inventory DAL", "Dnd Inventory DAL\Dnd Inventory DAL.csproj", "{F90DF8E7-07D4-4CBF-A7EF-4E64C647DE7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dnd Inventory DAL", "Dnd Inventory DAL\Dnd Inventory DAL.csproj", "{F90DF8E7-07D4-4CBF-A7EF-4E64C647DE7F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FDE8F58E-043D-4FB8-88F2-7FBE9E64987B} = {FDE8F58E-043D-4FB8-88F2-7FBE9E64987B}
 	EndProjectSection
