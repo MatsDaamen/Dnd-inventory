@@ -21,4 +21,4 @@ jobs:
     - name: Build
       run: dotnet build "Dnd Inventory/Dnd Inventory.sln" --no-restore
     - name: Test
-      run: dotnet test "Dnd Inventory/Dnd Inventory.sln" --no-build --no-restore --verbosity normal
+      run: dotnet test "Dnd Inventory/Tests/Tests.csproj" --no-build --no-restore --verbosity normal
