@@ -16,6 +16,22 @@ namespace Dnd_Inventory_DAL.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "JoinKeys",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    JoinKey = table.Column<Guid>(type: "char(36)", nullable: false),
+                    UsesLeft = table.Column<int>(type: "int", nullable: false),
+                    SessionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JoinKeys", x => x.Id);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Sessions",
                 columns: table => new
                 {
@@ -31,56 +47,17 @@ namespace Dnd_Inventory_DAL.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "JoinKeys",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    JoinKey = table.Column<Guid>(type: "char(36)", nullable: false),
-                    UsesLeft = table.Column<int>(type: "int", nullable: false),
-                    SessionId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_JoinKeys", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_JoinKeys_Sessions_SessionId",
-                        column: x => x.SessionId,
-                        principalTable: "Sessions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "SessionUsers",
                 columns: table => new
                 {
+                    SessionId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    SessionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SessionUsers", x => x.UserId);
-                    table.ForeignKey(
-                        name: "FK_SessionUsers_Sessions_SessionId",
-                        column: x => x.SessionId,
-                        principalTable: "Sessions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_SessionUsers", x => new { x.SessionId, x.UserId });
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_JoinKeys_SessionId",
-                table: "JoinKeys",
-                column: "SessionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SessionUsers_SessionId",
-                table: "SessionUsers",
-                column: "SessionId");
         }
 
         /// <inheritdoc />
@@ -90,10 +67,10 @@ namespace Dnd_Inventory_DAL.Migrations
                 name: "JoinKeys");
 
             migrationBuilder.DropTable(
-                name: "SessionUsers");
+                name: "Sessions");
 
             migrationBuilder.DropTable(
-                name: "Sessions");
+                name: "SessionUsers");
         }
     }
 }

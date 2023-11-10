@@ -15,5 +15,11 @@ namespace Dnd_Inventory_DAL
         public DbSet<SessionJoinKey> JoinKeys { get; set; }
 
         public DbSet<SessionUsers> SessionUsers { get; set; }
+
+        // we override the OnModelCreating method here.
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<SessionUsers>().HasKey(su => new { su.SessionId, su.UserId });
+        }
     }
 }

@@ -13,11 +13,11 @@ namespace Dnd_Inventory_Logic.Interfaces.Repositories
 
         public SessionModel Get(int sessionId);
 
-        public void CreateSession(SessionModel session);
+        public int CreateSession(SessionModel session);
 
         public Guid CreateSessionJoinKey(SessionJoinKeyModel sessionJoinKey);
 
-        public bool ValidateJoinKey(int sessionId, Guid sessionJoinKey);
+        public int ValidateJoinKey(Guid sessionJoinKey);
 
         public void JoinSession(int sessionId, int userId);
 

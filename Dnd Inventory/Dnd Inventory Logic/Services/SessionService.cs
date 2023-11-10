@@ -28,26 +28,20 @@ namespace Dnd_Inventory_Logic.Services
             return _sessionRepository.GetAll();
         }
 
-        public void Create(string name, int createdBy)
+        public void Create(SessionModel session)
         {
-            SessionModel session = new SessionModel
-            {
-                Name = name,
-                CreatedBy = createdBy,
-            };
+            int createdSessionId = _sessionRepository.CreateSession(session);
 
-            _sessionRepository.CreateSession(session);
+            _sessionRepository.JoinSession(createdSessionId, session.CreatedBy);
         }
 
         public Guid CreateJoinKey(int sessionId, int AmountOfUses, int createdBy)
         {
-            SessionModel session = _sessionRepository.Get(sessionId);
-
             SessionJoinKeyModel sessionJoinKey = new SessionJoinKeyModel
             {
                 JoinKey = Guid.NewGuid(),
                 UsesLeft = AmountOfUses,
-                Session = session
+                SessionId = sessionId
             };
 
             _sessionRepository.CreateSessionJoinKey(sessionJoinKey);
@@ -65,12 +59,14 @@ namespace Dnd_Inventory_Logic.Services
             _sessionRepository.DeleteSessionJoinKey(sessionJoinKey);
         }
 
-        public void Join(int sessionId, Guid sessionJoinKey, int userId)
+        public void Join(JoinRequestModel joinRequest)
         {
-            if (!_sessionRepository.ValidateJoinKey(sessionId, sessionJoinKey))
-                throw new Exception("join code not valide");
+            int sessionId = _sessionRepository.ValidateJoinKey(joinRequest.sessionJoinKey);
 
-            _sessionRepository.JoinSession(sessionId, userId);
+            if (sessionId == 0)
+                throw new Exception("session not found");
+
+            _sessionRepository.JoinSession(sessionId, joinRequest.userId);
         }
     }
 }

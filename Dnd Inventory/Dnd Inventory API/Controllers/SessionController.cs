@@ -1,4 +1,6 @@
 ﻿using Dnd_Inventory_API.Dtos.Session.GET;
+using Dnd_Inventory_API.Dtos.Session.JOIN;
+using Dnd_Inventory_API.Dtos.Session.POST;
 using Dnd_Inventory_Logic.DomainModels;
 using Dnd_Inventory_Logic.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -47,15 +49,27 @@ namespace Dnd_Inventory_API.Controllers
         }
 
         [HttpPost]
-        public void Post(string name, int createdBy) 
+        public void Post([FromBody]SessionRequest sessionRequest) 
         {
-            _sessionService.Create(name, createdBy);
+            SessionModel sessionModel = new SessionModel
+            {
+                Name = sessionRequest.name,
+                CreatedBy = sessionRequest.createdBy
+            };
+
+            _sessionService.Create(sessionModel);
         }
 
         [HttpPost("Join")]
-        public void Join(int sessionId, Guid sessionJoinKey, int userId)
+        public void Join([FromBody]JoinRequestDto joinRequestDto)
         {
-            _sessionService.Join(sessionId, sessionJoinKey, userId);
+            JoinRequestModel joinRequestModel = new JoinRequestModel
+            {
+                sessionJoinKey = Guid.Parse(joinRequestDto.sessionJoinKey),
+                userId = joinRequestDto.userId
+            };
+
+            _sessionService.Join(joinRequestModel);
         }
 
         [HttpPost("JoinKey")]

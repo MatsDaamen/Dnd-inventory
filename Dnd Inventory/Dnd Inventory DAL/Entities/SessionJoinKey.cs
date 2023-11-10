@@ -16,6 +16,6 @@ namespace Dnd_Inventory_DAL.Entities
         public int UsesLeft { get; set; }
 
         [ForeignKey("SessionId")]
-        public virtual Session Session { get; set; }
+        public int SessionId { get; set; }
     }
 }

@@ -12,11 +12,11 @@ namespace Dnd_Inventory_Logic.Interfaces.Services
         public SessionModel Get(int id);
         public List<SessionModel> Get();
 
-        public void Create(string name, int createdBy);
+        public void Create(SessionModel session);
 
         public Guid CreateJoinKey(int sessionId, int AmountOfUses, int createdBy);
 
-        public void Join(int sessionId, Guid sessionJoinKey, int userId);
+        public void Join(JoinRequestModel joinRequest);
 
         public void Delete(int sessionId);
 

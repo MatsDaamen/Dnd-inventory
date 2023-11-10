@@ -8,6 +8,6 @@
 
         public int UsesLeft { get; set; }
 
-        public SessionModel Session { get; set; }
+        public int SessionId { get; set; }
     }
 }

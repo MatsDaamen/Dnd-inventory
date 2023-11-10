@@ -54,47 +54,20 @@ namespace Dnd_Inventory_DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SessionId");
-
                     b.ToTable("JoinKeys");
                 });
 
             modelBuilder.Entity("Dnd_Inventory_DAL.Entities.SessionUsers", b =>
                 {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
                     b.Property<int>("SessionId")
                         .HasColumnType("int");
 
-                    b.HasKey("UserId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("SessionId");
+                    b.HasKey("SessionId", "UserId");
 
                     b.ToTable("SessionUsers");
-                });
-
-            modelBuilder.Entity("Dnd_Inventory_DAL.Entities.SessionJoinKey", b =>
-                {
-                    b.HasOne("Dnd_Inventory_DAL.Entities.Session", "Session")
-                        .WithMany()
-                        .HasForeignKey("SessionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Session");
-                });
-
-            modelBuilder.Entity("Dnd_Inventory_DAL.Entities.SessionUsers", b =>
-                {
-                    b.HasOne("Dnd_Inventory_DAL.Entities.Session", "Session")
-                        .WithMany()
-                        .HasForeignKey("SessionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Session");
                 });
 #pragma warning restore 612, 618
         }
