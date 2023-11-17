@@ -29,5 +29,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v4
     - name: Test
       run: dotnet test "Dnd Inventory/Tests/Tests.csproj" --no-build --no-restore --verbosity normal
