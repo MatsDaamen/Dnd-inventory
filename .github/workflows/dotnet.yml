@@ -6,7 +6,9 @@ name: .NET
 on: [push, pull_request]
 
 jobs:
+
   build:
+    name: build
 
     runs-on: ubuntu-latest
 
@@ -20,5 +22,11 @@ jobs:
       run: dotnet restore "Dnd Inventory/Dnd Inventory.sln"
     - name: Build
       run: dotnet build "Dnd Inventory/Dnd Inventory.sln" --no-restore
+  test:
+    name: test
+
+    runs-on: ubuntu-latest
+
+    steps:
     - name: Test
       run: dotnet test "Dnd Inventory/Tests/Tests.csproj" --no-build --no-restore --verbosity normal
