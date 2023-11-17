@@ -23,9 +23,16 @@ namespace Dnd_Inventory_Logic.Services
             return _sessionRepository.Get(id);
         }
 
-        public List<SessionModel> Get()
+        public List<SessionModel> Get(int? userId)
         {
-            return _sessionRepository.GetAll();
+            List<SessionModel> sessions = new();
+
+            if (userId != null)
+                sessions = _sessionRepository.GetAll((int)userId);
+            else
+                sessions = _sessionRepository.GetAll();
+
+            return sessions;
         }
 
         public void Create(SessionModel session)

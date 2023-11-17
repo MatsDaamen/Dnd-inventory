@@ -19,7 +19,7 @@ namespace Dnd_Inventory_API.Controllers
         }
 
         [HttpGet]
-        public List<SessionDTO> Get()
+        public List<SessionDTO> Get([FromQuery]int userId)
         {
             List<SessionModel> sessionModels = _sessionService.Get();
                 
@@ -51,11 +51,7 @@ namespace Dnd_Inventory_API.Controllers
         [HttpPost]
         public void Post([FromBody]SessionRequest sessionRequest) 
         {
-            SessionModel sessionModel = new SessionModel
-            {
-                Name = sessionRequest.name,
-                CreatedBy = sessionRequest.createdBy
-            };
+            SessionModel sessionModel = new SessionModel(sessionRequest.name, sessionRequest.createdBy);
 
             _sessionService.Create(sessionModel);
         }

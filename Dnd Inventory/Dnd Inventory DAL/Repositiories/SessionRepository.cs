@@ -30,14 +30,28 @@ namespace Dnd_Inventory_DAL.Repositiories
             return sessionModel;
         }
 
+
         public List<SessionModel> GetAll()
         {
-            return _db.Sessions.Select(dbSession => new SessionModel
-            {
-                Id = dbSession.Id,
-                Name = dbSession.Name,
-                CreatedBy = dbSession.CreatedBy
-            }).ToList();
+            List<Session> sessions = _db.Sessions.ToList();
+
+            List<SessionModel> sessionModels = sessions.Select(dbSession => new SessionModel(dbSession.Id, dbSession.Name, dbSession.CreatedBy)).ToList();
+
+            return sessionModels;
+        }
+
+        public List<SessionModel> GetAll(int userId)
+        {
+            List<int> sessionIds = _db.SessionUsers.Where(SessionUser => SessionUser.UserId == userId)
+                .Select(sessionUser => sessionUser.SessionId)
+                .ToList();
+
+            List<Session> sessions = _db.Sessions.Where(session => sessionIds.Contains(session.Id)).ToList();
+
+
+            List<SessionModel> sessionModels = sessions.Select(dbSession => new SessionModel(dbSession.Id, dbSession.Name, dbSession.CreatedBy)).ToList();
+
+            return sessionModels;
         }
 
         public int CreateSession(SessionModel sessionModel)

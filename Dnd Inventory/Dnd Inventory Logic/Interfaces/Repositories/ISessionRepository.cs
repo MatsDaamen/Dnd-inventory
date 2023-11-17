@@ -10,6 +10,7 @@ namespace Dnd_Inventory_Logic.Interfaces.Repositories
     public interface ISessionRepository
     {
         public List<SessionModel> GetAll();
+        public List<SessionModel> GetAll(int userId);
 
         public SessionModel Get(int sessionId);
 

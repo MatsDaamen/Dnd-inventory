@@ -10,7 +10,7 @@ namespace Dnd_Inventory_Logic.Interfaces.Services
     public interface ISessionService
     {
         public SessionModel Get(int id);
-        public List<SessionModel> Get();
+        public List<SessionModel> Get(int? userId);
 
         public void Create(SessionModel session);
 
