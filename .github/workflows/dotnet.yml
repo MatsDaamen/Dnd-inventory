@@ -31,4 +31,4 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Test
-      run: dotnet test "Dnd Inventory/Tests/Tests.csproj" --no-restore --verbosity normal
+      run: dotnet test "Dnd Inventory/Tests/Tests.csproj" --verbosity normal
