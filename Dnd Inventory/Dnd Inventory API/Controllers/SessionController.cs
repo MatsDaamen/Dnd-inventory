@@ -1,5 +1,6 @@
 ﻿using Dnd_Inventory_API.Dtos.Session.GET;
 using Dnd_Inventory_API.Dtos.Session.JOIN;
+using Dnd_Inventory_API.Dtos.Session.JOINKEY;
 using Dnd_Inventory_API.Dtos.Session.POST;
 using Dnd_Inventory_Logic.DomainModels;
 using Dnd_Inventory_Logic.Interfaces.Services;
@@ -70,9 +71,15 @@ namespace Dnd_Inventory_API.Controllers
 
         [HttpPost("JoinKey")]
 
-        public Guid PostJoinKey(int sessionId, int amountOfUses, int createdBy)
+        public Guid PostJoinKey([FromBody] JoinKeyRequest joinKeyRequest)
         {
-            Guid joinKey = _sessionService.CreateJoinKey(sessionId, amountOfUses, createdBy);
+            SessionJoinKeyModel joinKeyModel = new SessionJoinKeyModel
+            {
+                SessionId = joinKeyRequest.sessionId,
+                UsesLeft = joinKeyRequest.amountOfUses,
+            };
+
+            Guid joinKey = _sessionService.CreateJoinKey(joinKeyModel, joinKeyRequest.createdBy);
 
             return joinKey;
         }

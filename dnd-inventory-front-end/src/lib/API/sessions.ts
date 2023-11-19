@@ -1,7 +1,7 @@
 import { redirect } from "@sveltejs/kit";
 
-function getUrl(url?: string): string {
-    return `http://localhost:5254/api/Session${url}`
+function getBaseUrl(): string {
+        return `http://localhost:5254/api/Session`
 }
 
 export type Session = {
@@ -15,8 +15,16 @@ export type joinKey = {
     userId: number
 };
 
+export type CreationJoinKey = {
+    sessionId: number,
+    amountOfUses: number,
+    createdBy: number
+};
+
 export const getSessions = async (): Promise<Session[]> => {
-	const response = await fetch(getUrl(), {
+
+
+	const response = await fetch(getBaseUrl(), {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -32,7 +40,7 @@ export const getSessions = async (): Promise<Session[]> => {
 };
 
 export const getSession = async (id: number): Promise<Session> => {
-	const response = await fetch(getUrl(id.toString()), {
+	const response = await fetch(getBaseUrl() + `/${id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -50,7 +58,7 @@ export const getSession = async (id: number): Promise<Session> => {
 
 export const createSession = async (session: Session) => {
     
-        const response = await fetch(getUrl(), {
+        const response = await fetch(getBaseUrl(), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -63,7 +71,7 @@ export const createSession = async (session: Session) => {
 
 export const joinSession = async (joinRequestDto: joinKey) => {
     
-	const response = await fetch(getUrl('Join'), {
+	const response = await fetch(getBaseUrl() + `/join`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -73,3 +81,15 @@ export const joinSession = async (joinRequestDto: joinKey) => {
 
 	return [];
 };
+
+export const CreateJoinCode = async (createionJoinkey: CreationJoinKey) => {
+    const response = await fetch(getBaseUrl() + "/JoinKey", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(createionJoinkey)
+    });
+
+	return [];
+}

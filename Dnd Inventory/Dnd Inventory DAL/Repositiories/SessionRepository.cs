@@ -100,14 +100,22 @@ namespace Dnd_Inventory_DAL.Repositiories
             }
         }
 
-        public int ValidateJoinKey(Guid sessionJoinKey)
+        public SessionJoinKeyModel ValidateJoinKey(Guid sessionJoinKey)
         {
             SessionJoinKey? joinKey = _db.JoinKeys.FirstOrDefault(joinkey => joinkey.JoinKey == sessionJoinKey);
 
             if (joinKey.UsesLeft <= 0)
                 throw new Exception("joinKey not valid");
 
-            return joinKey.SessionId;
+            SessionJoinKeyModel joinKeyModel = new SessionJoinKeyModel()
+            {
+                Id = joinKey.Id,
+                SessionId = joinKey.SessionId,
+                UsesLeft = joinKey.UsesLeft,
+                JoinKey = joinKey.JoinKey
+            };
+
+            return joinKeyModel;
         }
 
         public void JoinSession(int sessionId, int userId)
@@ -124,6 +132,15 @@ namespace Dnd_Inventory_DAL.Repositiories
             };
 
             _db.Add(sessionUsers);
+            _db.SaveChanges();
+        }
+
+        public void UpdateJoinKey(SessionJoinKeyModel sessionJoinKey)
+        {
+            SessionJoinKey joinKey = _db.JoinKeys.First(joinKey => joinKey.Id == sessionJoinKey.Id);
+
+            joinKey.UsesLeft--;
+
             _db.SaveChanges();
         }
     }

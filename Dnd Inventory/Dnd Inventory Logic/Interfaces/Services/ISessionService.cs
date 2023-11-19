@@ -14,7 +14,7 @@ namespace Dnd_Inventory_Logic.Interfaces.Services
 
         public void Create(SessionModel session);
 
-        public Guid CreateJoinKey(int sessionId, int AmountOfUses, int createdBy);
+        public Guid CreateJoinKey(SessionJoinKeyModel joinKeyModel, int createdBy);
 
         public void Join(JoinRequestModel joinRequest);
 

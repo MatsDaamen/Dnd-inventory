@@ -65,9 +65,19 @@ namespace Tests.Mock
 
         }
 
-        public int ValidateJoinKey(Guid sessionJoinKey)
+        public void UpdateJoinKey(SessionJoinKeyModel sessionJoinKey)
         {
-            return 1;
+
+        }
+
+        public SessionJoinKeyModel ValidateJoinKey(Guid sessionJoinKey)
+        {
+            return new SessionJoinKeyModel 
+            {
+                Id = 1,
+                SessionId = 1,
+                UsesLeft = 1
+            };
         }
     }
 }

@@ -18,12 +18,14 @@ namespace Dnd_Inventory_Logic.Interfaces.Repositories
 
         public Guid CreateSessionJoinKey(SessionJoinKeyModel sessionJoinKey);
 
-        public int ValidateJoinKey(Guid sessionJoinKey);
+        public SessionJoinKeyModel ValidateJoinKey(Guid sessionJoinKey);
 
         public void JoinSession(int sessionId, int userId);
 
         public void DeleteSession(int sessionId);
 
         public void DeleteSessionJoinKey(Guid sessionJoinKey);
+
+        public void UpdateJoinKey(SessionJoinKeyModel sessionJoinKey);
     }
 }

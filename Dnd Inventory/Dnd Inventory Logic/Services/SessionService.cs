@@ -42,14 +42,14 @@ namespace Dnd_Inventory_Logic.Services
             _sessionRepository.JoinSession(createdSessionId, session.CreatedBy);
         }
 
-        public Guid CreateJoinKey(int sessionId, int AmountOfUses, int createdBy)
+        public Guid CreateJoinKey(SessionJoinKeyModel sessionJoinKey, int createdBy)
         {
-            SessionJoinKeyModel sessionJoinKey = new SessionJoinKeyModel
-            {
-                JoinKey = Guid.NewGuid(),
-                UsesLeft = AmountOfUses,
-                SessionId = sessionId
-            };
+            SessionModel session = Get(sessionJoinKey.SessionId);
+
+            if (session.CreatedBy != createdBy)
+                throw new Exception("not owner of session");
+
+            sessionJoinKey.JoinKey = Guid.NewGuid();
 
             _sessionRepository.CreateSessionJoinKey(sessionJoinKey);
 
@@ -68,12 +68,14 @@ namespace Dnd_Inventory_Logic.Services
 
         public void Join(JoinRequestModel joinRequest)
         {
-            int sessionId = _sessionRepository.ValidateJoinKey(joinRequest.sessionJoinKey);
+            SessionJoinKeyModel joinKeyModel = _sessionRepository.ValidateJoinKey(joinRequest.sessionJoinKey);
 
-            if (sessionId == 0)
-                throw new Exception("session not found");
+            _sessionRepository.JoinSession(joinKeyModel.SessionId, joinRequest.userId);
 
-            _sessionRepository.JoinSession(sessionId, joinRequest.userId);
+            if (joinKeyModel.UsesLeft <= 1)
+                _sessionRepository.DeleteSessionJoinKey(joinKeyModel.JoinKey);
+            else
+                _sessionRepository.UpdateJoinKey(joinKeyModel);
         }
     }
 }

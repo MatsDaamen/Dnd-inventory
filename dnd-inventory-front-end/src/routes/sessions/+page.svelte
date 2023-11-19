@@ -62,7 +62,7 @@
         open={showCreateModal}
         on:close={() => showCreateModal = false}>
         <form action="?/create" method="post">
-            <labl>Name:</labl>
+            <p>Name:</p>
             <input name="sessionName" type="text"/>
             <Button type="submit" color="primary">Create</Button>
         </form>
@@ -73,7 +73,7 @@
         open={showJoinModal}
         on:close={() => showJoinModal = false}>
         <form action="?/join" method="post">
-            <labl>Join Key:</labl>
+            <p>Join Key:</p>
             <input name="joinkey" type="text"/>
             <Button type="submit" color="primary">Join</Button>
         </form>
