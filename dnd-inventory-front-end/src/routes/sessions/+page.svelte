@@ -50,7 +50,7 @@
             <TableBodyRow>
                 <TableBodyCell>{session.name}</TableBodyCell>
                 <TableBodyCell>
-                    <a href="/{session.id}">To Session</a>
+                    <a href="/sessions/{session.id}">To Session</a>
                 </TableBodyCell>
             </TableBodyRow>
             {/each}

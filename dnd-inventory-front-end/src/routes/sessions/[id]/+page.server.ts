@@ -1,11 +1,11 @@
 import type { PageServerLoad } from './$types';
 import { getSession, type Session } from '$lib/API/sessions';
 
-export const load = (async ( params ) => {
+export const load = (async ( { params } ) => {
 
-    const id: number = params.id;
-
-    const session = getSession(id);
+    const id = +params.id;
+    
+    const session = await getSession(id);
 
     return {session};
 }) satisfies PageServerLoad;

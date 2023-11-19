@@ -19,9 +19,9 @@ namespace Dnd_Inventory_API.Controllers
         }
 
         [HttpGet]
-        public List<SessionDTO> Get([FromQuery]int userId)
+        public List<SessionDTO> Get([FromQuery]int? userId)
         {
-            List<SessionModel> sessionModels = _sessionService.Get();
+            List<SessionModel> sessionModels = _sessionService.Get(userId);
                 
             List<SessionDTO> sessionDTOs = sessionModels.Select(session => new SessionDTO
             {

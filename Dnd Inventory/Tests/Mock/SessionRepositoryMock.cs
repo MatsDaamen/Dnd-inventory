@@ -36,6 +36,20 @@ namespace Tests.Mock
 
         public List<SessionModel> GetAll()
         {
+            Random rnd = new Random();
+
+            List<SessionModel> sessions = new List<SessionModel>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                sessions.Add(new SessionModel(i, "test" + i.ToString(), rnd.Next(1, 10)));
+            }
+
+            return sessions;
+        }
+
+        public List<SessionModel> GetAll(int userId)
+        {
             List<SessionModel> sessions = new List<SessionModel>();
 
             for (int i = 0; i < 10; i++)

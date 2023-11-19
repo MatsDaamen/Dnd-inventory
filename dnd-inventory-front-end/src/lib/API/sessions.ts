@@ -1,5 +1,9 @@
 import { redirect } from "@sveltejs/kit";
 
+function getUrl(url?: string): string {
+    return `http://localhost:5254/api/Session${url}`
+}
+
 export type Session = {
     id: number,
     name: string,
@@ -12,7 +16,7 @@ export type joinKey = {
 };
 
 export const getSessions = async (): Promise<Session[]> => {
-	const response = await fetch(`http://localhost:5254/api/Session`, {
+	const response = await fetch(getUrl(), {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -28,7 +32,7 @@ export const getSessions = async (): Promise<Session[]> => {
 };
 
 export const getSession = async (id: number): Promise<Session> => {
-	const response = await fetch(`http://localhost:5254/api/Session/${id}`, {
+	const response = await fetch(getUrl(id.toString()), {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -46,7 +50,7 @@ export const getSession = async (id: number): Promise<Session> => {
 
 export const createSession = async (session: Session) => {
     
-        const response = await fetch(`http://localhost:5254/api/Session`, {
+        const response = await fetch(getUrl(), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -59,7 +63,7 @@ export const createSession = async (session: Session) => {
 
 export const joinSession = async (joinRequestDto: joinKey) => {
     
-	const response = await fetch(`http://localhost:5254/api/Session/Join`, {
+	const response = await fetch(getUrl('Join'), {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

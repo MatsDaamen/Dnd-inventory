@@ -20,12 +20,7 @@ namespace Dnd_Inventory_DAL.Repositiories
         {
             Session dbSession = _db.Sessions.First(session => session.Id == sessionId);
 
-            SessionModel sessionModel = new SessionModel
-            {
-                Id = dbSession.Id,
-                Name = dbSession.Name,
-                CreatedBy = dbSession.CreatedBy
-            };
+            SessionModel sessionModel = new SessionModel( dbSession.Id, dbSession.Name, dbSession.CreatedBy);
 
             return sessionModel;
         }
