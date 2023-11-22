@@ -2,9 +2,11 @@ import type { Actions, PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 import { getSessions, type Session, joinSession, type joinKey, createSession } from '$lib/API/sessions';
 
-export const load = (async () => {
+export const load = (async ({ locals}) => {
 
     const sessions: Session[] = await getSessions();
+
+    console.log(await locals.getSession());
 
     return {sessions};
 }) satisfies PageServerLoad;
