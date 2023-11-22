@@ -90,5 +90,11 @@ namespace Dnd_Inventory_API.Controllers
 
             return joinKey;
         }
+
+        [HttpDelete("joinKey/{guid}")]
+        public void DeleteJoinKey(Guid guid)
+        {
+            _sessionService.DeleteJoinKey(guid);
+        }
     }
 }

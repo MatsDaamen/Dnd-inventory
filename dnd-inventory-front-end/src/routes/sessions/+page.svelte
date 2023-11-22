@@ -10,6 +10,7 @@
 		TableHead,
 		TableHeadCell
 	} from 'flowbite-svelte';
+    import { PlusSolid, OpenBookSolid } from 'flowbite-svelte-icons';
     import type { PageData } from './$types'
     import type { Session } from '$lib/API/sessions';
 
@@ -31,6 +32,7 @@
             <Button 
             color="primary"
             on:click={() => showCreateModal = true}>
+                <PlusSolid class="w-4 h-4 mr-4 text-white"/>
                 Create new Session
             </Button>
             <Button 
@@ -41,7 +43,7 @@
         </div>
     </div>
     <Table>
-        <TableHead>
+        <TableHead class="text-white dark:text-white bg-primary-500 dark:bg-primary-600">
             <TableHeadCell>Name</TableHeadCell>
             <TableHeadCell>To session</TableHeadCell>
         </TableHead>
@@ -50,7 +52,9 @@
             <TableBodyRow>
                 <TableBodyCell>{session.name}</TableBodyCell>
                 <TableBodyCell>
-                    <a href="/sessions/{session.id}">To Session</a>
+                    <Button color="primary" href="/sessions/{session.id}">
+                    <OpenBookSolid />
+                    </Button>
                 </TableBodyCell>
             </TableBodyRow>
             {/each}

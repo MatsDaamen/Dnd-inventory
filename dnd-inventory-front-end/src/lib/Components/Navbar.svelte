@@ -1,6 +1,6 @@
 <script lang='ts'>
     import {
-        Navbar, NavBrand, NavLi, NavUl, NavHamburger
+        Navbar, NavBrand, NavLi, NavUl
     } from 'flowbite-svelte'
 </script>
 
@@ -10,7 +10,6 @@
       Dnd inventory
     </span>
   </NavBrand>
-  <NavHamburger on:click={toggle} />
   <NavUl {hidden}>
     <NavLi href="/" active={true}>Home</NavLi>
     <NavLi href="/sessions">Sessions</NavLi>

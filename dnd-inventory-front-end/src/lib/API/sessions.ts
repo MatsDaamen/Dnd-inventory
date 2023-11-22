@@ -13,7 +13,7 @@ export type Session = {
 
 export type joinKey = {
     joinKey: string,
-    usesLeft: number,
+    usesLeft?: number,
     userId: number
 };
 
@@ -51,12 +51,7 @@ export const getSession = async (id: number): Promise<Session> => {
     });
 
 	if (response.ok) {
-        let responseClone = response.clone();
-
-        console.log(await responseClone.json());
-
 		const session: Session = await response.json();
-
 		return session;
 	}
 
@@ -96,6 +91,17 @@ export const CreateJoinCode = async (createionJoinkey: CreationJoinKey) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(createionJoinkey)
+    });
+
+	return [];
+}
+
+export const DeleteJoinCode = async (guid: string) => {
+    const response = await fetch(getBaseUrl() + `/JoinKey/${guid}`, {
+        method: 'Delete',
+        headers: {
+            'Content-Type': 'application/json'
+        }
     });
 
 	return [];

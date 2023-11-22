@@ -14,18 +14,16 @@ export const actions = {
 
         const data = await request.formData();
 
-        const sessionJoinKey = data.get("joinkey") as string;
+        const joinKey = data.get("joinkey") as string;
         const userId = 10
 
-        const joinkey: joinKey =
+        const sessionJoinkey: joinKey =
         {
-            sessionJoinKey,
+            joinKey,
             userId
         }
 
-        console.log(joinkey)
-
-        await joinSession(joinkey);
+        await joinSession(sessionJoinkey);
     }),
     create: (async ({request, params}) => {
 
@@ -38,10 +36,9 @@ export const actions = {
         {
             id: 0,
             name,
-            createdBy
+            createdBy,
+            joinKeys: []
         }
-
-        console.log(session)
 
         await createSession(session);
     })

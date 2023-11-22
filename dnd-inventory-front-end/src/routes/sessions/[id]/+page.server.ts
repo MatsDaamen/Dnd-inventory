@@ -1,5 +1,5 @@
 import type { Actions, PageServerLoad } from './$types';
-import { CreateJoinCode, getSession, type Session, type CreationJoinKey } from '$lib/API/sessions';
+import { CreateJoinCode, getSession, type Session, type CreationJoinKey, DeleteJoinCode } from '$lib/API/sessions';
 
 export const load = (async ( { params } ) => {
 
@@ -13,7 +13,7 @@ export const load = (async ( { params } ) => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-    default: (async ({request, params}) => {
+    create: (async ({request, params}) => {
 
         const data = await request.formData();
 
@@ -27,8 +27,17 @@ export const actions = {
             createdBy: +createdBy
         };
 
-        console.log(joinkey);
-
         await CreateJoinCode(joinkey);
+    }),
+    delete: (async ({request, params}) => {
+        const data = await request.formData();
+
+        const guid = data.get("selectedGuid") as string
+
+        if (guid === null){
+            console.log("null value in selected guid");
+            return;
+        }
+        await DeleteJoinCode(guid);
     })
 } satisfies Actions;
