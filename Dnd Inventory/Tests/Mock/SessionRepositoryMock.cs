@@ -60,6 +60,11 @@ namespace Tests.Mock
             return sessions;
         }
 
+        public List<SessionJoinKeyModel> GetAllJoinKeys(int sessionId)
+        {
+            return new List<SessionJoinKeyModel>();
+        }
+
         public void JoinSession(int sessionId, int userId)
         {
 
