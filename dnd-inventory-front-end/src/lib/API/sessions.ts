@@ -7,11 +7,13 @@ function getBaseUrl(): string {
 export type Session = {
     id: number,
     name: string,
-    createdBy: number
+    createdBy: number,
+    joinKeys: joinKey[]
 };
 
 export type joinKey = {
-    sessionJoinKey: string,
+    joinKey: string,
+    usesLeft: number,
     userId: number
 };
 
@@ -49,7 +51,12 @@ export const getSession = async (id: number): Promise<Session> => {
     });
 
 	if (response.ok) {
+        let responseClone = response.clone();
+
+        console.log(await responseClone.json());
+
 		const session: Session = await response.json();
+
 		return session;
 	}
 

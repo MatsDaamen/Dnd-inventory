@@ -7,6 +7,8 @@ export const load = (async ( { params } ) => {
     
     const session = await getSession(id);
 
+    console.log(session)
+
     return {session};
 }) satisfies PageServerLoad;
 

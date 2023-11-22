@@ -7,5 +7,7 @@ namespace Dnd_Inventory_API.Dtos.Session.GET
         public int Id { get; set; }
         public string Name { get; set; }
         public int CreatedBy { get; set; }
+
+        public List<JoinKeyDto> JoinKeys { get; set; }
     }
 }

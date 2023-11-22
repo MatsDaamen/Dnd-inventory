@@ -27,5 +27,7 @@ namespace Dnd_Inventory_Logic.Interfaces.Repositories
         public void DeleteSessionJoinKey(Guid sessionJoinKey);
 
         public void UpdateJoinKey(SessionJoinKeyModel sessionJoinKey);
+
+        public List<SessionJoinKeyModel> GetAllJoinKeys(int sessionId);
     }
 }

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Dnd_Inventory_DAL.Entities;
+﻿using Dnd_Inventory_DAL.Entities;
 using Dnd_Inventory_Logic.DomainModels;
 using Dnd_Inventory_Logic.Interfaces.Repositories;
+using System.Text.Json.Serialization;
 
 namespace Dnd_Inventory_DAL.Repositiories
 {
@@ -142,6 +140,21 @@ namespace Dnd_Inventory_DAL.Repositiories
             joinKey.UsesLeft--;
 
             _db.SaveChanges();
+        }
+
+        public List<SessionJoinKeyModel> GetAllJoinKeys(int sessionId)
+        {
+            List<SessionJoinKey> joinKeys = _db.JoinKeys.Where(joinkey => joinkey.SessionId == sessionId).ToList();
+
+            List<SessionJoinKeyModel> joinKeyModels = joinKeys.Select(joinKey => new SessionJoinKeyModel
+            {
+                Id = joinKey.Id,
+                SessionId = joinKey.SessionId,
+                UsesLeft = joinKey.UsesLeft,
+                JoinKey = joinKey.JoinKey
+            }).ToList();
+
+            return joinKeyModels;
         }
     }
 }

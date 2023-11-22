@@ -28,7 +28,7 @@ namespace Dnd_Inventory_API.Controllers
             {
                 Id = session.Id,
                 Name = session.Name,
-                CreatedBy = session.CreatedBy,
+                CreatedBy = session.CreatedBy
             }).ToList();
 
             return sessionDTOs;
@@ -44,6 +44,13 @@ namespace Dnd_Inventory_API.Controllers
                 Id = session.Id,
                 Name = session.Name,
                 CreatedBy = session.CreatedBy,
+                JoinKeys = session.SessionJoinKeys.Select(joinkey => new JoinKeyDto
+                {
+                    Id = joinkey.Id,
+                    JoinKey = joinkey.JoinKey,
+                    UsesLeft = joinkey.UsesLeft,
+                    SessionId = session.Id
+                }).ToList()
             };
 
             return sessionDTO;

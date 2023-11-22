@@ -1,6 +1,7 @@
 ﻿using Dnd_Inventory_Logic.DomainModels;
 using Dnd_Inventory_Logic.Interfaces.Repositories;
 using Dnd_Inventory_Logic.Interfaces.Services;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,11 @@ namespace Dnd_Inventory_Logic.Services
 
         public SessionModel Get(int id)
         {
-            return _sessionRepository.Get(id);
+            SessionModel sessionModel = _sessionRepository.Get(id);
+
+            sessionModel.SessionJoinKeys = _sessionRepository.GetAllJoinKeys(sessionModel.Id);
+
+            return sessionModel;
         }
 
         public List<SessionModel> Get(int? userId)
