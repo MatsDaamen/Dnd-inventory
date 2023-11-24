@@ -47,3 +47,8 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+namespace Dnd_Inventory_API
+{
+    public class dndInventoryApi { }
+}
