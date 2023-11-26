@@ -21,10 +21,6 @@ export const authHandle: Handle = SvelteKitAuth(async () => {
 		trustHost: true
 	};
 
-    console.log(import.meta.env.VITE_GOOGLE_ID);
-    console.log(import.meta.env.VITE_GOOGLE_SECRET);
-    console.log(import.meta.env.VITE_SECRET);
-
 	return authOptions;
 });
 

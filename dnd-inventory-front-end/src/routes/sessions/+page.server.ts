@@ -4,11 +4,15 @@ import { getSessions, type Session, joinSession, type joinKey, createSession } f
 
 export const load = (async ({ locals}) => {
 
+    const session = await locals.getSession();
+
+	if (!session?.user)
+		throw redirect(302, '/login');
+
     const sessions: Session[] = await getSessions();
 
-    console.log(await locals.getSession());
-
     return {sessions};
+    
 }) satisfies PageServerLoad;
 
 export const actions = {

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Navbar from '$lib/Components/Navbar.svelte';
 	import {
 		Button,
 		Modal,
@@ -21,8 +20,6 @@
     let showJoinModal = false;
 </script>
 
-<Navbar/>
-
 <div class="grid grid-rows-[max-content,1fr] text-xs md:text-base lg:text-lg p-4 md:p-12 gap-4">
 	<div class="flex flex-col md:flex-row gap-4 md:gap-0 md:justify-between">
 		<div class="block">
@@ -43,7 +40,7 @@
         </div>
     </div>
     <Table>
-        <TableHead class="text-white dark:text-white bg-primary-500 dark:bg-primary-600">
+        <TableHead class="bg-primary-500">
             <TableHeadCell>Name</TableHeadCell>
             <TableHeadCell>To session</TableHeadCell>
         </TableHead>
