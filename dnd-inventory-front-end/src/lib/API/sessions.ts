@@ -7,30 +7,48 @@ function getBaseUrl(): string {
 export type Session = {
     id: number,
     name: string,
-    createdBy: number,
+    createdBy: string,
     joinKeys: joinKey[]
 };
 
 export type joinKey = {
     joinKey: string,
     usesLeft?: number,
-    userId: number
+    userId: string
 };
+
+
+export type requestJoinKey = {
+    sessionJoinKey: string,
+    userId: string
+};
+
+
 
 export type CreationJoinKey = {
     sessionId: number,
     amountOfUses: number,
-    createdBy: number
+    createdBy: string
 };
 
-export const getSessions = async (): Promise<Session[]> => {
+export const getSessions = async (userId: string | null): Promise<Session[]> => {
+
+    let url = getBaseUrl();
 
 
-	const response = await fetch(getBaseUrl(), {
+    if(userId) {
+        url = url + "?" + new URLSearchParams({
+            userId: userId
+        })
+    }
+
+	const response = await fetch(url, 
+    {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+
     });
 
 	if (response.ok) {
@@ -71,7 +89,7 @@ export const createSession = async (session: Session) => {
         return [];
     };
 
-export const joinSession = async (joinRequestDto: joinKey) => {
+export const joinSession = async (joinRequestDto: requestJoinKey) => {
     
 	const response = await fetch(getBaseUrl() + `/join`, {
         method: 'POST',

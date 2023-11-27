@@ -5,18 +5,18 @@
         public int Id { get; }
         public string Name { get; set; }
 
-        public int CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
 
         public List<SessionJoinKeyModel> SessionJoinKeys { get; set; }
 
-        public SessionModel(int id, string name, int createdBy) 
+        public SessionModel(int id, string name, string createdBy) 
         {
             Id = id;
             Name = name;
             CreatedBy = createdBy;
         }
 
-        public SessionModel(string name, int createdBy) 
+        public SessionModel(string name, string createdBy) 
         {
             Name = name;
             CreatedBy = createdBy;

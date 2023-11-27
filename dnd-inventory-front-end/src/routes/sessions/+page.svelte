@@ -15,6 +15,7 @@
 
     export let data: PageData;
 	const sessions: Session[] = data.sessions;
+    const userId: string = data.userid;
 
     let showCreateModal = false;
     let showJoinModal = false;
@@ -65,6 +66,7 @@
         <form action="?/create" method="post">
             <p>Name:</p>
             <input name="sessionName" type="text"/>
+            <input name="createdBy" type="hidden" value="{userId}"/>
             <Button type="submit" color="primary">Create</Button>
         </form>
     </Modal>
@@ -76,6 +78,7 @@
         <form action="?/join" method="post">
             <p>Join Key:</p>
             <input name="joinkey" type="text"/>
+            <input name="userid" type="hidden" value="{userId}"/>
             <Button type="submit" color="primary">Join</Button>
         </form>
     </Modal>

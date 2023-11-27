@@ -1,17 +1,24 @@
 import type { Actions, PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
-import { getSessions, type Session, joinSession, type joinKey, createSession } from '$lib/API/sessions';
+import { getSessions, type Session, joinSession, type joinKey, createSession, type requestJoinKey } from '$lib/API/sessions';
+import { UserDatabase } from '$lib/database/userDatabase';
+import clientPromise from '$lib/database/clientPromise';
 
 export const load = (async ({ locals}) => {
 
     const session = await locals.getSession();
 
-	if (!session?.user)
+	if (!session?.user?.email)
 		throw redirect(302, '/login');
 
-    const sessions: Session[] = await getSessions();
+    const userDatabase: UserDatabase = await UserDatabase.fromClient(clientPromise);
+    const userId = await userDatabase.getUserIdByEmail(session.user.email);
+    const sessions: Session[] = await getSessions(userId);
 
-    return {sessions};
+    return {
+        sessions: sessions,
+        userid: userId?.toString()
+        };
     
 }) satisfies PageServerLoad;
 
@@ -20,12 +27,12 @@ export const actions = {
 
         const data = await request.formData();
 
-        const joinKey = data.get("joinkey") as string;
-        const userId = 10
+        const sessionJoinKey = data.get("joinkey") as string;
+        const userId = data.get("userid") as string;
 
-        const sessionJoinkey: joinKey =
+        const sessionJoinkey: requestJoinKey =
         {
-            joinKey,
+            sessionJoinKey,
             userId
         }
 
@@ -36,7 +43,9 @@ export const actions = {
         const data = await request.formData();
 
         const name = data.get("sessionName") as string;
-        const createdBy = 10
+        const createdBy = data.get("createdBy") as string;
+
+        console.log(createdBy);
 
         const session: Session =
         {

@@ -16,10 +16,8 @@
     import { fly } from 'svelte/transition';
 
     export let data: PageData;
-
     const session: Session = data.session;
-
-    const userId = 10;
+    const userId: string = data.userid;
 
     let selectedJoinCode: joinKey | null = null;
 
@@ -38,7 +36,7 @@
 
 	<div class="flex flex-col md:flex-row gap-4 md:gap-0 md:justify-between">
         <div class="block">
-            <Button href="javascript:history.back()">
+            <Button href="/sessions">
                 <ArrowLeftSolid/>
             </Button>
 		</div>
@@ -114,7 +112,7 @@
             <input name="amountOfUses" type="number"/>
         </div>
         <input name="sessionId" type="hidden" value="{session.id}"/>
-        <input name="createdBy" type="hidden" value="10"/>
+        <input name="createdBy" type="hidden" value="{userId}"/>
         <Button class="flex gap-2" type="submit" color="primary">Create</Button>
     </form>
     </Modal>

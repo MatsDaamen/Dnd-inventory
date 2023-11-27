@@ -1,15 +1,27 @@
 import type { Actions, PageServerLoad } from './$types';
 import { CreateJoinCode, getSession, type Session, type CreationJoinKey, DeleteJoinCode } from '$lib/API/sessions';
+import { UserDatabase } from '$lib/database/userDatabase';
+import clientPromise from '$lib/database/clientPromise';
+import { redirect } from '@sveltejs/kit';
 
-export const load = (async ( { params } ) => {
+export const load = (async ( { locals, params } ) => {
+
+    const loginSession = await locals.getSession();
+
+	if (!loginSession?.user?.email)
+		throw redirect(302, '/login');
+
+    const userDatabase: UserDatabase = await UserDatabase.fromClient(clientPromise);
+    const userId = await userDatabase.getUserIdByEmail(loginSession.user.email);
 
     const id = +params.id;
     
-    const session = await getSession(id);
+    const session: Session = await getSession(id);
 
-    console.log(session)
-
-    return {session};
+    return {
+        session: session,
+        userid: userId?.toString()
+    };
 }) satisfies PageServerLoad;
 
 export const actions = {
@@ -24,7 +36,7 @@ export const actions = {
         const joinkey: CreationJoinKey = {
             sessionId: +sessionId,
             amountOfUses: +amountOfUses,
-            createdBy: +createdBy
+            createdBy: createdBy
         };
 
         await CreateJoinCode(joinkey);

@@ -31,7 +31,7 @@ namespace Tests.Mock
 
         public SessionModel Get(int sessionId)
         {
-            return new SessionModel(1, "test", 1);
+            return new SessionModel(1, "test", "1");
         }
 
         public List<SessionModel> GetAll()
@@ -42,19 +42,19 @@ namespace Tests.Mock
 
             for (int i = 0; i < 10; i++)
             {
-                sessions.Add(new SessionModel(i, "test" + i.ToString(), rnd.Next(1, 10)));
+                sessions.Add(new SessionModel(i, "test" + i.ToString(), "1"));
             }
 
             return sessions;
         }
 
-        public List<SessionModel> GetAll(int userId)
+        public List<SessionModel> GetAll(string userId)
         {
             List<SessionModel> sessions = new List<SessionModel>();
 
             for (int i = 0; i < 10; i++)
             {
-                sessions.Add(new SessionModel(i, "test" + i.ToString(), 1));
+                sessions.Add(new SessionModel(i, "test" + i.ToString(), "1"));
             }
 
             return sessions;
@@ -65,7 +65,7 @@ namespace Tests.Mock
             return new List<SessionJoinKeyModel>();
         }
 
-        public void JoinSession(int sessionId, int userId)
+        public void JoinSession(int sessionId, string userId)
         {
 
         }

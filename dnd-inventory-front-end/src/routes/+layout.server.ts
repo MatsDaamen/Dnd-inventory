@@ -1,7 +1,7 @@
 import type { LayoutServerLoad } from './$types';
 import type { Session } from '@auth/core/types';
-import { getuser } from '$lib/API/user';
-import type { User } from '$lib/API/user';
+import { UserDatabase, type UserAccount } from '$lib/database/userDatabase';
+import clientPromise from '$lib/database/clientPromise';
 
 export const load = (async ({ locals }) => {
 	const session = await locals.getSession();
@@ -13,13 +13,13 @@ export const load = (async ({ locals }) => {
 	};
 }) satisfies LayoutServerLoad;
 
-// This function is used to get the associated user from the session.
-async function getUser(session: Session | null): Promise<User | null> {
+async function getUser(session: Session | null): Promise<UserAccount | null> {
 	if (session === null || !session.user || !session.user.email) {
 		return null;
 	}
 
-    const user: User | null = await getuser();
+    const userDatabase: UserDatabase = await UserDatabase.fromClient(clientPromise);
+    const user = await userDatabase.getUserByEmail(session.user.email);
 
     return user;
 }

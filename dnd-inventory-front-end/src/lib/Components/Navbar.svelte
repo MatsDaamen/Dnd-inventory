@@ -2,12 +2,10 @@
   import {
       Navbar, NavBrand, NavLi, NavUl, NavHamburger, Avatar, Button, Dropdown, DropdownItem, DropdownHeader
   } from 'flowbite-svelte'
-  import type { User } from '$lib/API/user';
   import type { Session } from '@auth/core/types';
   import { signOut } from '@auth/sveltekit/client'
 
   export let session: Session | null;
-  export let user: User | null;
 
 </script>
 
