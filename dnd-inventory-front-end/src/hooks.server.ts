@@ -15,14 +15,14 @@ export const authHandle: Handle = SvelteKitAuth(async () => {
 	const authOptions = {
 		providers: [
 			Google({
-				clientId: "434241718547-2drnn06aiee8f820j0fc4bqj5i3pru84.apps.googleusercontent.com",//import.meta.env.VITE_GOOGLE_CLIENT_ID,
-				clientSecret: "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"//import.meta.env.VITE_GOOGLE_SECRET
+				clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+				clientSecret: import.meta.env.VITE_GOOGLE_SECRET
 			})
 		],
 		adapter: MongoDBAdapter(clientPromise, {
 			databaseName: 'accounts'
 		}),
-		secret: "bd05789392e962f687ed468a66de0319",//import.meta.env.VITE_SECRET,
+		secret: import.meta.env.VITE_SECRET,
 		trustHost: true
 	};
 
