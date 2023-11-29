@@ -23,7 +23,7 @@ namespace Tests
         [TestMethod]
         public void TestJoinKeyIsNotMadeBySessionOwner()
         {
-            SessionModel session = new SessionModel(1, "test", 1);
+            SessionModel session = new SessionModel(1, "test", "1");
 
             _sessionService.Create(session);
 
@@ -34,7 +34,7 @@ namespace Tests
                 JoinKey = Guid.NewGuid()
             };
 
-            Assert.ThrowsException<Exception>(() => _sessionService.CreateJoinKey(joinKey, 10));
+            Assert.ThrowsException<Exception>(() => _sessionService.CreateJoinKey(joinKey, "10"));
         }
     }
 }
