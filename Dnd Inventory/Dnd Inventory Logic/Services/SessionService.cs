@@ -28,12 +28,12 @@ namespace Dnd_Inventory_Logic.Services
             return sessionModel;
         }
 
-        public List<SessionModel> Get(int? userId)
+        public List<SessionModel> Get(string? userId)
         {
             List<SessionModel> sessions = new();
 
-            if (userId != null)
-                sessions = _sessionRepository.GetAll((int)userId);
+            if (!string.IsNullOrEmpty(userId))
+                sessions = _sessionRepository.GetAll(userId);
             else
                 sessions = _sessionRepository.GetAll();
 
@@ -47,7 +47,7 @@ namespace Dnd_Inventory_Logic.Services
             _sessionRepository.JoinSession(createdSessionId, session.CreatedBy);
         }
 
-        public Guid CreateJoinKey(SessionJoinKeyModel sessionJoinKey, int createdBy)
+        public Guid CreateJoinKey(SessionJoinKeyModel sessionJoinKey, string createdBy)
         {
             SessionModel session = Get(sessionJoinKey.SessionId);
 

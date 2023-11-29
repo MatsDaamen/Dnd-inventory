@@ -33,7 +33,7 @@ namespace Dnd_Inventory_DAL.Repositiories
             return sessionModels;
         }
 
-        public List<SessionModel> GetAll(int userId)
+        public List<SessionModel> GetAll(string userId)
         {
             List<int> sessionIds = _db.SessionUsers.Where(SessionUser => SessionUser.UserId == userId)
                 .Select(sessionUser => sessionUser.SessionId)
@@ -116,7 +116,7 @@ namespace Dnd_Inventory_DAL.Repositiories
             return joinKeyModel;
         }
 
-        public void JoinSession(int sessionId, int userId)
+        public void JoinSession(int sessionId, string userId)
         {
             Session? session = _db.Sessions.FirstOrDefault(item => item.Id == sessionId);
 

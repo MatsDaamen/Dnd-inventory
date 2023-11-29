@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Navbar from '$lib/Components/Navbar.svelte';
 	import {
 		Button,
 		Modal,
@@ -16,12 +15,11 @@
 
     export let data: PageData;
 	const sessions: Session[] = data.sessions;
+    const userId: string = data.userid;
 
     let showCreateModal = false;
     let showJoinModal = false;
 </script>
-
-<Navbar/>
 
 <div class="grid grid-rows-[max-content,1fr] text-xs md:text-base lg:text-lg p-4 md:p-12 gap-4">
 	<div class="flex flex-col md:flex-row gap-4 md:gap-0 md:justify-between">
@@ -43,7 +41,7 @@
         </div>
     </div>
     <Table>
-        <TableHead class="text-white dark:text-white bg-primary-500 dark:bg-primary-600">
+        <TableHead class="bg-primary-500">
             <TableHeadCell>Name</TableHeadCell>
             <TableHeadCell>To session</TableHeadCell>
         </TableHead>
@@ -68,6 +66,7 @@
         <form action="?/create" method="post">
             <p>Name:</p>
             <input name="sessionName" type="text"/>
+            <input name="createdBy" type="hidden" value="{userId}"/>
             <Button type="submit" color="primary">Create</Button>
         </form>
     </Modal>
@@ -79,6 +78,7 @@
         <form action="?/join" method="post">
             <p>Join Key:</p>
             <input name="joinkey" type="text"/>
+            <input name="userid" type="hidden" value="{userId}"/>
             <Button type="submit" color="primary">Join</Button>
         </form>
     </Modal>

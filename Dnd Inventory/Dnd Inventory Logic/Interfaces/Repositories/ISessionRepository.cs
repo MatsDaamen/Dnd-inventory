@@ -10,7 +10,7 @@ namespace Dnd_Inventory_Logic.Interfaces.Repositories
     public interface ISessionRepository
     {
         public List<SessionModel> GetAll();
-        public List<SessionModel> GetAll(int userId);
+        public List<SessionModel> GetAll(string userId);
 
         public SessionModel Get(int sessionId);
 
@@ -20,7 +20,7 @@ namespace Dnd_Inventory_Logic.Interfaces.Repositories
 
         public SessionJoinKeyModel ValidateJoinKey(Guid sessionJoinKey);
 
-        public void JoinSession(int sessionId, int userId);
+        public void JoinSession(int sessionId, string userId);
 
         public void DeleteSession(int sessionId);
 

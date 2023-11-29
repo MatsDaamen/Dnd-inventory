@@ -1,6 +1,5 @@
 <script lang="ts">
     import type { PageData } from './$types';
-    import Navbar from '$lib/Components/Navbar.svelte';
     import {
 		Button,
 		Modal,
@@ -12,15 +11,13 @@
 		TableHeadCell,
         Toast
 	} from 'flowbite-svelte';
-    import { PlusSolid, TrashBinSolid, ClipboardCheckSolid, InfoCircleSolid } from 'flowbite-svelte-icons';
+    import { PlusSolid, TrashBinSolid, ClipboardCheckSolid, InfoCircleSolid, ArrowLeftSolid } from 'flowbite-svelte-icons';
     import type { Session, joinKey } from '$lib/API/sessions';
     import { fly } from 'svelte/transition';
 
     export let data: PageData;
-
     const session: Session = data.session;
-
-    const userId = 10;
+    const userId: string = data.userid;
 
     let selectedJoinCode: joinKey | null = null;
 
@@ -31,18 +28,20 @@
     function copyJoinCode(joinCode: string){
         navigator.clipboard.writeText(joinCode);
         showToast = true;
-        console.log(showToast);
     }
 
 </script>
 
-<Navbar/>
-
 <div class="grid grid-rows-[max-content,1fr] text-xs md:text-base lg:text-lg p-4 md:p-12 gap-4">
 
 	<div class="flex flex-col md:flex-row gap-4 md:gap-0 md:justify-between">
+        <div class="block">
+            <Button href="/sessions">
+                <ArrowLeftSolid/>
+            </Button>
+		</div>
 		<div class="block">
-			<h1 class="text-lg md:text-2xl font-bold">Sessions</h1>
+			<h1 class="text-lg md:text-2xl font-bold">{session.name}</h1>
 		</div>
         {#if session.createdBy === userId}
         <div class="block">
@@ -62,7 +61,7 @@
         {#if session.createdBy === userId}
         <div class="block">  
             <Table>
-                <TableHead class="text-white dark:text-white bg-primary-500 dark:bg-primary-600">
+                <TableHead class="text-white dark:text-white bg-primary-500">
                     <TableHeadCell>Join Code</TableHeadCell>
                     <TableHeadCell>Uses left</TableHeadCell>
                     <TableHeadCell>actions</TableHeadCell>
@@ -113,7 +112,7 @@
             <input name="amountOfUses" type="number"/>
         </div>
         <input name="sessionId" type="hidden" value="{session.id}"/>
-        <input name="createdBy" type="hidden" value="10"/>
+        <input name="createdBy" type="hidden" value="{userId}"/>
         <Button class="flex gap-2" type="submit" color="primary">Create</Button>
     </form>
     </Modal>

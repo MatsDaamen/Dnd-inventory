@@ -9,6 +9,6 @@ namespace Dnd_Inventory_DAL.Entities
         public int SessionId { get; set; }
 
         [Key]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

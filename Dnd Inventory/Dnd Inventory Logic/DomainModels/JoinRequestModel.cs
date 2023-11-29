@@ -9,6 +9,6 @@ namespace Dnd_Inventory_Logic.DomainModels
     public class JoinRequestModel
     {
         public Guid sessionJoinKey { get; set; }
-        public int userId { get; set; }
+        public string userId { get; set; }
     }
 }

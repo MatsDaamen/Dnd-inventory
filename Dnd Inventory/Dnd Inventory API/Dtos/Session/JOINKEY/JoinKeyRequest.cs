@@ -6,6 +6,6 @@
 
         public int amountOfUses { get; set; }
         
-        public int createdBy { get; set; }
+        public string createdBy { get; set; }
     }
 }
