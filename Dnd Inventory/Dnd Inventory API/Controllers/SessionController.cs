@@ -1,13 +1,16 @@
-﻿using Dnd_Inventory_API.Dtos.Session.GET;
+﻿using Dnd_Inventory_API.authorization;
+using Dnd_Inventory_API.Dtos.Session.GET;
 using Dnd_Inventory_API.Dtos.Session.JOIN;
 using Dnd_Inventory_API.Dtos.Session.JOINKEY;
 using Dnd_Inventory_API.Dtos.Session.POST;
 using Dnd_Inventory_Logic.DomainModels;
 using Dnd_Inventory_Logic.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dnd_Inventory_API.Controllers
 {
+    [OAuthAuthorize]
     [Route("api/[controller]")]
     [ApiController]
     public class SessionController : ControllerBase

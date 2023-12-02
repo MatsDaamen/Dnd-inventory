@@ -1,7 +1,18 @@
 import { redirect } from "@sveltejs/kit";
 
+
+let headers: HeadersInit;
+
 function getBaseUrl(): string {
         return import.meta.env.VITE_API_URL + `/Session`
+}
+
+export function SetAuthHeaders(token: string) {
+
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': token
+    }
 }
 
 export type listSession = {
@@ -50,7 +61,6 @@ export const getSessions = async (userId: string | null): Promise<Session[]> => 
 
     let url = getBaseUrl();
 
-
     if(userId) {
         url = url + "?" + new URLSearchParams({
             userId: userId
@@ -60,9 +70,7 @@ export const getSessions = async (userId: string | null): Promise<Session[]> => 
 	const response = await fetch(url, 
     {
         method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: headers,
 
     });
 
@@ -77,9 +85,7 @@ export const getSessions = async (userId: string | null): Promise<Session[]> => 
 export const getSession = async (id: number): Promise<Session> => {
 	const response = await fetch(getBaseUrl() + `/${id}`, {
         method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: headers,
         
     });
 
@@ -95,9 +101,7 @@ export const createSession = async (session: sessionCreate) => {
     
         const response = await fetch(getBaseUrl(), {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: headers,
             body: JSON.stringify(session)
         });
     
@@ -108,9 +112,7 @@ export const joinSession = async (joinRequestDto: requestJoinKey) => {
     
 	const response = await fetch(getBaseUrl() + `/join`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: headers,
         body: JSON.stringify(joinRequestDto)
     });
 
@@ -120,9 +122,7 @@ export const joinSession = async (joinRequestDto: requestJoinKey) => {
 export const CreateJoinCode = async (createionJoinkey: CreationJoinKey) => {
     const response = await fetch(getBaseUrl() + "/JoinKey", {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: headers,
         body: JSON.stringify(createionJoinkey)
     });
 
@@ -132,9 +132,7 @@ export const CreateJoinCode = async (createionJoinkey: CreationJoinKey) => {
 export const DeleteJoinCode = async (guid: string) => {
     const response = await fetch(getBaseUrl() + `/JoinKey/${guid}`, {
         method: 'Delete',
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        headers: headers
     });
 
 	return [];
@@ -143,9 +141,7 @@ export const DeleteJoinCode = async (guid: string) => {
 export const DeleteUserId = async (sessionid: number, id: string) => {
     const response = await fetch(getBaseUrl() + `/user/${sessionid}/${id}`, {
         method: 'Delete',
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        headers: headers
     });
 
 	return [];
