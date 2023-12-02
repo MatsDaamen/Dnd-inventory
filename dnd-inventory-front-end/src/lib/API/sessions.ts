@@ -1,14 +1,26 @@
 import { redirect } from "@sveltejs/kit";
 
 function getBaseUrl(): string {
-        return `http://localhost:5254/api/Session`
+        return import.meta.env.VITE_API_URL + `/Session`
+}
+
+export type listSession = {
+    id: number,
+    name: string,
+    createrName: string
+}
+
+export type sessionCreate = {
+    name: string,
+    createdBy: string
 }
 
 export type Session = {
     id: number,
     name: string,
     createdBy: string,
-    joinKeys: joinKey[]
+    joinKeys: joinKey[],
+    users: sessionUsers[],
 };
 
 export type joinKey = {
@@ -17,18 +29,21 @@ export type joinKey = {
     userId: string
 };
 
-
 export type requestJoinKey = {
     sessionJoinKey: string,
     userId: string
 };
 
-
-
 export type CreationJoinKey = {
     sessionId: number,
     amountOfUses: number,
     createdBy: string
+};
+
+export type sessionUsers = {
+    sessionId: number,
+    userId: string,
+    userName: string
 };
 
 export const getSessions = async (userId: string | null): Promise<Session[]> => {
@@ -76,7 +91,7 @@ export const getSession = async (id: number): Promise<Session> => {
 	throw redirect(302, '/sessions');
 };
 
-export const createSession = async (session: Session) => {
+export const createSession = async (session: sessionCreate) => {
     
         const response = await fetch(getBaseUrl(), {
             method: 'POST',
@@ -116,6 +131,17 @@ export const CreateJoinCode = async (createionJoinkey: CreationJoinKey) => {
 
 export const DeleteJoinCode = async (guid: string) => {
     const response = await fetch(getBaseUrl() + `/JoinKey/${guid}`, {
+        method: 'Delete',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+	return [];
+}
+
+export const DeleteUserId = async (sessionid: number, id: string) => {
+    const response = await fetch(getBaseUrl() + `/user/${sessionid}/${id}`, {
         method: 'Delete',
         headers: {
             'Content-Type': 'application/json'

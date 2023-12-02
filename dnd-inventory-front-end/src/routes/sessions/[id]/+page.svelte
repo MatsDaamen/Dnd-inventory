@@ -9,9 +9,11 @@
 		TableBodyRow,
 		TableHead,
 		TableHeadCell,
-        Toast
+        Toast,
+        TabItem,
+        Tabs
 	} from 'flowbite-svelte';
-    import { PlusSolid, TrashBinSolid, ClipboardCheckSolid, InfoCircleSolid, ArrowLeftSolid } from 'flowbite-svelte-icons';
+    import { PlusSolid, TrashBinSolid, ClipboardCheckSolid, InfoCircleSolid, ArrowLeftSolid, CheckCircleSolid } from 'flowbite-svelte-icons';
     import type { Session, joinKey } from '$lib/API/sessions';
     import { fly } from 'svelte/transition';
 
@@ -20,6 +22,8 @@
     const userId: string = data.userid;
 
     let selectedJoinCode: joinKey | null = null;
+
+    let selectedUserId: string | null = null;
 
     let showJoinKeyModel = false;
 
@@ -43,49 +47,79 @@
 		<div class="block">
 			<h1 class="text-lg md:text-2xl font-bold">{session.name}</h1>
 		</div>
-        {#if session.createdBy === userId}
-        <div class="block">
-            <Button 
-                color="primary"
-                on:click={() => showJoinKeyModel = true}>
-                <PlusSolid class="w-4 h-4 mr-4 text-white"/>
-                create new code
-            </Button>
-        </div>
-        {/if}
 
     </div>
-    <div class="flex flex-col md:flex-row gap-4 md:gap-0 md:justify-between">
-		<div class="block">
-		</div>
+    <Tabs style="underline">
+        <TabItem open={session.createdBy !== userId} title="inventories">
+
+        </TabItem>
         {#if session.createdBy === userId}
-        <div class="block">  
-            <Table>
-                <TableHead class="text-white dark:text-white bg-primary-500">
-                    <TableHeadCell>Join Code</TableHeadCell>
-                    <TableHeadCell>Uses left</TableHeadCell>
-                    <TableHeadCell>actions</TableHeadCell>
-                </TableHead>
-                <TableBody>
-                    {#each session.joinKeys as joinCode}
-                    <TableBodyRow>
-                        <TableBodyCell>{joinCode.joinKey}</TableBodyCell>
-                        <TableBodyCell>{joinCode.usesLeft}</TableBodyCell>
-                        <TableBodyCell>
-                            <Button on:click={() => copyJoinCode(joinCode.joinKey)} color="primary">
-                                <ClipboardCheckSolid/>
+        <TabItem open={session.createdBy === userId} title="members and invite code">
+            <div class="flex flex-col md:flex-row gap-2 md:gap-0 md:justify-between">
+                <div class="block">
+                    <Table>
+                        <TableHead class="text-white dark:text-white bg-primary-500">
+                            <TableHeadCell>member name</TableHeadCell>
+                            <TableHeadCell>sessionOwner</TableHeadCell>
+                            <TableHeadCell>actions</TableHeadCell>
+                        </TableHead>
+                        <TableBody>
+                            {#each session.users as user}
+                            <TableBodyRow class="justify-center items-center">
+                                <TableBodyCell>{user.userName}</TableBodyCell>
+                                <TableBodyCell>
+                                    {#if userId === user.userId}
+                                    <CheckCircleSolid/>
+                                    {/if}
+                                </TableBodyCell>
+                                <TableBodyCell>
+                                    {#if userId !== user.userId}
+                                    <Button on:click={() => selectedUserId = user.userId} color="red">
+                                        <TrashBinSolid/>
+                                    </Button>
+                                    {/if}
+                                </TableBodyCell>
+                            </TableBodyRow>
+                            {/each}
+                        </TableBody>
+                    </Table>
+                </div>
+                <div class="block">
+                    <Table>
+                        <TableHead class="text-white dark:text-white bg-primary-500">
+                            <TableHeadCell>Join Code</TableHeadCell>
+                            <TableHeadCell>Uses left</TableHeadCell>
+                            <TableHeadCell>
+                                <Button
+                                color="primary"
+                                on:click={() => showJoinKeyModel = true}>
+                                <PlusSolid class="w-4 h-4 mr-4 text-white"/>
+                                create new code
                             </Button>
-                            <Button on:click={() => selectedJoinCode = joinCode} color="red">
-                                <TrashBinSolid/>
-                            </Button>
-                        </TableBodyCell>
-                    </TableBodyRow>
-                    {/each}
-                </TableBody>
-            </Table>
-        </div>
+                            </TableHeadCell>
+                        </TableHead>
+                        <TableBody>
+                            {#each session.joinKeys as joinCode}
+                            <TableBodyRow>
+                                <TableBodyCell>{joinCode.joinKey}</TableBodyCell>
+                                <TableBodyCell>{joinCode.usesLeft}</TableBodyCell>
+                                <TableBodyCell>
+                                    <Button on:click={() => copyJoinCode(joinCode.joinKey)} color="primary">
+                                        <ClipboardCheckSolid/>
+                                    </Button>
+                                    <Button on:click={() => selectedJoinCode = joinCode} color="red">
+                                        <TrashBinSolid/>
+                                    </Button>
+                                </TableBodyCell>
+                            </TableBodyRow>
+                            {/each}
+                        </TableBody>
+                    </Table>
+                </div>
+            </div>
+        </TabItem>
         {/if}
-    </div>
+    </Tabs>
 
     <Toast
     class="absolute mb-4"
@@ -122,10 +156,28 @@
     on:close={() => selectedJoinCode = null}>
     <form 
     class="flex items-center flex-col gap-4"
-    action="?/delete" 
+    action="?/deletejoin" 
     method="post">
         <p class="flex gap-2">Are you sure you want to remove this join code?</p>
         <input class="flex gap-2" name="selectedGuid" type="hidden" value="{selectedJoinCode?.joinKey}"/>
+        <div class="flex gap-2">
+            <Button  type="submit" color="primary">Yes</Button>
+            <Button on:click={()=> selectedJoinCode = null} color="red">No</Button>
+        </div>
+    </form>
+    </Modal>
+
+    <Modal
+    title="Delete session member"
+    open={selectedUserId !== null}
+    on:close={() => selectedUserId = null}>
+    <form 
+    class="flex items-center flex-col gap-4"
+    action="?/deleteuser" 
+    method="post">
+        <p class="flex gap-2">Are you sure you want to remove this person from the session?</p>
+        <input class="flex gap-2" name="sessionId" type="hidden" value="{session.id}"/>
+        <input class="flex gap-2" name="userId" type="hidden" value="{selectedUserId}"/>
         <div class="flex gap-2">
             <Button  type="submit" color="primary">Yes</Button>
             <Button on:click={()=> selectedJoinCode = null} color="red">No</Button>

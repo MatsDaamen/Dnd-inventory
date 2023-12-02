@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dnd Inventory DAL\Dnd Inventory DAL.csproj" />
+    <ProjectReference Include="..\Dnd Inventory DAL\Dnd Session DAL.csproj" />
   </ItemGroup>
 
 </Project>

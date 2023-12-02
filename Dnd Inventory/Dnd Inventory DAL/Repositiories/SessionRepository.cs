@@ -1,15 +1,14 @@
 ﻿using Dnd_Inventory_DAL.Entities;
 using Dnd_Inventory_Logic.DomainModels;
 using Dnd_Inventory_Logic.Interfaces.Repositories;
-using System.Text.Json.Serialization;
 
 namespace Dnd_Inventory_DAL.Repositiories
 {
     public class SessionRepository : ISessionRepository
     {
-        private readonly InventoryDbContext _db;
+        private readonly SessionDbContext _db;
 
-        public SessionRepository(InventoryDbContext db)
+        public SessionRepository(SessionDbContext db)
         {
             _db = db;
         }
@@ -22,7 +21,6 @@ namespace Dnd_Inventory_DAL.Repositiories
 
             return sessionModel;
         }
-
 
         public List<SessionModel> GetAll()
         {
@@ -61,21 +59,6 @@ namespace Dnd_Inventory_DAL.Repositiories
             return session.Id;
         }
 
-        public Guid CreateSessionJoinKey(SessionJoinKeyModel sessionJoinKeyModel)
-        {
-            SessionJoinKey sessionJoinKey = new SessionJoinKey
-            {
-                JoinKey = sessionJoinKeyModel.JoinKey,
-                UsesLeft = sessionJoinKeyModel.UsesLeft,
-                SessionId = sessionJoinKeyModel.SessionId
-            };
-
-            _db.Add(sessionJoinKey);
-            _db.SaveChanges();
-
-            return sessionJoinKey.JoinKey;
-        }
-
         public void DeleteSession(int sessionId)
         {
             Session _session = _db.Sessions.First(session => session.Id == sessionId);
@@ -85,35 +68,6 @@ namespace Dnd_Inventory_DAL.Repositiories
                 _db.Remove(_session);
                 _db.SaveChanges();
             }
-        }
-
-        public void DeleteSessionJoinKey(Guid sessionJoinKey)
-        {
-            SessionJoinKey _sessionJoinKey = _db.JoinKeys.First(joinKey => joinKey.JoinKey == sessionJoinKey);
-
-            if (_sessionJoinKey != null)
-            {
-                _db.Remove(_sessionJoinKey);
-                _db.SaveChanges();
-            }
-        }
-
-        public SessionJoinKeyModel ValidateJoinKey(Guid sessionJoinKey)
-        {
-            SessionJoinKey? joinKey = _db.JoinKeys.FirstOrDefault(joinkey => joinkey.JoinKey == sessionJoinKey);
-
-            if (joinKey.UsesLeft <= 0)
-                throw new Exception("joinKey not valid");
-
-            SessionJoinKeyModel joinKeyModel = new SessionJoinKeyModel()
-            {
-                Id = joinKey.Id,
-                SessionId = joinKey.SessionId,
-                UsesLeft = joinKey.UsesLeft,
-                JoinKey = joinKey.JoinKey
-            };
-
-            return joinKeyModel;
         }
 
         public void JoinSession(int sessionId, string userId)
@@ -131,30 +85,6 @@ namespace Dnd_Inventory_DAL.Repositiories
 
             _db.Add(sessionUsers);
             _db.SaveChanges();
-        }
-
-        public void UpdateJoinKey(SessionJoinKeyModel sessionJoinKey)
-        {
-            SessionJoinKey joinKey = _db.JoinKeys.First(joinKey => joinKey.Id == sessionJoinKey.Id);
-
-            joinKey.UsesLeft--;
-
-            _db.SaveChanges();
-        }
-
-        public List<SessionJoinKeyModel> GetAllJoinKeys(int sessionId)
-        {
-            List<SessionJoinKey> joinKeys = _db.JoinKeys.Where(joinkey => joinkey.SessionId == sessionId).ToList();
-
-            List<SessionJoinKeyModel> joinKeyModels = joinKeys.Select(joinKey => new SessionJoinKeyModel
-            {
-                Id = joinKey.Id,
-                SessionId = joinKey.SessionId,
-                UsesLeft = joinKey.UsesLeft,
-                JoinKey = joinKey.JoinKey
-            }).ToList();
-
-            return joinKeyModels;
         }
     }
 }

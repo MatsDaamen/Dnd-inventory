@@ -1,29 +1,29 @@
 ﻿using Dnd_Inventory_Logic.DomainModels;
 using Dnd_Inventory_Logic.Interfaces.Repositories;
 using Dnd_Inventory_Logic.Interfaces.Services;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dnd_Inventory_Logic.Services
 {
     public class SessionService : ISessionService
     {
         private ISessionRepository _sessionRepository;
+        private IJoinKeyRepository _joinKeyRepository;
+        private ISessionUsersRepository _sessionUsersRepository;
 
-        public SessionService(ISessionRepository sessionRepository) 
+        public SessionService(ISessionRepository sessionRepository, IJoinKeyRepository joinKeyRepository, ISessionUsersRepository usersRepository) 
         {
             _sessionRepository = sessionRepository;
+            _joinKeyRepository = joinKeyRepository;
+            _sessionUsersRepository = usersRepository;
         }
 
         public SessionModel Get(int id)
         {
             SessionModel sessionModel = _sessionRepository.Get(id);
 
-            sessionModel.SessionJoinKeys = _sessionRepository.GetAllJoinKeys(sessionModel.Id);
+            sessionModel.SessionJoinKeys = _joinKeyRepository.GetAllJoinKeys(sessionModel.Id);
+
+            sessionModel.SessionUsers = _sessionUsersRepository.GetAllBySessionId(sessionModel.Id);
 
             return sessionModel;
         }
@@ -56,7 +56,7 @@ namespace Dnd_Inventory_Logic.Services
 
             sessionJoinKey.JoinKey = Guid.NewGuid();
 
-            _sessionRepository.CreateSessionJoinKey(sessionJoinKey);
+            _joinKeyRepository.CreateSessionJoinKey(sessionJoinKey);
 
             return sessionJoinKey.JoinKey;
         }
@@ -68,19 +68,24 @@ namespace Dnd_Inventory_Logic.Services
 
         public void DeleteJoinKey(Guid sessionJoinKey)
         {
-            _sessionRepository.DeleteSessionJoinKey(sessionJoinKey);
+            _joinKeyRepository.DeleteSessionJoinKey(sessionJoinKey);
         }
 
         public void Join(JoinRequestModel joinRequest)
         {
-            SessionJoinKeyModel joinKeyModel = _sessionRepository.ValidateJoinKey(joinRequest.sessionJoinKey);
+            SessionJoinKeyModel joinKeyModel = _joinKeyRepository.ValidateJoinKey(joinRequest.sessionJoinKey);
 
             _sessionRepository.JoinSession(joinKeyModel.SessionId, joinRequest.userId);
 
             if (joinKeyModel.UsesLeft <= 1)
-                _sessionRepository.DeleteSessionJoinKey(joinKeyModel.JoinKey);
+                _joinKeyRepository.DeleteSessionJoinKey(joinKeyModel.JoinKey);
             else
-                _sessionRepository.UpdateJoinKey(joinKeyModel);
+                _joinKeyRepository.UpdateJoinKey(joinKeyModel);
+        }
+
+        public void DeleteSessionUser(int sessionId, string userId)
+        {
+            _sessionUsersRepository.DeleteSessionUser(sessionId, userId);
         }
     }
 }

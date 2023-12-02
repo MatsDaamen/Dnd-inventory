@@ -20,7 +20,7 @@ IConfigurationRoot configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
     .Build();
 
-builder.Services.AddDbContext<InventoryDbContext>(
+builder.Services.AddDbContext<SessionDbContext>(
         options =>
         options.UseMySQL(configuration.GetConnectionString("Default"))
         );
@@ -30,6 +30,8 @@ builder.Services.AddScoped<ISessionService, SessionService>();
 
 // dal layer
 builder.Services.AddScoped<ISessionRepository, SessionRepository>();
+builder.Services.AddScoped<IJoinKeyRepository, JoinKeyRepository>();
+builder.Services.AddScoped<ISessionUsersRepository, SessionUsersRepository>();
 
 var app = builder.Build();
 

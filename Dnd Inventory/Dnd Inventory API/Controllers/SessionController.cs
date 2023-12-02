@@ -50,6 +50,11 @@ namespace Dnd_Inventory_API.Controllers
                     JoinKey = joinkey.JoinKey,
                     UsesLeft = joinkey.UsesLeft,
                     SessionId = session.Id
+                }).ToList(),
+                Users = session.SessionUsers.Select(user => new SessionUsersDto
+                {
+                    SessionId = user.SessionId,
+                    UserId = user.UserId,
                 }).ToList()
             };
 
@@ -95,6 +100,12 @@ namespace Dnd_Inventory_API.Controllers
         public void DeleteJoinKey(Guid guid)
         {
             _sessionService.DeleteJoinKey(guid);
+        }
+
+        [HttpDelete("user/{sessionId}/{userId}")]
+        public void DeleteJoinKey(int sessionId, string userId)
+        {
+            _sessionService.DeleteSessionUser(sessionId, userId);
         }
     }
 }

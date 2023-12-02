@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dnd_Inventory_DAL.Migrations
 {
-    [DbContext(typeof(InventoryDbContext))]
+    [DbContext(typeof(SessionDbContext))]
     partial class InventoryDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

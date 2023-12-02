@@ -1,10 +1,10 @@
 import clientPromise from "./clientPromise";
-import type { Collection, Db, MongoClient, WithId } from 'mongodb';
+import { ObjectId, type Collection, type Db, type MongoClient, type WithId } from 'mongodb';
 
 
 
 interface DatabaseUserAccount {
-    _id?: string,
+    _id?: ObjectId,
     name: string,
     email: string,
     image: string
@@ -12,7 +12,7 @@ interface DatabaseUserAccount {
 
 
 export interface UserAccount {
-    _id?: string,
+    _id?: ObjectId,
     name: string,
     email: string,
     image: string
@@ -32,7 +32,7 @@ export class UserDatabase {
 	}
 
     async getUserByEmail(email: string): Promise<UserAccount | null> {
-		const account = await this.accountCollection.findOne({ email });
+		const account = await this.accountCollection.findOne({ email: email });
 
         if (!account) return null;
 
@@ -45,10 +45,18 @@ export class UserDatabase {
 	}
 
     async getUserIdByEmail(email: string): Promise<string | null> {
-		const account = await this.accountCollection.findOne({ email });
+		const account = await this.accountCollection.findOne({ email: email });
 
         if (!account) return null;
 
-		return account._id;
+		return account._id.toString();
+	}
+	
+	async getUserNameById(id: string): Promise<string | null> {
+		const account = await this.accountCollection.findOne({ _id: new ObjectId(id) });
+
+        if (!account) return null;
+
+		return account.name;
 	}
 }
