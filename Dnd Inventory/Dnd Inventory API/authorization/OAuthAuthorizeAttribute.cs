@@ -2,6 +2,7 @@
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 
 namespace Dnd_Inventory_API.authorization
 {
@@ -17,11 +18,17 @@ namespace Dnd_Inventory_API.authorization
 
             var token = context.HttpContext.Request.Headers["Authorization"].First();
 
-            var validPayload = await GoogleJsonWebSignature.ValidateAsync(token);
+            try
+            {
+                GoogleJsonWebSignature.Payload payload = GoogleJsonWebSignature.ValidateAsync(token).Result;
 
-            if (validPayload == null)
-                context.Result = new UnauthorizedObjectResult(string.Empty);
-
+                if (payload == null)
+                    context.Result = new UnauthorizedObjectResult(string.Empty);
+            }
+            catch (Exception ex)
+            {
+                context.Result = new UnauthorizedObjectResult(ex.Message);
+            }
 
             return;
         }
