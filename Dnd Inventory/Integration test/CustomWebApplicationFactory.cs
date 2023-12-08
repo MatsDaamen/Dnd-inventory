@@ -1,6 +1,8 @@
 ﻿using Dnd_Inventory_DAL;
 using Google.Protobuf.WellKnownTypes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +18,7 @@ namespace Integration_test
             {
                 var dbContextDescriptor = services.SingleOrDefault(
                     d => d.ServiceType ==
-                        typeof(DbContextOptions<InventoryDbContext>));
+                        typeof(DbContextOptions<SessionDbContext>));
 
                 services.Remove(dbContextDescriptor);
 
@@ -26,14 +28,21 @@ namespace Integration_test
                     .AddJsonFile("appsettings.json")
                     .Build();
 
-                services.AddDbContext<InventoryDbContext>(
+                services.AddDbContext<SessionDbContext>(
                 options =>
                         options.UseMySQL(configuration.GetConnectionString("Test"))
                 );
 
+                // allow anonymous access to bypass authorization
+                var authorizationDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(IAuthorizationHandler));
+                if (authorizationDescriptor != null)
+                    services.Remove(authorizationDescriptor);
+
             });
 
             builder.UseEnvironment("Development");
+
+            Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Development");
         }
     }
 }

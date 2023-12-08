@@ -1,6 +1,6 @@
 using Dnd_Inventory_Logic.Interfaces.Services;
 using Dnd_Inventory_Logic.Services;
-using Tests.Mock;
+using Moq;
 
 namespace Tests
 {
@@ -12,20 +12,19 @@ namespace Tests
         [TestInitialize]
         public void initialization()
         {
-            SessionRepositoryMock mock = new SessionRepositoryMock();
-
-            mock.Sessions = new List<SessionModel>();
-            mock.JoinKeys = new List<SessionJoinKeyModel>();
-
-            _sessionService = new SessionService(mock);
+            
         }
 
         [TestMethod]
         public void TestJoinKeyIsNotMadeBySessionOwner()
         {
-            SessionModel session = new SessionModel(1, "test", "1");
+            var sessionStub = new Mock<ISessionRepository>();
+            var sessionUserStub = new Mock<ISessionUsersRepository>();
+            var joinKeyStub = new Mock<IJoinKeyRepository>();
 
-            _sessionService.Create(session);
+            sessionStub.Setup(x => x.Get(1)).Returns(new SessionModel(1, "test", "1"));
+
+            _sessionService = new SessionService(sessionStub.Object,joinKeyStub.Object, sessionUserStub.Object);
 
             SessionJoinKeyModel joinKey = new SessionJoinKeyModel
             {

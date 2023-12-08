@@ -10,9 +10,9 @@ namespace Integration_test
 {
     public static class DatabaseSeeder
     {
-        private static InventoryDbContext _db;
+        private static SessionDbContext _db;
 
-        public static void Init(InventoryDbContext db) 
+        public static void Init(SessionDbContext db) 
         {
             _db = db;
         }

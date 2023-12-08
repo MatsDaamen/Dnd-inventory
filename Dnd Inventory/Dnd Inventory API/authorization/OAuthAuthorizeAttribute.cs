@@ -1,15 +1,16 @@
 ﻿using Google.Apis.Auth;
-using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 
 namespace Dnd_Inventory_API.authorization
 {
     public class OAuthAuthorizeAttribute : Attribute, IAuthorizationFilter
     {
-        public async void OnAuthorization(AuthorizationFilterContext context)
+        public void OnAuthorization(AuthorizationFilterContext context)
         {
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+                return;
+
             if (!context.HttpContext.Request.Headers["Authorization"].Any())
             {
                 context.Result = new UnauthorizedObjectResult(string.Empty);

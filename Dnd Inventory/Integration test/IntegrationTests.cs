@@ -16,7 +16,7 @@ namespace Integration_test
 
             using (var scope = scopeFactory.CreateScope())
             {
-                var Context = scope.ServiceProvider.GetService<InventoryDbContext>();
+                var Context = scope.ServiceProvider.GetService<SessionDbContext>();
 
                 DatabaseSeeder.Init(Context);
                 DatabaseSeeder.Seed();
@@ -37,7 +37,7 @@ namespace Integration_test
 
             // Assert
             response.EnsureSuccessStatusCode(); // Status Code 200-299
-            Assert.Equal("[{\"id\":1,\"name\":\"Arcus's session\",\"createdBy\":\"6565e4921336ad0c552c2ebb\",\"joinKeys\":null},{\"id\":2,\"name\":\"Kalrez's session\",\"createdBy\":\"6565e4921336ad0c552c2ebb\",\"joinKeys\":null}]", result);
+            Assert.Equal("[{\"id\":1,\"name\":\"Arcus's session\",\"createdBy\":\"6565e4921336ad0c552c2ebb\",\"joinKeys\":null,\"users\":null},{\"id\":2,\"name\":\"Kalrez's session\",\"createdBy\":\"6565e4921336ad0c552c2ebb\",\"joinKeys\":null,\"users\":null}]", result);
         }
     }
 }

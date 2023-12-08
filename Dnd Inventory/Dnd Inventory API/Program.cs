@@ -1,8 +1,11 @@
+using Dnd_Inventory_API.authorization;
 using Dnd_Inventory_DAL;
 using Dnd_Inventory_DAL.Repositiories;
 using Dnd_Inventory_Logic.Interfaces.Repositories;
 using Dnd_Inventory_Logic.Interfaces.Services;
 using Dnd_Inventory_Logic.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -51,7 +54,7 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var service = scope.ServiceProvider;
-    var context = service.GetService<InventoryDbContext>();
+    var context = service.GetService<SessionDbContext>();
 
     context.Database.EnsureCreated();
 }
