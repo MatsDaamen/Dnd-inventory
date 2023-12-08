@@ -1,6 +1,6 @@
-﻿namespace Dnd_Inventory_Logic.DomainModels
+﻿namespace Dnd_Inventory_API.Dtos.Session.GET
 {
-    public class SessionUserModels
+    public class SessionUsersDto
     {
         public int SessionId { get; set; }
 

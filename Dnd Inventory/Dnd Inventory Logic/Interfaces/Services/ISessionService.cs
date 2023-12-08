@@ -21,5 +21,6 @@ namespace Dnd_Inventory_Logic.Interfaces.Services
         public void Delete(int sessionId);
 
         public void DeleteJoinKey(Guid sessionJoinKey);
+        public void DeleteSessionUser(int sessionId, string userId);
     }
 }

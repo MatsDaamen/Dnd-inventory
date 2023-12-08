@@ -9,6 +9,8 @@
 
         public List<SessionJoinKeyModel> SessionJoinKeys { get; set; }
 
+        public List<SessionUserModels> SessionUsers { get; set; }
+
         public SessionModel(int id, string name, string createdBy) 
         {
             Id = id;

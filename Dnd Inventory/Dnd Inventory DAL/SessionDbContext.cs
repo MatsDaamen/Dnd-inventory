@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dnd_Inventory_DAL
 {
-    public class InventoryDbContext : DbContext
+    public class SessionDbContext : DbContext
     {
-        public InventoryDbContext(DbContextOptions<InventoryDbContext> options) : base(options)
+        public SessionDbContext(DbContextOptions<SessionDbContext> options) : base(options)
         {
             
         }

@@ -1,7 +1,7 @@
 import { MongoClient } from 'mongodb';
 
 function getUri() {
-	return 'mongodb://root:mongopwd@localhost:8080';
+	return import.meta.env.VITE_MONGO_DB;
 }
 
 const clientPromise: Promise<MongoClient> = new MongoClient(getUri()).connect();

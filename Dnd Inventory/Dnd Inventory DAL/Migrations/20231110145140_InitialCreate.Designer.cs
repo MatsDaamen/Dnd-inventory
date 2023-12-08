@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dnd_Inventory_DAL.Migrations
 {
-    [DbContext(typeof(InventoryDbContext))]
+    [DbContext(typeof(SessionDbContext))]
     [Migration("20231110145140_InitialCreate")]
     partial class InitialCreate
     {

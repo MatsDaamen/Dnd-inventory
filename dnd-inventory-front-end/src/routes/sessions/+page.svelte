@@ -11,10 +11,10 @@
 	} from 'flowbite-svelte';
     import { PlusSolid, OpenBookSolid } from 'flowbite-svelte-icons';
     import type { PageData } from './$types'
-    import type { Session } from '$lib/API/sessions';
+    import type { listSession } from '$lib/API/sessions';
 
     export let data: PageData;
-	const sessions: Session[] = data.sessions;
+	const sessions: listSession[] = data.sessions;
     const userId: string = data.userid;
 
     let showCreateModal = false;
@@ -43,12 +43,14 @@
     <Table>
         <TableHead class="bg-primary-500">
             <TableHeadCell>Name</TableHeadCell>
+            <TableHeadCell>session owner</TableHeadCell>
             <TableHeadCell>To session</TableHeadCell>
         </TableHead>
         <TableBody>
             {#each sessions as session}
             <TableBodyRow>
                 <TableBodyCell>{session.name}</TableBodyCell>
+                <TableBodyCell>{session.createrName}</TableBodyCell>
                 <TableBodyCell>
                     <Button color="primary" href="/sessions/{session.id}">
                     <OpenBookSolid />

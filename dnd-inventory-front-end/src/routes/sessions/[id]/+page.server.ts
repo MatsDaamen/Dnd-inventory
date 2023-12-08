@@ -1,5 +1,5 @@
 import type { Actions, PageServerLoad } from './$types';
-import { CreateJoinCode, getSession, type Session, type CreationJoinKey, DeleteJoinCode } from '$lib/API/sessions';
+import { CreateJoinCode, getSession, type Session, type CreationJoinKey, DeleteJoinCode, DeleteUserId } from '$lib/API/sessions';
 import { UserDatabase } from '$lib/database/userDatabase';
 import clientPromise from '$lib/database/clientPromise';
 import { redirect } from '@sveltejs/kit';
@@ -18,6 +18,10 @@ export const load = (async ( { locals, params } ) => {
     
     const session: Session = await getSession(id);
 
+    for (let index = 0; index < session.users.length; index++) {
+        session.users[index].userName = await userDatabase.getUserNameById(session.users[index].userId);
+    }
+
     return {
         session: session,
         userid: userId?.toString()
@@ -25,7 +29,7 @@ export const load = (async ( { locals, params } ) => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-    create: (async ({request, params}) => {
+    create: (async ({request}) => {
 
         const data = await request.formData();
 
@@ -41,7 +45,7 @@ export const actions = {
 
         await CreateJoinCode(joinkey);
     }),
-    delete: (async ({request, params}) => {
+    deletejoin: (async ({request}) => {
         const data = await request.formData();
 
         const guid = data.get("selectedGuid") as string
@@ -51,5 +55,13 @@ export const actions = {
             return;
         }
         await DeleteJoinCode(guid);
+    }),
+    deleteuser: (async ({request}) => {
+        const data = await request.formData();
+
+        const sessionId = data.get("sessionId") as string
+        const id = data.get("userId") as string
+
+        await DeleteUserId(+sessionId, id);
     })
 } satisfies Actions;
