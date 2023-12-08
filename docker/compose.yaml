@@ -44,9 +44,27 @@ services:
       - mysql-db:/var/lib/mysql
       - ./mysql-db/init.sql:/docker-entrypoint-initmysql-db.d/init.sql
 
+  mysql-test-db:
+    container_name: dnd-test-inventory-mysql
+    image: mysql/mysql-server:latest
+    cap_add:
+      - SYS_NICE
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=dndtestinventory
+      - MYSQL_ROOT_PASSWORD=RootSqlHost
+      - MYSQL_ROOT_HOST=%
+    ports:
+      - '3307:3306'
+    volumes:
+      - mysql-test-db:/var/lib/mysql
+      - ./mysql-test-db/init.sql:/docker-entrypoint-initmysql-test-db.d/init.sql
+
       
 volumes:
   mysql-db:
+    driver: local
+  mysql-test-db:
     driver: local
   mongo-db:
     driver: local

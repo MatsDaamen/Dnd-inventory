@@ -46,6 +46,14 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+using (var scope = app.Services.CreateScope())
+{
+    var service = scope.ServiceProvider;
+    var context = service.GetService<InventoryDbContext>();
+
+    context.Database.EnsureCreated();
+}
+
 app.Run();
 
 namespace Dnd_Inventory_API
