@@ -1,11 +1,10 @@
 <script lang='ts'>
+    import type { User } from '@auth0/auth0-spa-js';
   import {
       Navbar, NavBrand, NavLi, NavUl, NavHamburger, Avatar, Button, Dropdown, DropdownItem, DropdownHeader
   } from 'flowbite-svelte'
-  import type { Session } from '@auth/core/types';
-  import { signOut } from '@auth/sveltekit/client'
 
-  export let session: Session | null;
+  export let user: User;
 
 </script>
 
@@ -20,19 +19,19 @@
     <NavLi href="/" active={true}>Home</NavLi>
     <NavLi href="/sessions">Sessions</NavLi>
   </NavUl>
-  {#if session && session.user}
+  {#if user}
   <div>
-    {#if session && session.user}
-      <Avatar id="avatar-menu" src={session.user.image ?? ''} />
+    {#if user}
+      <Avatar id="avatar-menu" src={user.image ?? ''} />
     {:else}
       <Button href="/login" color="primary">Login</Button>
     {/if}
 		<Dropdown placement="bottom" triggeredBy="#avatar-menu">
 			<DropdownHeader>
-				<span class="block text-sm font-bold">{session.user.name}</span>
-				<span class="block truncate text-sm">{session.user.email}</span>
+				<span class="block text-sm font-bold">{user.name}</span>
+				<span class="block truncate text-sm">{user.email}</span>
 			</DropdownHeader>
-			<DropdownItem on:click={() => signOut()}>Logout</DropdownItem>
+			<DropdownItem on:click={() => null}>Logout</DropdownItem>
 		</Dropdown>
   </div>
   {:else}

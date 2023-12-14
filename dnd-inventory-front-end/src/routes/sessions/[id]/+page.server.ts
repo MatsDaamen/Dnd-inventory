@@ -1,27 +1,17 @@
 import type { Actions, PageServerLoad } from './$types';
 import { CreateJoinCode, getSession, type Session, type CreationJoinKey, DeleteJoinCode, DeleteUserId } from '$lib/API/sessions';
-import { UserDatabase } from '$lib/database/userDatabase';
-import clientPromise from '$lib/database/clientPromise';
 import { redirect } from '@sveltejs/kit';
+import { isAuthenticated, user } from '$lib/auth/authStore';
 
-export const load = (async ( { locals, params } ) => {
+export const load = (async ( { params } ) => {
 
-    const loginSession = await locals.getSession();
-
-	if (!loginSession?.user?.email)
+	if (!isAuthenticated)
 		throw redirect(302, '/login');
-
-    const userDatabase: UserDatabase = await UserDatabase.fromClient(clientPromise);
-    const userId = await userDatabase.getUserIdByEmail(loginSession.user.email);
 
     const id = +params.id;
     
     const session: Session = await getSession(id);
-
-    for (let index = 0; index < session.users.length; index++) {
-        session.users[index].userName = await userDatabase.getUserNameById(session.users[index].userId);
-    }
-
+    
     return {
         session: session,
         userid: userId?.toString()

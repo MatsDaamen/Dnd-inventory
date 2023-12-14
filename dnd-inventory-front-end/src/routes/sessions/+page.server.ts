@@ -1,18 +1,17 @@
 import type { Actions, PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 import { getSessions, type Session, joinSession, createSession, type requestJoinKey, type sessionCreate, type listSession } from '$lib/API/sessions';
-import { UserDatabase } from '$lib/database/userDatabase';
-import clientPromise from '$lib/database/clientPromise';
+import { getUser, isAuthenticated, user } from '$lib/auth/authStore';
 
-export const load = (async ({ locals}) => {
+export const load = (async ({ }) => {
 
-    const session = await locals.getSession();
-
-	if (!session?.user?.email)
+    if (!isAuthenticated)
 		throw redirect(302, '/login');
 
-    const userDatabase: UserDatabase = await UserDatabase.fromClient(clientPromise);
-    const userId = await userDatabase.getUserIdByEmail(session.user.email);
+    console.log(getUser());
+    let userId = "";
+    //console.log(userId);
+
     const sessions: Session[] = await getSessions(userId);
 
     let sessionList: listSession[] = [];
@@ -21,7 +20,7 @@ export const load = (async ({ locals}) => {
         let newSession: listSession = {
             id: sessions[i].id,
             name: sessions[i].name,
-            createrName: await userDatabase.getUserNameById(sessions[i].createdBy)
+            createrName: ""
         }
 
         sessionList.push(newSession);

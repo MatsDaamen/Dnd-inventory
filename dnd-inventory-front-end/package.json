@@ -26,9 +26,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@auth/core": "^0.18.3",
-    "@auth/mongodb-adapter": "^2.0.6",
-    "@auth/sveltekit": "^0.3.14",
+    "@auth0/auth0-spa-js": "^2.1.2",
     "@popperjs/core": "^2.11.8",
     "flowbite": "^2.0.0",
     "flowbite-svelte": "^0.44.19",

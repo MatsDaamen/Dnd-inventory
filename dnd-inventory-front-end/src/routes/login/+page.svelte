@@ -1,7 +1,25 @@
 <script lang="ts">
 import { Button } from 'flowbite-svelte';
-import { signIn } from '@auth/sveltekit/client'
-import google_logo from '$lib/images/google_logo.svg';
+import auth from "$lib/auth/auth";
+import { onMount } from 'svelte';
+import { isAuthenticated, user } from '$lib/auth/authStore';
+import type { Auth0Client } from '@auth0/auth0-spa-js';
+
+let auth0Client: Auth0Client;
+
+onMount(async () => {
+    auth0Client = await auth.createClient();
+    isAuthenticated.set(await auth0Client.isAuthenticated());
+    user.set(await auth0Client.getUser());
+  });
+
+  function login() {
+    auth.login(auth0Client);
+  }
+
+  function logout() {
+    auth.logout(auth0Client);
+  }
 </script>
 
 <div class="h-screen">
@@ -13,18 +31,13 @@ import google_logo from '$lib/images/google_logo.svg';
 						<h1>Log in</h1>
 					</div>
 					<Button
-						on:click={() => signIn('google')}
+						on:click={() => login()}
 						color="primary"
 						size="lg"
 						class="text-lg"
 						iconStyle="!w-5 !h-5"
 					>
-						<img
-							src={google_logo}
-							alt="Google logo"
-							class="w-8 h-8 p-1 mr-4 rounded-full bg-white"
-						/>
-						Log in with Google
+						Log in
 					</Button>
 				</div>
 			</div>
