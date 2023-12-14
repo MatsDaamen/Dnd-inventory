@@ -2,7 +2,8 @@
     import type { User } from '@auth0/auth0-spa-js';
   import {
       Navbar, NavBrand, NavLi, NavUl, NavHamburger, Avatar, Button, Dropdown, DropdownItem, DropdownHeader
-  } from 'flowbite-svelte'
+  } from 'flowbite-svelte';
+  import { signOut } from '@auth/sveltekit/client';
 
   export let user: User;
 
@@ -31,7 +32,7 @@
 				<span class="block text-sm font-bold">{user.name}</span>
 				<span class="block truncate text-sm">{user.email}</span>
 			</DropdownHeader>
-			<DropdownItem on:click={() => null}>Logout</DropdownItem>
+			<DropdownItem on:click={() => signOut()}>Logout</DropdownItem>
 		</Dropdown>
   </div>
   {:else}

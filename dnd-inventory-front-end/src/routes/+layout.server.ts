@@ -1,10 +1,7 @@
-import { getUser } from '$lib/auth/authStore';
 import type { LayoutServerLoad } from './$types';
 
 
-export const load = (async ({ }) => {
-
-	return {
-		user: await getUser()
-	};
+export const load = (async ({ locals }) => {
+	const session = await locals.getSession();
+	return { session };
 }) satisfies LayoutServerLoad;

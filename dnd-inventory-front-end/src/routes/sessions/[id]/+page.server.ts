@@ -1,12 +1,14 @@
 import type { Actions, PageServerLoad } from './$types';
 import { CreateJoinCode, getSession, type Session, type CreationJoinKey, DeleteJoinCode, DeleteUserId } from '$lib/API/sessions';
 import { redirect } from '@sveltejs/kit';
-import { isAuthenticated, user } from '$lib/auth/authStore';
+import { getUserId } from '$lib/API/auth';
 
-export const load = (async ( { params } ) => {
+export const load = (async ( { locals, params } ) => {
 
-	if (!isAuthenticated)
-		throw redirect(302, '/login');
+    const loginSession = await locals.getSession();
+    if (!loginSession?.user) throw redirect(302, '/login');
+
+    let userId = await getUserId(loginSession.user.email);
 
     const id = +params.id;
     

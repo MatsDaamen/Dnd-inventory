@@ -1,25 +1,7 @@
 <script lang="ts">
 import { Button } from 'flowbite-svelte';
-import auth from "$lib/auth/auth";
-import { onMount } from 'svelte';
-import { isAuthenticated, user } from '$lib/auth/authStore';
-import type { Auth0Client } from '@auth0/auth0-spa-js';
+import { signIn } from '@auth/sveltekit/client';
 
-let auth0Client: Auth0Client;
-
-onMount(async () => {
-    auth0Client = await auth.createClient();
-    isAuthenticated.set(await auth0Client.isAuthenticated());
-    user.set(await auth0Client.getUser());
-  });
-
-  function login() {
-    auth.login(auth0Client);
-  }
-
-  function logout() {
-    auth.logout(auth0Client);
-  }
 </script>
 
 <div class="h-screen">
@@ -31,7 +13,13 @@ onMount(async () => {
 						<h1>Log in</h1>
 					</div>
 					<Button
-						on:click={() => login()}
+						on:click={() => signIn('auth0', {
+							redirect: false,
+							callbackUrl: 'http://localhost:4173/login'
+						  },
+						  {
+							scope: 'api openid profile email'
+						  })}
 						color="primary"
 						size="lg"
 						class="text-lg"
