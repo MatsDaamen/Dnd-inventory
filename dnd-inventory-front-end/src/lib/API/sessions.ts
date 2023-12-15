@@ -1,6 +1,5 @@
 import { redirect } from "@sveltejs/kit";
 
-
 let headers: HeadersInit;
 
 function getBaseUrl(): string {
@@ -11,7 +10,7 @@ export function SetAuthHeaders(token: string) {
 
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': token
+        'Authorization': 'Bearer ' + token
     }
 }
 

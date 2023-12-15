@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Dnd_Inventory_API.Controllers
 {
-    [OAuthAuthorize]
+    [Authorize("read:sessions")]
     [Route("api/[controller]")]
     [ApiController]
     public class SessionController : ControllerBase

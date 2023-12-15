@@ -1,7 +1,7 @@
 import type { Actions, PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 import { getSessions, type Session, joinSession, createSession, type requestJoinKey, type sessionCreate, type listSession } from '$lib/API/sessions';
-import { getUserId } from '$lib/API/auth';
+import { getAccessToken, getUserId } from '$lib/API/auth';
 
 export const load = (async ({ locals }) => {
 

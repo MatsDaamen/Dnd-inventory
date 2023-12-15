@@ -34,3 +34,27 @@ export const getUserId = async (email: string): Promise<string | null> => {
 	return null;
 };
 
+export const getAccessToken = async (): Promise<string | null> => {
+
+    let url = getBaseUrl() + '/oauth/token';
+
+	const response = await fetch(url, 
+    {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({
+            grant_type: 'client_credentials',
+            client_id: import.meta.env.VITE_AUTH0_ID,
+            client_secret: import.meta.env.VITE_AUTH0_SECRET,
+            audience: import.meta.env.VITE_AUTH0_API_AUDIENCE
+          })
+    });
+
+	if (response.ok) {
+        const responseBody: {access_token: string} = await response.json();
+        console.log(responseBody.access_token);
+        return responseBody.access_token;
+	}
+
+	return null;
+};

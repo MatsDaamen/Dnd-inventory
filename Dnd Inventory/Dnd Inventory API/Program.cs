@@ -7,6 +7,9 @@ using Dnd_Inventory_Logic.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +39,44 @@ builder.Services.AddScoped<ISessionRepository, SessionRepository>();
 builder.Services.AddScoped<IJoinKeyRepository, JoinKeyRepository>();
 builder.Services.AddScoped<ISessionUsersRepository, SessionUsersRepository>();
 
+// 1. Add Authentication Services
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+.AddJwtBearer(options =>
+{
+    options.Authority = $"http://{builder.Configuration["Auth0:Domain"]}/";
+    options.Audience = builder.Configuration["Auth0:Audience"];
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        NameClaimType = ClaimTypes.NameIdentifier
+    };
+    options.RequireHttpsMetadata = false;
+});
+
+builder.Services
+  .AddAuthorization(options =>
+  {
+      options.AddPolicy(
+        "read:sessions",
+        policy => policy.Requirements.Add(
+          new HasScopeRequirement("read:sessions", builder.Configuration["Auth0:Domain"])
+        )
+      );
+  });
+
+IdentityModelEventSource.ShowPII = true;
+
+builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Default", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -47,6 +88,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("Default");
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
