@@ -42,10 +42,13 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Setup MySQL     
-        uses: mirromutth/mysql-action@v1.1
-        with:
-          mysql database: 'dndtestinventory'
-          mysql root password: 'RootSqlHost'
+    - name: Setup MySQL
+      uses: mirromutth/mysql-action@v1.1
+      with:
+        host port: 3307
+        container port: 3306
+        mysql root password: dndtestinventory
+        mysql database: RootSqlHost
+          
     - name: Tests
       run: dotnet test "Dnd Inventory/Integration test/Integration test.csproj"
