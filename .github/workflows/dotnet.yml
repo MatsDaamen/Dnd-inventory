@@ -22,13 +22,30 @@ jobs:
       run: dotnet restore "Dnd Inventory/Dnd Inventory.sln"
     - name: Build
       run: dotnet build "Dnd Inventory/Dnd Inventory.sln" --no-restore
-  test:
-    name: test
+  unit_test:
+    name: unit_test
     needs: build
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
-    - name: Test
+    - name: Tests
       run: dotnet test "Dnd Inventory/Tests/Tests.csproj"
+
+  integration_test:
+    name: integration_test
+    needs: build
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup MySQL     
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          mysql database: 'dndtestinventory'
+          mysql root password: 'RootSqlHost'
+    - name: Tests
+      run: dotnet test "Dnd Inventory/Integration test/Integration test.csproj"
