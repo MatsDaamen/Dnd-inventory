@@ -47,8 +47,8 @@ jobs:
       with:
         host port: 3307
         container port: 3306
-        mysql root password: dndtestinventory
-        mysql database: RootSqlHost
+        mysql root password: 'dndtestinventory'
+        mysql database: 'RootSqlHost'
           
     - name: Tests
       run: dotnet test "Dnd Inventory/Integration test/Integration test.csproj"
