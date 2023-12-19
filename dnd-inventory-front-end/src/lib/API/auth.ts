@@ -52,7 +52,6 @@ export const getAccessToken = async (): Promise<string | null> => {
 
 	if (response.ok) {
         const responseBody: {access_token: string} = await response.json();
-        console.log(responseBody.access_token);
         return responseBody.access_token;
 	}
 
