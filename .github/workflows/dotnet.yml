@@ -83,5 +83,5 @@ jobs:
       shell: powershell
       run: |
         .\.sonar\scanner\dotnet-sonarscanner begin /k:"MatsDaamen_Dnd-inventory" /o:"matsdaamen" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-        dotnet build "Dnd Inventory/Dnd Inventory.sln" --no-restore
+        dotnet build --no-restore Dnd Inventory/Dnd Inventory.sln
         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
