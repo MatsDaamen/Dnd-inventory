@@ -54,9 +54,10 @@ jobs:
     - name: Tests
       run: dotnet test "Dnd Inventory/Integration test/Integration test.csproj"
   analyse:
-    needs: build
+    needs: integration_test
     runs-on: windows-latest
     steps:
+    - uses: actions/checkout@v4
     - name: Cache SonarCloud packages
       uses: actions/cache@v3
       with:
@@ -75,6 +76,14 @@ jobs:
       run: |
         New-Item -Path .\.sonar\scanner -ItemType Directory
         dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore "Dnd Inventory/Dnd Inventory.sln"
+    - name: Build
+      run: dotnet build "Dnd Inventory/Dnd Inventory.sln" --no-restore
     - name: Build and analyze
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
