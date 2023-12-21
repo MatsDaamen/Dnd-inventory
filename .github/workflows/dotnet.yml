@@ -54,7 +54,7 @@ jobs:
     - name: Tests
       run: dotnet test "Dnd Inventory/Integration test/Integration test.csproj"
   analyse:
-
+    needs: build
     runs-on: windows-latest
     steps:
     - name: Cache SonarCloud packages
