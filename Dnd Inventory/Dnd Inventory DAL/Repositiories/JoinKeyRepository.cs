@@ -60,7 +60,7 @@ namespace Dnd_Inventory_DAL.Repositiories
         {
             SessionJoinKey? joinKey = _db.JoinKeys.FirstOrDefault(joinkey => joinkey.JoinKey == sessionJoinKey);
 
-            if (joinKey.UsesLeft <= 0)
+            if (joinKey is null || joinKey.UsesLeft <= 0)
                 throw new Exception("joinKey not valid");
 
             SessionJoinKeyModel joinKeyModel = new SessionJoinKeyModel()
