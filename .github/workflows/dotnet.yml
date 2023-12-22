@@ -48,7 +48,7 @@ jobs:
         host port: 3307
         container port: 3307
         mysql user: 'root'
-        mysql root password: 'RootSqlHost'
+        mysql root password: secrets.DB_PASS
         mysql database: 'dndtestinventory'
           
     - name: Tests
@@ -61,6 +61,7 @@ jobs:
       uses: actions/setup-java@v4.0.0
       with:
         java-version: 61
+        distribution: rulu
     - uses: actions/checkout@v4
     - name: Cache SonarCloud packages
       uses: actions/cache@v3
