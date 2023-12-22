@@ -50,7 +50,8 @@ jobs:
         mysql user: 'root'
         mysql root password: ${{ secrets.DB_PASS }}
         mysql database: 'dndtestinventory'
-          
+    - name: Restore dependencies
+      run: dotnet restore "Dnd Inventory/Integration test/Integration test.csproj"    
     - name: Tests
       run: dotnet test "Dnd Inventory/Integration test/Integration test.csproj" --no-restore
   analyse:
