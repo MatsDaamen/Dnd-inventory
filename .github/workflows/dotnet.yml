@@ -48,7 +48,7 @@ jobs:
         host port: 3307
         container port: 3307
         mysql user: 'root'
-        mysql root password: 'RootSqlHost'
+        mysql root password: ${{ secrets.DB_PASS }}
         mysql database: 'dndtestinventory'
           
     - name: Tests
