@@ -57,6 +57,10 @@ jobs:
     needs: integration_test
     runs-on: windows-latest
     steps:
+    - name: Setup Java JDK
+      uses: actions/setup-java@v4.0.0
+      with:
+        java-version: 61
     - uses: actions/checkout@v4
     - name: Cache SonarCloud packages
       uses: actions/cache@v3
