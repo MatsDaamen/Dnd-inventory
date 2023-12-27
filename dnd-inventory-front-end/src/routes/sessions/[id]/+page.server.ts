@@ -1,7 +1,7 @@
 import type { Actions, PageServerLoad } from './$types';
 import { CreateJoinCode, getSession, type Session, type CreationJoinKey, DeleteJoinCode, DeleteUserId } from '$lib/API/sessions';
 import { redirect } from '@sveltejs/kit';
-import { getUserId } from '$lib/API/auth';
+import { getUserId, getUserName } from '$lib/API/auth';
 
 export const load = (async ( { locals, params } ) => {
 
@@ -13,7 +13,7 @@ export const load = (async ( { locals, params } ) => {
     const id = +params.id;
     
     const session: Session = await getSession(id);
-    
+
     return {
         session: session,
         userid: userId?.toString()

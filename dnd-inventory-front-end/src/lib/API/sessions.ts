@@ -1,4 +1,5 @@
 import { redirect } from "@sveltejs/kit";
+import { getUserName } from "./auth";
 
 let headers: HeadersInit;
 
@@ -17,6 +18,7 @@ export function SetAuthHeaders(token: string) {
 export type listSession = {
     id: number,
     name: string,
+    createdBy: string,
     createrName: string
 }
 
@@ -56,7 +58,7 @@ export type sessionUsers = {
     userName: string
 };
 
-export const getSessions = async (userId: string | null): Promise<Session[]> => {
+export const getSessions = async (userId: string | null): Promise<listSession[]> => {
 
     let url = getBaseUrl();
 
@@ -74,7 +76,12 @@ export const getSessions = async (userId: string | null): Promise<Session[]> => 
     });
 
 	if (response.ok) {
-		const sessions: Session[] = await response.json();
+		const sessions: listSession[] = await response.json();
+
+        for (let i = 0; i < sessions.length; i++) {
+            sessions[i].createrName = await getUserName(sessions[i].createdBy);
+        }
+
 		return sessions;
 	}
 
@@ -90,6 +97,11 @@ export const getSession = async (id: number): Promise<Session> => {
 
 	if (response.ok) {
 		const session: Session = await response.json();
+
+        for (let i = 0; i < session.users.length; i++) {
+            session.users[i].userName = await getUserName(session.users[i].userId);
+        }
+
 		return session;
 	}
 

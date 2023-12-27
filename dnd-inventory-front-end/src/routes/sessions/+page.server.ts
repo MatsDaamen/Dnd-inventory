@@ -10,22 +10,10 @@ export const load = (async ({ locals }) => {
 
     let userId = await getUserId(session.user.email);
 
-    const sessions: Session[] = await getSessions(userId);
-
-    let sessionList: listSession[] = [];
-
-    for (let i = 0; i < sessions.length; i++) {
-        let newSession: listSession = {
-            id: sessions[i].id,
-            name: sessions[i].name,
-            createrName: ""
-        }
-
-        sessionList.push(newSession);
-    }
+    const sessions: listSession[] = await getSessions(userId);
 
     return {
-        sessions: sessionList,
+        sessions: sessions,
         userid: userId?.toString()
         };
     
