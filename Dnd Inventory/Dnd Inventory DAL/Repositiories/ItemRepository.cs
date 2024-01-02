@@ -1,0 +1,66 @@
+﻿using Dnd_Inventory_DAL.Entities;
+using Dnd_Inventory_Logic.DomainModels;
+using Dnd_Inventory_Logic.Interfaces.Repositories;
+
+namespace Dnd_Inventory_DAL.Repositiories
+{
+    public class ItemRepository : IItemRepository
+    {
+        private SessionDbContext _db;
+
+        public ItemRepository(SessionDbContext db) 
+        {
+            _db = db;
+        }
+
+        public List<ItemModel> GetAll()
+        {
+            List<Item> items = _db.items.ToList();
+
+            List<ItemModel> itemModels = items.Select(item => new ItemModel
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Description = item.Description,
+                Type = item.Type,
+                Price = item.Price,
+                Weight = item.Weight
+            }).ToList();
+
+            return itemModels;
+        }
+
+        public ItemModel Get(int id)
+        {
+            Item item = _db.items.FirstOrDefault(x => x.Id == id);
+
+            ItemModel itemModel = new ItemModel
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Description = item.Description,
+                Type = item.Type,
+                Price = item.Price,
+                Weight = item.Weight
+            };
+
+            return itemModel;
+        }
+
+        public void Create(ItemModel itemModel)
+        {
+            Item item = new Item
+            {
+                Id = itemModel.Id,
+                Name = itemModel.Name,
+                Description = itemModel.Description,
+                Type = itemModel.Type,
+                Price = itemModel.Price,
+                Weight = itemModel.Weight
+            };
+
+            _db.items.Add(item);
+            _db.SaveChanges();
+        }
+    }
+}

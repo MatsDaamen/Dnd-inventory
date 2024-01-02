@@ -16,10 +16,15 @@ namespace Dnd_Inventory_DAL
 
         public DbSet<SessionUsers> SessionUsers { get; set; }
 
+        public DbSet<Item> items { get; set; }
+
+        public DbSet<Inventory> inventories { get; set; }
+
         // we override the OnModelCreating method here.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<SessionUsers>().HasKey(su => new { su.SessionId, su.UserId });
+            modelBuilder.Entity<Inventory>().HasKey(su => new { su.ItemId, su.UserId });
         }
     }
 }

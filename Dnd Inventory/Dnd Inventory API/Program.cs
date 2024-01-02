@@ -61,6 +61,18 @@ builder.Services
           new HasScopeRequirement("read:sessions", builder.Configuration["Auth0:Domain"])
         )
       );
+      options.AddPolicy(
+        "read:items",
+        policy => policy.Requirements.Add(
+            new HasScopeRequirement("read:items", builder.Configuration["Auth0:Domain"])
+        )
+      );
+      options.AddPolicy(
+        "read:inventory",
+        policy => policy.Requirements.Add(
+            new HasScopeRequirement("read:inventory", builder.Configuration["Auth0:Domain"])
+        )
+      );
   });
 
 IdentityModelEventSource.ShowPII = true;

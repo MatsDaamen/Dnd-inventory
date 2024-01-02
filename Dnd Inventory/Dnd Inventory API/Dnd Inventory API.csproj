@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Dtos\Inventory\" />
     <Folder Include="Properties\Repositiories\" />
   </ItemGroup>
 

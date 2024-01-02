@@ -1,5 +1,4 @@
-﻿using Dnd_Inventory_API.authorization;
-using Dnd_Inventory_API.Dtos.Session.GET;
+﻿using Dnd_Inventory_API.Dtos.Session.GET;
 using Dnd_Inventory_API.Dtos.Session.JOIN;
 using Dnd_Inventory_API.Dtos.Session.JOINKEY;
 using Dnd_Inventory_API.Dtos.Session.POST;
