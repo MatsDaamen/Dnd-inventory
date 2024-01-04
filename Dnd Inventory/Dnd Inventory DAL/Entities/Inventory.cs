@@ -10,8 +10,12 @@ namespace Dnd_Inventory_DAL.Entities
     public class Inventory
     {
         public string UserId { get; set; }
+        
         [ForeignKey("ItemId")]
         public int ItemId { get; set; }
+
+        [ForeignKey("sessionId")]
+        public int SessionId { get; set; }
 
         public int Amount { get; set; }
     }

@@ -13,6 +13,8 @@ namespace Dnd_Inventory_Logic.Interfaces.Services
 
         public void AddItem(int itemId, string userId, int amount = 1);
 
+        public void TransferItem(int itemId, string userId, string NewUserId, int amount = 1);
+
         public void RemoveItem(int itemId, string userId, int amount = 1);
     }
 }
