@@ -18,7 +18,7 @@ namespace Dnd_Inventory_API.Controllers
             _itemService = itemService;
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public ItemDto Get(int id) 
         {
             ItemModel itemModel = _itemService.Get(id);
@@ -38,9 +38,9 @@ namespace Dnd_Inventory_API.Controllers
         }
 
         [HttpGet]
-        public List<ItemDto> GetAll() 
+        public List<ItemDto> GetAll([FromQuery]int sessionId) 
         {
-            List<ItemModel> items = _itemService.GetAll();
+            List<ItemModel> items = _itemService.GetAll(sessionId);
 
             List<ItemDto> itemDtos = items.Select(item => new ItemDto()
             {
@@ -56,16 +56,18 @@ namespace Dnd_Inventory_API.Controllers
             return itemDtos;
         }
 
-        public void Create(ItemDto itemDto)
+        [HttpPost]
+        public void Create(ItemCreationRequest itemCreationRequest)
         {
             ItemModel itemModel = new ItemModel()
             {
-                Id = itemDto.Id,
-                Name = itemDto.Name,
-                Description = itemDto.Description,
-                Price = itemDto.Price,
-                Weight = itemDto.Weight,
-                Type = itemDto.Type
+                Id = itemCreationRequest.Id,
+                Name = itemCreationRequest.Name,
+                Description = itemCreationRequest.Description,
+                Price = itemCreationRequest.Price,
+                Weight = itemCreationRequest.Weight,
+                Type = itemCreationRequest.Type,
+                sessionId = itemCreationRequest.SessionId
             };
 
             _itemService.Create(itemModel);

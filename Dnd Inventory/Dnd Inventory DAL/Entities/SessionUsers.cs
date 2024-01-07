@@ -10,5 +10,7 @@ namespace Dnd_Inventory_DAL.Entities
 
         [Key]
         public string UserId { get; set; }
+
+        public ICollection<Item> Items { get; set; }
     }
 }

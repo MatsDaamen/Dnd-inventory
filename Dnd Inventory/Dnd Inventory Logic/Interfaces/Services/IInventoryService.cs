@@ -9,12 +9,15 @@ namespace Dnd_Inventory_Logic.Interfaces.Services
 {
     public interface IInventoryService
     {
-        public InventoryModel GetAll(string userId);
+        public List<InventoryModel> Get(string userId, int sessionId);
+        public List<InventoryModel> GetAll(int sessionId);
 
-        public void AddItem(int itemId, string userId, int amount = 1);
+        public void AddItem(int itemId, int sessionId, string userId, int amount);
 
-        public void TransferItem(int itemId, string userId, string NewUserId, int amount = 1);
+        public void TransferItem(int itemId, int sessionId, string userId, string NewUserId, int amount = 1);
 
-        public void RemoveItem(int itemId, string userId, int amount = 1);
+        public void RemoveItem(int itemId, int sessionId, string userId, int amount = 1);
+
+        public void DeleteItem(int itemId, int sessionId, string userId);
     }
 }

@@ -33,11 +33,15 @@ builder.Services.AddDbContext<SessionDbContext>(
 
 // logic layer
 builder.Services.AddScoped<ISessionService, SessionService>();
+builder.Services.AddScoped<IInventoryService, InventoryService>();
+builder.Services.AddScoped<IItemService, ItemService>();
 
 // dal layer
 builder.Services.AddScoped<ISessionRepository, SessionRepository>();
 builder.Services.AddScoped<IJoinKeyRepository, JoinKeyRepository>();
 builder.Services.AddScoped<ISessionUsersRepository, SessionUsersRepository>();
+builder.Services.AddScoped<IItemRepository, ItemRepository>();
+builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
 
 // 1. Add Authentication Services
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

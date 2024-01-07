@@ -7,8 +7,7 @@ function getBaseUrl(): string {
         return import.meta.env.VITE_API_URL + `/Session`
 }
 
-export function SetAuthHeaders(token: string) {
-
+export function SetSessionAuthHeaders(token: string) {
     headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token

@@ -83,6 +83,11 @@ namespace Dnd_Inventory_Logic.Services
                 _joinKeyRepository.UpdateJoinKey(joinKeyModel);
         }
 
+        public List<SessionUserModels> GetSessionUsers(int sessionId)
+        {
+            return _sessionUsersRepository.GetAllBySessionId(sessionId);
+        }
+
         public void DeleteSessionUser(int sessionId, string userId)
         {
             _sessionUsersRepository.DeleteSessionUser(sessionId, userId);

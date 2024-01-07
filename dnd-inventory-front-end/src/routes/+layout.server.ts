@@ -1,6 +1,6 @@
 import { getAccessToken } from '$lib/API/auth';
-import { SetAuthHeaders } from '$lib/API/sessions';
 import type { LayoutServerLoad } from './$types';
+import { SetAuthHeaders } from '$lib/API/auth';
 
 
 export const load = (async ({ locals }) => {

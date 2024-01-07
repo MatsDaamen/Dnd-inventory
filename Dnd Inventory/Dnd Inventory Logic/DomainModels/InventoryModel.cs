@@ -10,6 +10,8 @@ namespace Dnd_Inventory_Logic.DomainModels
     {
         public string UserId { get; set; }
 
+        public int SessionId { get; set; }
+
         public List<ItemModel> itemModels { get; set; }
     }
 }

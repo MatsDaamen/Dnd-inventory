@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -9,13 +10,13 @@ namespace Dnd_Inventory_DAL.Entities
 {
     public class Inventory
     {
-        public string UserId { get; set; }
-        
-        [ForeignKey("ItemId")]
+        public string? UserId { get; set; }
+
+        public int SessionId { get; set; }
+
         public int ItemId { get; set; }
 
-        [ForeignKey("sessionId")]
-        public int SessionId { get; set; }
+        public virtual ICollection<Item> Items { get; set; }
 
         public int Amount { get; set; }
     }

@@ -16,10 +16,20 @@
     import { PlusSolid, TrashBinSolid, ClipboardCheckSolid, InfoCircleSolid, ArrowLeftSolid, CheckCircleSolid } from 'flowbite-svelte-icons';
     import type { Session, joinKey } from '$lib/API/sessions';
     import { fly } from 'svelte/transition';
+    import InventoryTable from '$lib/Components/InventoryTable.svelte';
+    import type { inventory } from '$lib/API/inventory';
+    import { redirect } from '@sveltejs/kit';
 
     export let data: PageData;
     const session: Session = data.session;
     const userId: string = data.userid;
+    const inventories: inventory[] = data.inventory;
+
+    //let index = inventories.findIndex(x => x.userId == null);
+
+    //const sessionInventory = inventories[index];
+    //inventories.splice(index, 1);
+    //<InventoryTable inventory = {sessionInventory} inventoryIsOpen = {true}/>
 
     let selectedJoinCode: joinKey | null = null;
 
@@ -34,6 +44,9 @@
         showToast = true;
     }
 
+    if(session.users.find(x => x.userId == userId) == undefined)
+        throw redirect(302, '/sessions');
+
 </script>
 
 <div class="grid grid-rows-[max-content,1fr] text-xs md:text-base lg:text-lg p-4 md:p-12 gap-4">
@@ -47,11 +60,24 @@
 		<div class="block">
 			<h1 class="text-lg md:text-2xl font-bold">{session.name}</h1>
 		</div>
-
     </div>
     <Tabs style="underline">
         <TabItem open={session.createdBy !== userId} title="inventories">
-
+            <div class="flex flex-col md:flex-row gap-2 md:gap-0 md:justify-between">
+                {#if session.createdBy === userId}
+                    <div class="block">
+                        {#each inventories as inventory}
+                            <InventoryTable {inventory}/>
+                        {/each}
+                    </div>
+                {:else}
+                    <div class="block">
+                        <InventoryTable inventory = {inventories.shift()}/>
+                    </div>
+                {/if}
+                <div class="block">
+                </div>
+            </div>
         </TabItem>
         {#if session.createdBy === userId}
         <TabItem open={session.createdBy === userId} title="members and invite code">

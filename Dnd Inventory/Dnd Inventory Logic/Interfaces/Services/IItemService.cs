@@ -11,7 +11,7 @@ namespace Dnd_Inventory_Logic.Interfaces.Services
     {
         public ItemModel Get(int id);
 
-        public List<ItemModel> GetAll();
+        public List<ItemModel> GetAll(int sessionId);
 
         public void Create(ItemModel item);
     }

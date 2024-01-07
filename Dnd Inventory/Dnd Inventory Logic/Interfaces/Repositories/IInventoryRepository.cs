@@ -4,13 +4,12 @@ namespace Dnd_Inventory_Logic.Interfaces.Repositories
 {
     public interface IInventoryRepository
     {
-        public List<int> GetInventoryItemIds(string userId, int sessionId);
-        public List<InventoryModel> GetAll();
+        public List<InventoryModel> GetInventory(string userId, int sessionId);
+        public InventoryModel GetSessionInventory(int sessionId);
+        public List<InventoryModel> GetAllBySessionId(int sessionId);
 
-        public void Create(InventoryModel inventory);
+        public void Create(int itemId, int sessionId, string userId, int amount = 1);
 
-        public void Update(InventoryModel inventory);
-
-        public void Delete(string userId, int itemId);
+        public void Delete(string userId, int sessionId, int itemId);
     }
 }

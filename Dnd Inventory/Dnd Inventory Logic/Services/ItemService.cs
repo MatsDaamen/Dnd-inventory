@@ -28,9 +28,15 @@ namespace Dnd_Inventory_Logic.Services
             return _ItemRepository.Get(id);
         }
 
-        public List<ItemModel> GetAll()
+        public List<ItemModel> GetAll(int sessionId)
         {
-            return _ItemRepository.GetAll();
+            List<ItemModel> items;
+            if (sessionId == 0)
+                items = _ItemRepository.GetAll();
+            else
+                items = _ItemRepository.GetAllSessionItems(sessionId);
+
+            return items;
         }
     }
 }

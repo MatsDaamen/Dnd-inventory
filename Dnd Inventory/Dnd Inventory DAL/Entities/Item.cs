@@ -16,6 +16,8 @@ namespace Dnd_Inventory_DAL.Entities
         public float Weight { get; set; }
         public int Price { get; set; }
 
+        public ICollection<SessionUsers> users { get; set; }
+
         [ForeignKey("SessionId")]
         public int? SessionId { get; set; }
     }

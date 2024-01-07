@@ -1,3 +1,7 @@
+import { SetSessionAuthHeaders } from './sessions';
+import { SetInventoryAuthHeaders } from './inventory';
+
+
 let headers = {
     'Content-Type': 'application/json',
     'authorization': 'Bearer ' + import.meta.env.VITE_AUTH_API_TOKEN
@@ -5,6 +9,12 @@ let headers = {
 
 function getBaseUrl(): string {
         return import.meta.env.VITE_AUTH0_DOMAIN
+}
+
+export function SetAuthHeaders(token: string) 
+{
+    SetSessionAuthHeaders(token);
+    SetInventoryAuthHeaders(token);
 }
 
 export const getUserName = async (userid: string) => {

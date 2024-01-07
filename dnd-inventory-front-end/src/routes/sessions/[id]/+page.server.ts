@@ -2,6 +2,7 @@ import type { Actions, PageServerLoad } from './$types';
 import { CreateJoinCode, getSession, type Session, type CreationJoinKey, DeleteJoinCode, DeleteUserId } from '$lib/API/sessions';
 import { redirect } from '@sveltejs/kit';
 import { getUserId, getUserName } from '$lib/API/auth';
+import { getAllInventoriesInSession, getInventory, type inventory } from '$lib/API/inventory';
 
 export const load = (async ( { locals, params } ) => {
 
@@ -14,9 +15,12 @@ export const load = (async ( { locals, params } ) => {
     
     const session: Session = await getSession(id);
 
+    let inventory: inventory[] = session.createdBy === userId ? await getAllInventoriesInSession(session.id) : await getInventory(session.id, userId);
+
     return {
         session: session,
-        userid: userId?.toString()
+        userid: userId?.toString(),
+        inventory: inventory
     };
 }) satisfies PageServerLoad;
 
