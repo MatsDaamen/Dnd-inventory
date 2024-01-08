@@ -1,8 +1,6 @@
 ﻿using Dnd_Inventory_API.Dtos.Inventory;
-using Dnd_Inventory_API.Dtos.Item;
 using Dnd_Inventory_Logic.DomainModels;
 using Dnd_Inventory_Logic.Interfaces.Services;
-using Dnd_Inventory_Logic.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,7 +27,7 @@ namespace Dnd_Inventory_API.Controllers
             {
                 SessionId = inventoryItem.SessionId,
                 UserId = inventoryItem.UserId,
-                Items = inventoryItem.itemModels.Select(item => new ItemDto
+                Items = inventoryItem.itemModels.Select(item => new InventoryItemDto
                 {
                     Id = item.Id,
                     Name = item.Name,
@@ -37,6 +35,7 @@ namespace Dnd_Inventory_API.Controllers
                     Type = item.Type,
                     Weight = item.Weight,
                     Price = item.Price,
+                    Amount = item.Amount,
                     SessionId = item.sessionId
                 }).ToList()
             }).ToList();
@@ -53,13 +52,14 @@ namespace Dnd_Inventory_API.Controllers
             {
                 SessionId = inventoryItem.SessionId,
                 UserId = inventoryItem.UserId,
-                Items = inventoryItem.itemModels?.Select(item => new ItemDto
+                Items = inventoryItem.itemModels?.Select(item => new InventoryItemDto
                 {
                     Id = item.Id,
                     Name = item.Name,
                     Description = item.Description,
                     Type = item.Type,
                     Weight = item.Weight,
+                    Amount = item.Amount,
                     Price = item.Price,
                     SessionId = item.sessionId
                 }).ToList()

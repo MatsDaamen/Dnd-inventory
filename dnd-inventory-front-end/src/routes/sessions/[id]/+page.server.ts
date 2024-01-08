@@ -2,7 +2,7 @@ import type { Actions, PageServerLoad } from './$types';
 import { CreateJoinCode, getSession, type Session, type CreationJoinKey, DeleteJoinCode, DeleteUserId } from '$lib/API/sessions';
 import { redirect } from '@sveltejs/kit';
 import { getUserId, getUserName } from '$lib/API/auth';
-import { getAllInventoriesInSession, getInventory, type inventory } from '$lib/API/inventory';
+import { getAllInventoriesInSession, getInventory, type AddItemRequest, type inventory, AddItemToInventory, type TransferItemRequest, TransferItemToInventory } from '$lib/API/inventory';
 
 export const load = (async ( { locals, params } ) => {
 
@@ -59,5 +59,41 @@ export const actions = {
         const id = data.get("userId") as string
 
         await DeleteUserId(+sessionId, id);
+    }),
+    addItem: (async ({request}) => {
+        const data = await request.formData();
+
+        const sessionId = data.get("sessionId") as string
+        const userId = data.get("userId") as string
+        const itemId = data.get("itemId") as string
+        const amount = data.get("amountOfItems") as string
+
+        const AddItemRequest: AddItemRequest = {
+            sessionId: +sessionId,
+            userId: userId,
+            itemId: +itemId,
+            Amount: +amount
+        }
+
+        await AddItemToInventory(AddItemRequest);
+    }),
+    transferItem: (async ({request}) => {
+        const data = await request.formData();
+
+        const sessionId = data.get("sessionId") as string
+        const userId = data.get("userId") as string
+        const newUserId = data.get("newUserId") as string
+        const itemId = data.get("itemId") as string
+        const amount = data.get("amountOfItems") as string
+
+        const transferItemRequest: TransferItemRequest = {
+            sessionId: +sessionId,
+            userId: userId,
+            newUserId: newUserId,
+            itemId: +itemId,
+            Amount: +amount
+        }
+
+        await TransferItemToInventory(transferItemRequest);
     })
 } satisfies Actions;

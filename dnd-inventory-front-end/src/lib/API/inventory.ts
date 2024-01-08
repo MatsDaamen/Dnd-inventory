@@ -19,6 +19,7 @@ export type item = {
     discription: string,
     weight: number,
     price: number,
+    amount: number,
     type: string
 }
 
@@ -38,12 +39,13 @@ export type AddItemRequest = {
 
 export type TransferItemRequest = {
     userId: string,
+    newUserId: string,
     sessionId: number,
     itemId: number,
     Amount: number
 }
 
-export const getInventory = async (sessionId: number, userId: string): Promise<inventory | null> => {
+export const getInventory = async (sessionId: number, userId: string): Promise<inventory[] | null> => {
 	
     let url = getBaseUrl() + `/${sessionId}/${userId}`
     
@@ -53,11 +55,13 @@ export const getInventory = async (sessionId: number, userId: string): Promise<i
     });
 
 	if (response.ok) {
-		const inventory: inventory = await response.json();
+		const inventories: inventory[] = await response.json();
 
-        inventory.ownerName = await getUserName(inventory.userId);
+        for (let i = 0; i < inventories.length; i++) {
+            inventories[i].ownerName = await getUserName(inventories[i].userId);
+        }
 
-		return inventory;
+		return inventories;
 	}
 
     return null;
@@ -81,6 +85,38 @@ export const getAllInventoriesInSession = async (sessionId: number): Promise<inv
 
 		return inventories;
 	}
+
+    return null;
+};
+
+export const AddItemToInventory = async (addItemRequest: AddItemRequest): Promise<null> => {
+	
+    const response = await fetch(getBaseUrl(), {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(addItemRequest)
+    });
+
+	//if (response.ok) {
+	//	return inventories;
+	//}
+
+    return null;
+};
+
+export const TransferItemToInventory = async (transferItemRequest: TransferItemRequest): Promise<null> => {
+	
+    let url = getBaseUrl() + "/transfer"
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(transferItemRequest)
+    });
+
+	//if (response.ok) {
+	//	return inventories;
+	//}
 
     return null;
 };

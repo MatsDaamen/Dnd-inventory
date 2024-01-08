@@ -31,6 +31,8 @@
     //inventories.splice(index, 1);
     //<InventoryTable inventory = {sessionInventory} inventoryIsOpen = {true}/>
 
+    console.log(inventories);
+
     let selectedJoinCode: joinKey | null = null;
 
     let selectedUserId: string | null = null;
@@ -67,12 +69,12 @@
                 {#if session.createdBy === userId}
                     <div class="block">
                         {#each inventories as inventory}
-                            <InventoryTable {inventory}/>
+                            <InventoryTable inventory={inventory} sessionUsers={session.users} />
                         {/each}
                     </div>
                 {:else}
                     <div class="block">
-                        <InventoryTable inventory = {inventories.shift()}/>
+                        <InventoryTable inventory={inventories.shift()} sessionUsers={session.users} />
                     </div>
                 {/if}
                 <div class="block">

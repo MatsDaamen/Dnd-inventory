@@ -41,7 +41,10 @@ namespace Dnd_Inventory_DAL.Repositiories
                     Price = item.Price,
                     Weight = item.Weight,
                     sessionId = item.SessionId,
-                    Amount = inventoryItem.Amount
+                    Amount = _db.inventories.First(inventory => 
+                    inventory.ItemId == item.Id && 
+                    inventory.UserId == inventoryItem.UserId &&
+                    inventory.SessionId == inventoryItem.SessionId).Amount
                 }).ToList()
             }).ToList();
 
@@ -88,6 +91,8 @@ namespace Dnd_Inventory_DAL.Repositiories
                 })
                 .ToList();
 
+            List<Inventory> inv = _db.inventories.ToList();
+
             List<InventoryModel> inventoryModel = inventory.Select(inventoryItem => new InventoryModel
             {
                 UserId = inventoryItem.UserId,
@@ -101,7 +106,10 @@ namespace Dnd_Inventory_DAL.Repositiories
                     Price = item.Price,
                     Weight = item.Weight,
                     sessionId = item.SessionId,
-                    Amount = inventoryItem.Amount
+                    Amount = _db.inventories.First(inventory =>
+                        inventory.ItemId == item.Id &&
+                        inventory.UserId == inventoryItem.UserId &&
+                        inventory.SessionId == inventoryItem.SessionId).Amount
                 }).ToList()
             }).ToList();
 

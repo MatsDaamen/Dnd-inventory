@@ -51,7 +51,7 @@ namespace Dnd_Inventory_Logic.Services
                     inventoryModel.Add(new InventoryModel()
                     {
                         SessionId = sessionUser.SessionId,
-                        UserId = sessionUser.UserId
+                        UserId = sessionUser.UserId,
                     });
                 }
             }
