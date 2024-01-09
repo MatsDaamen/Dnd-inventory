@@ -1,4 +1,5 @@
 ﻿using Dnd_Inventory_API.Dtos.Inventory;
+using Dnd_Inventory_API.WebSocket;
 using Dnd_Inventory_Logic.DomainModels;
 using Dnd_Inventory_Logic.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -12,10 +13,12 @@ namespace Dnd_Inventory_API.Controllers
     public class InventoryController
     {
         private IInventoryService _inventoryService;
+        private ISignalRHubService _signalRHubService;
 
-        public InventoryController(IInventoryService inventoryService) 
+        public InventoryController(IInventoryService inventoryService, ISignalRHubService signalRHubService) 
         {
             _inventoryService = inventoryService;
+            _signalRHubService = signalRHubService;
         }
 
         [HttpGet("{sessionId}/{userId}")]
@@ -78,6 +81,27 @@ namespace Dnd_Inventory_API.Controllers
         public void Post(TransferItemRequest request)
         {
             _inventoryService.TransferItem(request.ItemId, request.SessionId, request.UserId, request.NewUserId, request.Amount);
+
+            InventoryModel inventoryModel = _inventoryService.Get(request.NewUserId, request.SessionId).First();
+
+            InventoryDto inventoryDto = new InventoryDto
+            {
+                SessionId = inventoryModel.SessionId,
+                UserId = inventoryModel.UserId,
+                Items = inventoryModel.itemModels.Select(item => new InventoryItemDto
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Description = item.Description,
+                    Type = item.Type,
+                    Weight = item.Weight,
+                    Price = item.Price,
+                    Amount = item.Amount,
+                    SessionId = item.sessionId
+                }).ToList()
+            };
+
+            _signalRHubService.UpdateInventory(inventoryDto);
         }
 
         [HttpDelete("{sessionId}/{userId}/{itemId}")]

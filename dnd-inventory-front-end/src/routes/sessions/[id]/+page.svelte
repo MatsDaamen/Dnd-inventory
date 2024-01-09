@@ -19,19 +19,16 @@
     import InventoryTable from '$lib/Components/InventoryTable.svelte';
     import type { inventory } from '$lib/API/inventory';
     import { redirect } from '@sveltejs/kit';
+    import { onMount } from 'svelte';
+    import * as signalr from '@microsoft/signalr';
+    
 
     export let data: PageData;
     const session: Session = data.session;
     const userId: string = data.userid;
     const inventories: inventory[] = data.inventory;
 
-    //let index = inventories.findIndex(x => x.userId == null);
-
-    //const sessionInventory = inventories[index];
-    //inventories.splice(index, 1);
-    //<InventoryTable inventory = {sessionInventory} inventoryIsOpen = {true}/>
-
-    console.log(inventories);
+    let hubconnection: signalr.HubConnection;
 
     let selectedJoinCode: joinKey | null = null;
 
@@ -49,6 +46,27 @@
     if(session.users.find(x => x.userId == userId) == undefined)
         throw redirect(302, '/sessions');
 
+    onMount(async () => {
+        hubconnection = new signalr.HubConnectionBuilder()
+        .withUrl(import.meta.env.VITE_HUB_URL + "/inventory")
+        .withAutomaticReconnect()
+        .build();
+
+        await hubconnection.start();
+
+        hubconnection.on("updateInventory", (inventory : string) => {
+
+            let newInventory: inventory = JSON.parse(inventory);
+            let oldInventory = inventories.find(inv => inv.sessionId == newInventory.sessionId && inv.userId == newInventory.userId);
+
+            newInventory.items.forEach(item => {
+                oldInventory?.items.splice(0, oldInventory.items.length, item);
+            })
+
+            console.log(inventory);
+            console.log("CHECK");
+        });
+	});
 </script>
 
 <div class="grid grid-rows-[max-content,1fr] text-xs md:text-base lg:text-lg p-4 md:p-12 gap-4">
@@ -74,7 +92,7 @@
                     </div>
                 {:else}
                     <div class="block">
-                        <InventoryTable inventory={inventories.shift()} sessionUsers={session.users} />
+                        <InventoryTable inventory={inventories.find(inv => inv.userId == userId)} sessionUsers={session.users} />
                     </div>
                 {/if}
                 <div class="block">

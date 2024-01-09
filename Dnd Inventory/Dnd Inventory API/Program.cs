@@ -1,4 +1,5 @@
 using Dnd_Inventory_API.authorization;
+using Dnd_Inventory_API.WebSocket;
 using Dnd_Inventory_DAL;
 using Dnd_Inventory_DAL.Repositiories;
 using Dnd_Inventory_Logic.Interfaces.Repositories;
@@ -6,6 +7,7 @@ using Dnd_Inventory_Logic.Interfaces.Services;
 using Dnd_Inventory_Logic.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -42,6 +44,10 @@ builder.Services.AddScoped<IJoinKeyRepository, JoinKeyRepository>();
 builder.Services.AddScoped<ISessionUsersRepository, SessionUsersRepository>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
+
+// Websocket
+builder.Services.AddSignalR();
+builder.Services.AddScoped<ISignalRHubService, SignalRHubService>();
 
 // 1. Add Authentication Services
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -87,7 +93,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("Default", policy =>
     {
-        policy.WithOrigins("http://localhost.com")
+        policy.WithOrigins(builder.Configuration["Cors:Default"])
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -108,6 +114,14 @@ app.UseCors("Default");
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseWebSockets();
+
+app.MapHub<InventoryHub>("/hub/inventory").RequireCors(x => x
+           .AllowAnyMethod()
+           .AllowAnyHeader()
+           .SetIsOriginAllowed(origin => true)
+           .AllowCredentials());
 
 app.MapControllers();
 

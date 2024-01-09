@@ -19,7 +19,7 @@
     export let inventory: inventory;
 
     export let sessionUsers: sessionUsers[];
-    let otherUsers = sessionUsers.filter(user => user.userId != inventory.userId)
+    let otherUsers = sessionUsers.filter(user => user.userId != inventory?.userId)
 
     export const inventoryIsOpen: boolean|undefined = false;
 
