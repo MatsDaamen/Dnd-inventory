@@ -51,33 +51,6 @@ namespace Dnd_Inventory_DAL.Repositiories
             return inventoryModel;
         }
 
-        public InventoryModel GetSessionInventory(int sessionId)
-        {
-            //Inventory inventory = _db.inventories
-            //    .Include(item => item.Items)
-            //    .First(item => item.SessionId == sessionId && string.IsNullOrEmpty(item.UserId));
-
-            //InventoryModel inventoryModel = new InventoryModel
-            //{
-            //    UserId = inventory.UserId,
-            //    SessionId = inventory.SessionId,
-            //    itemModels = inventory.Items.Select(item => new ItemModel
-            //    {
-            //        Id = item.Id,
-            //        Name = item.Name,
-            //        Description = item.Description,
-            //        Type = item.Type,
-            //        Price = item.Price,
-            //        Weight = item.Weight,
-            //        sessionId = item.SessionId,
-            //        Amount = inventory.Amount
-            //    }).ToList()
-            //};
-
-            //return inventoryModel;
-            return null;
-        }
-
         public List<InventoryModel> GetAllBySessionId(int sessionId)
         {
             List<Inventory> inventory = _db.SessionUsers

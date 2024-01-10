@@ -33,7 +33,7 @@ namespace Dnd_Inventory_DAL.Repositiories
 
         public ItemModel Get(int id)
         {
-            Item item = _db.items.FirstOrDefault(x => x.Id == id);
+            Item item = _db.items.First(x => x.Id == id);
 
             ItemModel itemModel = new ItemModel
             {
