@@ -56,7 +56,7 @@ jobs:
       run: dotnet test "Dnd-Inventory/Integration test/Integration test.csproj" --no-restore
   analyse:
     needs: integration_test
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Setup Java JDK
       uses: actions/setup-java@v4.0.0
