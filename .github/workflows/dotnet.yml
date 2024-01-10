@@ -95,7 +95,7 @@ jobs:
         ls
         pushd Dnd-Inventory
         ls
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"MatsDaamen_Dnd-inventory"
+        .sonar\scanner\dotnet-sonarscanner begin /k:"MatsDaamen_Dnd-inventory"
         /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
         /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
         dotnet build --no-incremental
