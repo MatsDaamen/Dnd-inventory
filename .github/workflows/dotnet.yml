@@ -86,6 +86,14 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
+    - name: Setup MySQL
+      uses: mirromutth/mysql-action@v1.1
+      with:
+        host port: 3307
+        container port: 3307
+        mysql user: 'root'
+        mysql root password: ${{ secrets.DB_PASS }}
+        mysql database: 'dndtestinventory'
     - name: Build and analyze
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
