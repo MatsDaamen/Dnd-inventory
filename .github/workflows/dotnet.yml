@@ -19,9 +19,9 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore "Dnd Inventory/Dnd Inventory.sln"
+      run: dotnet restore "Dnd-Inventory/Dnd Inventory.sln"
     - name: Build
-      run: dotnet build "Dnd Inventory/Dnd Inventory.sln" --no-restore
+      run: dotnet build "Dnd-Inventory/Dnd Inventory.sln" --no-restore
   unit_test:
     name: unit_test
     needs: build
@@ -31,7 +31,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Tests
-      run: dotnet test "Dnd Inventory/Tests/Tests.csproj"
+      run: dotnet test "Dnd-Inventory/Tests/Tests.csproj"
 
   integration_test:
     name: integration_test
@@ -51,9 +51,9 @@ jobs:
         mysql root password: ${{ secrets.DB_PASS }}
         mysql database: 'dndtestinventory'
     - name: Restore dependencies
-      run: dotnet restore "Dnd Inventory/Integration test/Integration test.csproj"    
+      run: dotnet restore "Dnd-Inventory/Integration test/Integration test.csproj"    
     - name: Tests
-      run: dotnet test "Dnd Inventory/Integration test/Integration test.csproj" --no-restore
+      run: dotnet test "Dnd-Inventory/Integration test/Integration test.csproj" --no-restore
   analyse:
     needs: integration_test
     runs-on: windows-latest
@@ -94,7 +94,7 @@ jobs:
       shell: powershell
       run: |
         dotnet tool install --global dotnet-coverage
-        pushd "Dnd Inventory"
+        pushd "Dnd-Inventory"
         .\.sonar\scanner\dotnet-sonarscanner begin /k:"MatsDaamen_Dnd-inventory" /o:"matsdaamen" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml 
         dotnet build --no-incremental
         dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml" 
