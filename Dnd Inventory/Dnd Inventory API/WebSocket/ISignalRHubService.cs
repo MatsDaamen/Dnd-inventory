@@ -5,6 +5,6 @@ namespace Dnd_Inventory_API.WebSocket
 {
     public interface ISignalRHubService
     {
-        public Task UpdateInventory(InventoryDto inventory);
+        public Task UpdateInventory(List<InventoryDto> inventory);
     }
 }

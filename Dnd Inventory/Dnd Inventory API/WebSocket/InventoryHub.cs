@@ -11,9 +11,9 @@ namespace Dnd_Inventory_API.WebSocket
             _signalRHubService = signalRHubService;
         }
 
-        public void addClient(string userId, string clientId)
+        public void OnConnection(string userId, string clientId)
         {
-
+            Console.WriteLine($"user: {userId} connected on: {clientId}");
         }
     }
 }

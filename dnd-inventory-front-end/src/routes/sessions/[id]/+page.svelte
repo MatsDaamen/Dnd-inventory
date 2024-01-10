@@ -21,12 +21,13 @@
     import { redirect } from '@sveltejs/kit';
     import { onMount } from 'svelte';
     import * as signalr from '@microsoft/signalr';
+    import { getUserName } from '$lib/API/auth';
     
 
     export let data: PageData;
     const session: Session = data.session;
     const userId: string = data.userid;
-    const inventories: inventory[] = data.inventory;
+    let inventories: inventory[] = data.inventory;
 
     let hubconnection: signalr.HubConnection;
 
@@ -54,17 +55,20 @@
 
         await hubconnection.start();
 
-        hubconnection.on("updateInventory", (inventory : string) => {
+        await hubconnection.invoke("OnConnection", userId, hubconnection.connectionId);
 
-            let newInventory: inventory = JSON.parse(inventory);
-            let oldInventory = inventories.find(inv => inv.sessionId == newInventory.sessionId && inv.userId == newInventory.userId);
+        hubconnection.on("updateInventory", async (inventory : string) => {
 
-            newInventory.items.forEach(item => {
-                oldInventory?.items.splice(0, oldInventory.items.length, item);
-            })
+            let newInventories : inventory[] = JSON.parse(inventory);
 
-            console.log(inventory);
-            console.log("CHECK");
+            if(session.createdBy != userId)
+                newInventories = newInventories.splice(0, newInventories.length, newInventories.find(inv => inv.userId == userId))
+
+            for (let i = 0; i < newInventories.length; i++) {
+                newInventories[i].ownerName = await getUserName(newInventories[i].userId);
+            }
+            
+            inventories = newInventories;
         });
 	});
 </script>

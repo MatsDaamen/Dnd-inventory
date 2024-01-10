@@ -82,26 +82,26 @@ namespace Dnd_Inventory_API.Controllers
         {
             _inventoryService.TransferItem(request.ItemId, request.SessionId, request.UserId, request.NewUserId, request.Amount);
 
-            InventoryModel inventoryModel = _inventoryService.Get(request.NewUserId, request.SessionId).First();
+            List<InventoryModel> inventoryModel = _inventoryService.GetAll(request.SessionId);
 
-            InventoryDto inventoryDto = new InventoryDto
+            List<InventoryDto> inventoryDtos = inventoryModel.Select(inventoryItem => new InventoryDto
             {
-                SessionId = inventoryModel.SessionId,
-                UserId = inventoryModel.UserId,
-                Items = inventoryModel.itemModels.Select(item => new InventoryItemDto
+                SessionId = inventoryItem.SessionId,
+                UserId = inventoryItem.UserId,
+                Items = inventoryItem.itemModels?.Select(item => new InventoryItemDto
                 {
                     Id = item.Id,
                     Name = item.Name,
                     Description = item.Description,
                     Type = item.Type,
                     Weight = item.Weight,
-                    Price = item.Price,
                     Amount = item.Amount,
+                    Price = item.Price,
                     SessionId = item.sessionId
                 }).ToList()
-            };
+            }).ToList();
 
-            _signalRHubService.UpdateInventory(inventoryDto);
+            _signalRHubService.UpdateInventory(inventoryDtos);
         }
 
         [HttpDelete("{sessionId}/{userId}/{itemId}")]
