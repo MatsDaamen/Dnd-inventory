@@ -92,9 +92,9 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
         dotnet tool install --global dotnet-coverage
-        dir /ad
+        ls
         pushd Dnd-Inventory
-        dir /ad
+        ls
         .\.sonar\scanner\dotnet-sonarscanner begin /k:"MatsDaamen_Dnd-inventory"
         /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
         /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
