@@ -74,7 +74,7 @@ jobs:
       id: cache-sonar-scanner
       uses: actions/cache@v3
       with:
-        path: .\.sonar\scanner
+        path: ~\.sonar\scanner
         key: ${{ runner.os }}-sonar-scanner
         restore-keys: ${{ runner.os }}-sonar-scanner
     - name: Install SonarCloud scanner
