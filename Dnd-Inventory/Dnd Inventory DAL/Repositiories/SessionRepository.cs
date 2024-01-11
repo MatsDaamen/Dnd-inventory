@@ -6,7 +6,7 @@ namespace Dnd_Inventory_DAL.Repositiories
 {
     public class SessionRepository : ISessionRepository
     {
-        private readonly readonly SessionDbContext _db;
+        private readonly SessionDbContext _db;
 
         public SessionRepository(SessionDbContext db)
         {

@@ -11,7 +11,7 @@ namespace Dnd_Inventory_API.Controllers
     [ApiController]
     public class ItemController : ControllerBase
     {
-        private IItemService _itemService;
+        private readonly IItemService _itemService;
 
         public ItemController(IItemService itemService) 
         {
