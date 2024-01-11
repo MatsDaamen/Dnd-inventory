@@ -127,16 +127,22 @@ jobs:
         mysql root password: ${{ secrets.DB_PASS }}
         mysql database: 'dndtestinventory'
 
-    - name: Docker Compose
-      run: |
-        pushd docker
-        docker-compose up -d --build
-        popd
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore "Dnd-Inventory/Dnd Inventory.sln"
+    - name: Build
+      run: dotnet build "Dnd-Inventory/Dnd Inventory.sln" --no-restore 
 
     - name: Install dependencies
       run: |
-        docker exec 'dnd-inventory-front-end' npm install vitest
-        docker exec 'dnd-inventory-front-end' npx playwright install --with-deps
+        pushd dnd-inventory-front-end
+        npm install vitest
+        npx playwright install --with-deps
+        popd
         
     - name: Run Tests
-      run: docker exec 'dnd-inventory-front-end' npx playwright test
+      run: npx playwright test
