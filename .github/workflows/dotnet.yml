@@ -144,12 +144,6 @@ jobs:
         npm install vitest
         npx playwright install --with-deps
         popd
-    
-    - name: set up env file
-      run: |
-        pushd dnd-inventory-front-end
-        echo "${{ secrets.ENV_FILE }}" > .env
-        popd
         
     - name: Run Tests
       run: |
