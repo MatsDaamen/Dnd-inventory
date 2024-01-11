@@ -71,6 +71,12 @@ namespace Dnd_Inventory_API.Controllers
             _sessionService.Create(sessionModel);
         }
 
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _sessionService.Delete(id);
+        }
+
         [HttpPost("Join")]
         public void Join([FromBody]JoinRequestDto joinRequestDto)
         {
