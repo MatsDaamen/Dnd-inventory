@@ -15,7 +15,7 @@ test.describe.parallel('sessions and session page tests', () => {
 		const table = await page.innerText('#session-table');
 		expect(table).not.toBe('');
 	});
-	test('inventory table not to be empty', async ({ page }) => {
+	test('settings tab is not empty', async ({ page }) => {
 		await page.goto('/sessions/3');
 	
 		const tab = await page.innerText('#settings-tab');

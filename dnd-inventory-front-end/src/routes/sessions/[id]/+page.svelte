@@ -104,7 +104,7 @@
             </div>
         </TabItem>
         {#if session.createdBy === userId}
-        <TabItem open={session.createdBy === userId} title="members and invite code">
+        <TabItem open={session.createdBy === userId} title="members and invite code" id="settings-tab">
             <div class="flex flex-col md:flex-row gap-2 md:gap-0 md:justify-between">
                 <div class="block">
                     <Table>
