@@ -143,6 +143,10 @@ jobs:
         pushd dnd-inventory-front-end
         npm install vitest
         npx playwright install --with-deps
+        popd
         
     - name: Run Tests
-      run: npx playwright test
+      run: |
+        pushd dnd-inventory-front-end
+        npx playwright test
+        popd
