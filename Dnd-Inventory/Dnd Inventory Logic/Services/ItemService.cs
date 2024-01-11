@@ -18,9 +18,9 @@ namespace Dnd_Inventory_Logic.Services
             _ItemRepository = itemRepository;
         }
 
-        public void Create(ItemModel item)
+        public int Create(ItemModel item)
         {
-            _ItemRepository.Create(item);
+            return _ItemRepository.Create(item);
         }
 
         public ItemModel Get(int id)

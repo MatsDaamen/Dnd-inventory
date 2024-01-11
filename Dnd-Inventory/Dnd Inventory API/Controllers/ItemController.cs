@@ -57,7 +57,7 @@ namespace Dnd_Inventory_API.Controllers
         }
 
         [HttpPost]
-        public void Create(ItemCreationRequest itemCreationRequest)
+        public int Create(ItemCreationRequest itemCreationRequest)
         {
             ItemModel itemModel = new ItemModel()
             {
@@ -70,7 +70,7 @@ namespace Dnd_Inventory_API.Controllers
                 sessionId = itemCreationRequest.SessionId
             };
 
-            _itemService.Create(itemModel);
+            return _itemService.Create(itemModel);
         }
     }
 }

@@ -13,6 +13,6 @@ namespace Dnd_Inventory_Logic.Interfaces.Services
 
         public List<ItemModel> GetAll(int sessionId);
 
-        public void Create(ItemModel item);
+        public int Create(ItemModel item);
     }
 }

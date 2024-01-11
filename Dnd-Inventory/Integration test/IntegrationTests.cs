@@ -1,3 +1,4 @@
+using Dnd_Inventory_API.Dtos.Item;
 using Dnd_Inventory_DAL;
 using Dnd_Inventory_DAL.Entities;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -85,17 +86,34 @@ namespace Integration_test
         public async Task CreateAndGetNewItem(string url)
         {
             // Arrange
-            //var client = _factory.CreateClient();
+            var client = _factory.CreateClient();
+            var ItemToBeCreated = new ItemDto
+            {
+                Name = "test",
+                Description = "test",
+                Type = "test",
+                Weight = 1,
+                Price = 1,
+                SessionId = 1
+            };
+            var httpContent = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(ItemToBeCreated), Encoding.UTF8, "application/json");
 
             // Act
-            //await client.PostAsync(url, null);
+            var response = await client.PostAsync(url, httpContent);
+            
+            var result = await response.Content.ReadAsStringAsync();
 
-            //var response = await client.GetAsync(url);
+            ItemToBeCreated.Id = int.Parse(result);
 
-            //var result = await response.Content.ReadAsStringAsync();
+            response = await client.GetAsync(url + $"/{result}");
+
+            result = await response.Content.ReadAsStringAsync();
+
+            string expectedResult = Newtonsoft.Json.JsonConvert.SerializeObject(ItemToBeCreated).ToLower();
 
             // Assert
-            //response.EnsureSuccessStatusCode(); // Status Code 200-299
+            response.EnsureSuccessStatusCode(); // Status Code 200-299
+            Assert.Equal(expectedResult, result.ToLower());
         }
     }
 }

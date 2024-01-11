@@ -49,7 +49,7 @@ namespace Dnd_Inventory_DAL.Repositiories
             return itemModel;
         }
 
-        public void Create(ItemModel itemModel)
+        public int Create(ItemModel itemModel)
         {
             Item item = new Item
             {
@@ -64,6 +64,8 @@ namespace Dnd_Inventory_DAL.Repositiories
 
             _db.items.Add(item);
             _db.SaveChanges();
+
+            return item.Id;
         }
 
         public List<ItemModel> GetAllSessionItems(int sessionId)

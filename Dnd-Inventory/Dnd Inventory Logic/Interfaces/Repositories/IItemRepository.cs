@@ -7,6 +7,6 @@ namespace Dnd_Inventory_Logic.Interfaces.Repositories
         public ItemModel Get(int id);
         public List<ItemModel> GetAllSessionItems(int sessionId);
         public List<ItemModel> GetAll();
-        public void Create(ItemModel itemModel);
+        public int Create(ItemModel itemModel);
     }
 }
