@@ -55,7 +55,7 @@ namespace Dnd_Inventory_API.Controllers
             {
                 SessionId = inventoryItem.SessionId,
                 UserId = inventoryItem.UserId,
-                Items = inventoryItem.itemModels?.Select(item => new InventoryItemDto
+                Items = inventoryItem.itemModels.Select(item => new InventoryItemDto
                 {
                     Id = item.Id,
                     Name = item.Name,
@@ -88,7 +88,7 @@ namespace Dnd_Inventory_API.Controllers
             {
                 SessionId = inventoryItem.SessionId,
                 UserId = inventoryItem.UserId,
-                Items = inventoryItem.itemModels?.Select(item => new InventoryItemDto
+                Items = inventoryItem.itemModels.Select(item => new InventoryItemDto
                 {
                     Id = item.Id,
                     Name = item.Name,

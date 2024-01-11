@@ -16,13 +16,17 @@ namespace Integration_test
 
             var scopeFactory = factory.Services.GetService<IServiceScopeFactory>();
 
-            using (var scope = scopeFactory.CreateScope())
-            {
-                var Context = scope.ServiceProvider.GetService<SessionDbContext>();
+            if (scopeFactory is not null)
+                using (var scope = scopeFactory.CreateScope())
+                {
+                    var Context = scope.ServiceProvider.GetService<SessionDbContext>();
 
-                DatabaseSeeder.Init(Context);
-                DatabaseSeeder.Seed();
-            }
+                    if (Context is not null)
+                    {
+                        DatabaseSeeder.Init(Context);
+                        DatabaseSeeder.Seed();
+                    }
+                }
         }
 
         [Theory]

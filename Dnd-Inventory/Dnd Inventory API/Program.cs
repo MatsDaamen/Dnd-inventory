@@ -130,7 +130,8 @@ using (var scope = app.Services.CreateScope())
     var service = scope.ServiceProvider;
     var context = service.GetService<SessionDbContext>();
 
-    context.Database.EnsureCreated();
+    if (context is not null)
+        context.Database.EnsureCreated();
 }
 
 app.Run();
