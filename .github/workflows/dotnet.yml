@@ -112,6 +112,7 @@ jobs:
         
   end-to-end-tests:
     name: End to End Tests
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -142,7 +143,6 @@ jobs:
         pushd dnd-inventory-front-end
         npm install vitest
         npx playwright install --with-deps
-        popd
         
     - name: Run Tests
       run: npx playwright test
