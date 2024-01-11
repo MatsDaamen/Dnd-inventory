@@ -35,7 +35,7 @@
 	};
 </script>
 
-<Table>
+<Table data-testid="inventory">
     <TableHead class="text-white dark:text-white bg-primary-500">
         <TableHeadCell>{inventory?.ownerName}'s inventory</TableHeadCell>
         <TableHeadCell>amount</TableHeadCell>

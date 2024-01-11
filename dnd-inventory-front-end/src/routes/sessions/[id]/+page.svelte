@@ -96,7 +96,7 @@
                     </div>
                 {:else}
                     <div class="block">
-                        <InventoryTable inventory={inventories.find(inv => inv.userId == userId)} sessionUsers={session.users} />
+                        <InventoryTable data-testid="inventory" inventory={inventories.find(inv => inv.userId == userId)} sessionUsers={session.users} />
                     </div>
                 {/if}
                 <div class="block">
@@ -104,7 +104,7 @@
             </div>
         </TabItem>
         {#if session.createdBy === userId}
-        <TabItem open={session.createdBy === userId} title="members and invite code" id="settings-tab">
+        <TabItem open={session.createdBy === userId} title="members and invite code">
             <div class="flex flex-col md:flex-row gap-2 md:gap-0 md:justify-between">
                 <div class="block">
                     <Table>

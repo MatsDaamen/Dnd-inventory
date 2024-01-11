@@ -40,7 +40,7 @@
             </Button>
         </div>
     </div>
-    <Table>
+    <Table data-testid="session-table">
         <TableHead class="bg-primary-500">
             <TableHeadCell>Name</TableHeadCell>
             <TableHeadCell>session owner</TableHeadCell>
