@@ -147,11 +147,13 @@ jobs:
 
     - name: 'Create env file'
       run: |
+        pushd dnd-inventory-front-end
         touch .env
         echo VITE_AUTH0_ID=S49ORpskotleEqIPKgPYWIzKt5OC9KHn >> .env
         echo VITE_AUTH0_DOMAIN=https://dev-alag4swf4bg4ii2e.us.auth0.com >> .env
         echo VITE_AUTH0_SECRET=O4wfecJeMBfvIZQAfOPli8JtLdXUibEGTJUJ-VaRDHWy7sH-phO1vYzbONDyxzVC >> .env
         cat .env
+        popd
         
     - name: Run Tests
       run: |
