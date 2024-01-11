@@ -128,7 +128,10 @@ jobs:
         mysql database: 'dndtestinventory'
 
     - name: Docker Compose
-      run: pushd docker docker-compose up -d --build popd
+      run: |
+        pushd docker
+        docker-compose up -d --build
+        popd
 
     - name: Install dependencies
       run: |
