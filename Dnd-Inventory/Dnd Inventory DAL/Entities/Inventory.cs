@@ -10,7 +10,7 @@ namespace Dnd_Inventory_DAL.Entities
 {
     public class Inventory
     {
-        public string? UserId { get; set; }
+        public string UserId { get; set; }
 
         public int SessionId { get; set; }
 

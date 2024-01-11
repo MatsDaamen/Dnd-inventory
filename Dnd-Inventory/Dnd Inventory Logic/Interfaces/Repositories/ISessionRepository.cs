@@ -15,7 +15,7 @@ namespace Dnd_Inventory_Logic.Interfaces.Repositories
 
         public SessionModel Get(int sessionId);
 
-        public int CreateSession(SessionModel session);
+        public int CreateSession(SessionModel sessionModel);
 
         public void JoinSession(int sessionId, string userId);
 

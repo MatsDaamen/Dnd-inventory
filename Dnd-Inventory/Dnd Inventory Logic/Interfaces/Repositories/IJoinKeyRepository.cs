@@ -11,7 +11,7 @@ namespace Dnd_Inventory_Logic.Interfaces.Repositories
     {
         public List<SessionJoinKeyModel> GetAllJoinKeys(int sessionId);
 
-        public Guid CreateSessionJoinKey(SessionJoinKeyModel sessionJoinKey);
+        public Guid CreateSessionJoinKey(SessionJoinKeyModel sessionJoinKeyModel);
 
         public void UpdateJoinKey(SessionJoinKeyModel sessionJoinKey);
 

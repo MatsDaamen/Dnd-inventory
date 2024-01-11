@@ -16,9 +16,9 @@ namespace Dnd_Inventory_API.authorization
                 return Task.CompletedTask;
 
             var scopes = context.User
-              .FindFirst(c => c.Type == "scope" && c.Issuer == $"https://{requirement.Issuer}/").Value.Split(' ');
+              .FindFirst(c => c.Type == "scope" && c.Issuer == $"https://{requirement.Issuer}/")?.Value.Split(' ');
 
-            if (scopes.Any(s => s == requirement.Scope))
+            if (scopes != null && scopes.Any(s => s == requirement.Scope))
                 context.Succeed(requirement);
 
             return Task.CompletedTask;

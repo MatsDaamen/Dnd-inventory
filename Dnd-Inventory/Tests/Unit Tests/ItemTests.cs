@@ -7,8 +7,6 @@ namespace Tests
     [TestClass]
     public class ItemTests
     {
-        private IItemService _itemService;
-
         [TestInitialize]
         public void initialization()
         {
@@ -89,7 +87,7 @@ namespace Tests
                 }
             });
 
-            _itemService = new ItemService(itemRepositoryMock.Object);
+            IItemService _itemService = new ItemService(itemRepositoryMock.Object);
 
             List<ItemModel> itemModels = _itemService.GetAll(sessionId);
 

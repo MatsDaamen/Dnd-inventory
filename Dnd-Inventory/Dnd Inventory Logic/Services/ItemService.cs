@@ -11,7 +11,7 @@ namespace Dnd_Inventory_Logic.Services
 {
     public class ItemService : IItemService
     {
-        private IItemRepository _ItemRepository;
+        private readonly IItemRepository _ItemRepository;
 
         public ItemService(IItemRepository itemRepository)
         {

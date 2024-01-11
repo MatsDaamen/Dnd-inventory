@@ -7,8 +7,6 @@ namespace Tests
     [TestClass]
     public class SessionTests
     {
-        private ISessionService _sessionService;
-
         [TestInitialize]
         public void initialization()
         {
@@ -24,7 +22,7 @@ namespace Tests
 
             sessionStub.Setup(x => x.Get(1)).Returns(new SessionModel(1, "test", "1"));
 
-            _sessionService = new SessionService(sessionStub.Object,joinKeyStub.Object, sessionUserStub.Object);
+            ISessionService _sessionService = new SessionService(sessionStub.Object,joinKeyStub.Object, sessionUserStub.Object);
 
             SessionJoinKeyModel joinKey = new SessionJoinKeyModel
             {

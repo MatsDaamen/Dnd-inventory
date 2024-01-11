@@ -8,7 +8,7 @@ namespace Dnd_Inventory_DAL.Repositiories
 {
     public class InventoryRepository : IInventoryRepository
     {
-        private SessionDbContext _db;
+        private readonly SessionDbContext _db;
 
         public InventoryRepository(SessionDbContext db) 
         {
@@ -63,8 +63,6 @@ namespace Dnd_Inventory_DAL.Repositiories
                     Items = item.Items
                 })
                 .ToList();
-
-            List<Inventory> inv = _db.inventories.ToList();
 
             List<InventoryModel> inventoryModel = inventory.Select(inventoryItem => new InventoryModel
             {

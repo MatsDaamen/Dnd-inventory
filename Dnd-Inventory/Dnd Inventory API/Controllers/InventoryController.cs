@@ -12,8 +12,8 @@ namespace Dnd_Inventory_API.Controllers
     [ApiController]
     public class InventoryController
     {
-        private IInventoryService _inventoryService;
-        private ISignalRHubService _signalRHubService;
+        private readonly IInventoryService _inventoryService;
+        private readonly ISignalRHubService _signalRHubService;
 
         public InventoryController(IInventoryService inventoryService, ISignalRHubService signalRHubService) 
         {

@@ -4,11 +4,10 @@ namespace Dnd_Inventory_API.WebSocket
 {
     public class InventoryHub : Hub
     {
-        private ISignalRHubService _signalRHubService;
 
-        public InventoryHub(ISignalRHubService signalRHubService)
+        public InventoryHub()
         {
-            _signalRHubService = signalRHubService;
+
         }
 
         public void OnConnection(string userId, string clientId)

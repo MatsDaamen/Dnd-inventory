@@ -6,11 +6,11 @@ using System.Text;
 
 namespace Integration_test
 {
-    public class IntegrationTests : IClassFixture<CustomWebApplicationFactory<dndInventoryApi>>
+    public class IntegrationTests : IClassFixture<CustomWebApplicationFactory<DndInventoryApi>>
     {
-        private readonly CustomWebApplicationFactory<dndInventoryApi> _factory;
+        private readonly CustomWebApplicationFactory<DndInventoryApi> _factory;
 
-        public IntegrationTests(CustomWebApplicationFactory<dndInventoryApi> factory)
+        public IntegrationTests(CustomWebApplicationFactory<DndInventoryApi> factory)
         {
             _factory = factory;
 

@@ -6,9 +6,9 @@ namespace Dnd_Inventory_Logic.Services
 {
     public class SessionService : ISessionService
     {
-        private ISessionRepository _sessionRepository;
-        private IJoinKeyRepository _joinKeyRepository;
-        private ISessionUsersRepository _sessionUsersRepository;
+        private readonly ISessionRepository _sessionRepository;
+        private readonly IJoinKeyRepository _joinKeyRepository;
+        private readonly ISessionUsersRepository _sessionUsersRepository;
 
         public SessionService(ISessionRepository sessionRepository, IJoinKeyRepository joinKeyRepository, ISessionUsersRepository usersRepository) 
         {

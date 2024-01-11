@@ -2,7 +2,7 @@
 
 namespace Dnd_Inventory_API.Dtos.Session.GET
 {
-    public class SessionDTO
+    public class SessionDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -6,15 +6,13 @@ namespace Dnd_Inventory_Logic.Services
 {
     public class InventoryService : IInventoryService
     {
-        private IInventoryRepository _inventoryRepository;
+        private readonly IInventoryRepository _inventoryRepository;
 
-        private ISessionService _sessionService;
-        private IItemService _itemService;
+        private readonly ISessionService _sessionService;
 
-        public InventoryService(IInventoryRepository inventoryRepository, IItemService itemService, ISessionService sessionService)
+        public InventoryService(IInventoryRepository inventoryRepository, ISessionService sessionService)
         {
             _inventoryRepository = inventoryRepository;
-            _itemService = itemService;
             _sessionService = sessionService;
         }
 

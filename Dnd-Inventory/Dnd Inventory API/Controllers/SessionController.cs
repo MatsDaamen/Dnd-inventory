@@ -14,7 +14,7 @@ namespace Dnd_Inventory_API.Controllers
     [ApiController]
     public class SessionController : ControllerBase
     {
-        private ISessionService _sessionService;
+        private readonly ISessionService _sessionService;
 
         public SessionController(ISessionService sessionService)
         {
@@ -22,11 +22,11 @@ namespace Dnd_Inventory_API.Controllers
         }
 
         [HttpGet]
-        public List<SessionDTO> Get([FromQuery]string? userId)
+        public List<SessionDto> Get([FromQuery]string? userId)
         {
             List<SessionModel> sessionModels = _sessionService.Get(userId);
                 
-            List<SessionDTO> sessionDTOs = sessionModels.Select(session => new SessionDTO
+            List<SessionDto> sessionDTOs = sessionModels.Select(session => new SessionDto
             {
                 Id = session.Id,
                 Name = session.Name,
@@ -37,11 +37,11 @@ namespace Dnd_Inventory_API.Controllers
         }
 
         [HttpGet("{id}")]
-        public SessionDTO Get(int id)
+        public SessionDto Get(int id)
         {
             SessionModel session = _sessionService.Get(id);
 
-            SessionDTO sessionDTO = new SessionDTO
+            SessionDto sessionDTO = new SessionDto
             {
                 Id = session.Id,
                 Name = session.Name,

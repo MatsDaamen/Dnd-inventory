@@ -20,7 +20,8 @@ namespace Integration_test
                     d => d.ServiceType ==
                         typeof(DbContextOptions<SessionDbContext>));
 
-                services.Remove(dbContextDescriptor);
+                if(dbContextDescriptor is not null)
+                    services.Remove(dbContextDescriptor);
 
                 // database context
                 IConfigurationRoot configuration = new ConfigurationBuilder()
