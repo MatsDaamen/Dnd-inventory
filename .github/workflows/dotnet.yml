@@ -78,6 +78,34 @@ jobs:
         key: ${{ runner.os }}-sonar-scanner
         restore-keys: ${{ runner.os }}-sonar-scanner
 
+  end-to-end-tests:
+    name: End to End Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup MySQL
+      uses: mirromutth/mysql-action@v1.1
+      with:
+        host port: 3307
+        container port: 3307
+        mysql user: 'root'
+        mysql root password: ${{ secrets.DB_PASS }}
+        mysql database: 'dndtestinventory'
+
+    - name: Docker Compose
+      run: docker-compose up -d --build
+
+    - name: Install dependencies
+      run: |
+        docker exec 'dnd-inventory-front-end' npm install vitest
+        docker exec 'dnd-inventory-front-end' npx playwright install --with-deps
+        
+    - name: Run Tests
+      run: docker exec 'dnd-inventory-front-end' npx playwright test
+
     - name: Install SonarCloud scanner
       if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
       run: |
