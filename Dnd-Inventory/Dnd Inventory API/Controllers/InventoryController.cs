@@ -74,7 +74,7 @@ namespace Dnd_Inventory_API.Controllers
         [HttpPost]
         public void Post(AddItemRequest request)
         {
-                _inventoryService.AddItem(request.ItemId, request.SessionId, request.UserId, request.Amount);
+            _inventoryService.AddItem(request.ItemId, request.SessionId, request.UserId, request.Amount);
         }
 
         [HttpPost("transfer")]
