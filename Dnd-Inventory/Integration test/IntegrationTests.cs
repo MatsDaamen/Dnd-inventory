@@ -154,8 +154,8 @@ namespace Integration_test
         }
 
         [Theory]
-        [InlineData("/api/inventory", "/api/item")]
-        public async Task UpdateAndTransferIventoryItem(string invUrl, string itemUrl)
+        [InlineData("/api/inventory")]
+        public async Task UpdateAndTransferIventoryItem(string invUrl)
         {
             // Arrange
             var sessionId = 2;
