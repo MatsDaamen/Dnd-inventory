@@ -61,6 +61,9 @@
 
             let newInventories : inventory[] = JSON.parse(inventory);
 
+            if(inventories.some(x => newInventories.some(y => x.userId == y.userId)))
+                return;
+
             if(session.createdBy != userId)
                 newInventories = newInventories.splice(0, newInventories.length, newInventories.find(inv => inv.userId == userId))
 
