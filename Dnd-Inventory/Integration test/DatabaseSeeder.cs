@@ -33,6 +33,8 @@ namespace Integration_test
                     new SessionUsers { SessionId = 2, UserId = "7777e4921336ad0c552c2ebb" }
                 );
 
+            _db.JoinKeys.Add(new SessionJoinKey { JoinKey = Guid.Parse("0662f3d1-2744-43db-bf39-e941ae7a1fd4"), SessionId = 2, UsesLeft = 2});
+
             _db.items.AddRange(
                     new Item { 
                         Name = "test item 1", 

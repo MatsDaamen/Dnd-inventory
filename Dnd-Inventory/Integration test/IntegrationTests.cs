@@ -1,8 +1,12 @@
+using Azure;
 using Dnd_Inventory_API.Dtos.Inventory;
 using Dnd_Inventory_API.Dtos.Item;
+using Dnd_Inventory_API.Dtos.Session.GET;
+using Dnd_Inventory_API.Dtos.Session.JOIN;
 using Dnd_Inventory_DAL;
 using Dnd_Inventory_DAL.Entities;
 using Dnd_Inventory_Logic.DomainModels;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
@@ -82,6 +86,36 @@ namespace Integration_test
                     throw(new Exception($"response {i + 1} didn't have success status code", ex));
                 }
             }
+        }
+
+                [Theory]
+        [InlineData("/api/Session")]
+        public async Task TestSessionJoining(string url)
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+            var userId = "8888e4921336ad0c552c2ebb";
+            List<HttpResponseMessage> responses = new();
+            JoinRequestDto request = new JoinRequestDto
+            {
+                  userId = userId,
+                  sessionJoinKey = "0662f3d1-2744-43db-bf39-e941ae7a1fd4",
+            };
+
+            var httpContent = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+
+            var response1 = await client.PostAsync(url + "/Join", httpContent);
+
+            var response2 = await client.GetAsync(url + $"/{2}");
+
+            var result = await response2.Content.ReadAsStringAsync();
+
+            SessionDto session = Newtonsoft.Json.JsonConvert.DeserializeObject<SessionDto>(result);
+
+            response1.EnsureSuccessStatusCode();
+            response2.EnsureSuccessStatusCode();
+
+            Assert.Contains(session.Users, x => x.UserId == userId);
         }
 
         [Theory]
