@@ -156,7 +156,7 @@ jobs:
         echo VITE_HUB_URL=http://localhost:5254/hub >> .env
         echo VITE_AUTH_API_TOKEN=${{secrets.VITE_TOKEN}} >> .env
         cat .env
-        netstat -tnlp | grep :5254
+        netstat -tnlp
         popd
         
     - name: Run Tests
