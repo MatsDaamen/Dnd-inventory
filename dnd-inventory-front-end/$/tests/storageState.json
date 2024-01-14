@@ -1,0 +1,85 @@
+{
+  "cookies": [
+    {
+      "name": "authjs.csrf-token",
+      "value": "70635248fded62545d1007787519c6c35e03e4d1c18454bd008f65cca8f85a80%7C1db5486a6136a3c1e0ec5418d7acaa3736cb30c74a34874e17ab026d44388403",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "authjs.callback-url",
+      "value": "http%3A%2F%2Flocalhost%3A4173%2Flogin",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__cf_bm",
+      "value": "HeYyph5YwLx_UOG2_QxgRoLQroE7irMYOJNRlZMsfoo-1705268584-1-AVrM5/6Yk1yj5gGZwcvGoODepRdWnvIkuV/2NGZ5p0/C4XYACawmiZtKaNmB7h4ZjSmlULTaoR4b5+Y9BB5dAvc=",
+      "domain": ".us.auth0.com",
+      "path": "/",
+      "expires": 1705270384.780584,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "did",
+      "value": "s%3Av0%3Ae5f032b0-b325-11ee-ab57-ad5643d95770%3Ab3d3ab5f37164882b494492ead414dbd5e59ec81a4f074dccd5bb9397b758be3.rK%2FyUzLWBpI%2FK%2FF2w%2Fx39U%2FaJ29yRuSAsFJBBPBXULQ",
+      "domain": "dev-alag4swf4bg4ii2e.us.auth0.com",
+      "path": "/",
+      "expires": 1736826185.982525,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "did_compat",
+      "value": "s%3Av0%3Ae5f032b0-b325-11ee-ab57-ad5643d95770%3Ab3d3ab5f37164882b494492ead414dbd5e59ec81a4f074dccd5bb9397b758be3.rK%2FyUzLWBpI%2FK%2FF2w%2Fx39U%2FaJ29yRuSAsFJBBPBXULQ",
+      "domain": "dev-alag4swf4bg4ii2e.us.auth0.com",
+      "path": "/",
+      "expires": 1736826185.982626,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "auth0",
+      "value": "s%3A-Fh_1jU7NNN0KzG5VASdNje0kfXSDFLP.6z9xPUT2icsSHWbNR%2Bj1ccWbYMIULLT%2BjO%2BL0R1GqM4",
+      "domain": "dev-alag4swf4bg4ii2e.us.auth0.com",
+      "path": "/",
+      "expires": 1705527786.609264,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "auth0_compat",
+      "value": "s%3A-Fh_1jU7NNN0KzG5VASdNje0kfXSDFLP.6z9xPUT2icsSHWbNR%2Bj1ccWbYMIULLT%2BjO%2BL0R1GqM4",
+      "domain": "dev-alag4swf4bg4ii2e.us.auth0.com",
+      "path": "/",
+      "expires": 1705527786.609334,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "authjs.session-token",
+      "value": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..m1TwTbCY3aU10NBr.T77yIDp7ZW-PzlPHSq8XJxjjEBx0HPnJdV4uFRjORg6IuVKL9a7Y8IWSPGpwlFGq7Ybx82fgKC93k3ZCFDj4_VdYnmeMO3UdJUIqea-ACfnYlnFD2Sov3i8lUh5IKv49tWraMXQs5jdsBRFXuQb6g2WcyYoZZKGrF4Dl8GC2lTXfrEUasA_if2fG4NdHPOMipTvP-5nJWPHp5ysuPQJvL8L_YL9M7cvwdiXX4714inzZ2gvFxgc3af7rYOVDUaFrLK90soyyiZ31TcvoUM2bh1EunOxoJwXQoK2j84l_CkhyHtqnqoWcT2iM2OgF2WKtst9pzYwojuzDdUyGaNkaYQblZo6BzQcmOiUmrecj-_gKjavRTNAiaRIw-LaJNHgahbReQzdEEx8YJa_-EA.Om91EvZoP8pobPbaRLaVGQ",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1705270386.944397,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": []
+}

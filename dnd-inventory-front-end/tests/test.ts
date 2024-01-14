@@ -7,7 +7,7 @@ test.describe.parallel('sessions and session page tests', () => {
 
 		let sessionName = "testSession";
 
-		await page.context().storageState({ path: 'storageState.json' });
+		await page.context().storageState({ path: '$/tests/storageState.json' });
 
 		await page.goto('/sessions');
 	
@@ -22,7 +22,7 @@ test.describe.parallel('sessions and session page tests', () => {
 	});
 	test('inventory table not to be empty', async ({ page }) => {
 
-		await page.context().storageState({ path: 'storageState.json' });
+		await page.context().storageState({ path: '$/tests/storageState.json' });
 
 		await page.goto('/sessions/3');
 	
@@ -31,7 +31,7 @@ test.describe.parallel('sessions and session page tests', () => {
 	});
 	test('settings tab is not empty', async ({ page }) => {
 
-		await page.context().storageState({ path: 'storageState.json' });
+		await page.context().storageState({ path: '$/tests/storageState.json' });
 
 		await page.goto('/sessions/3');
 	
