@@ -30,7 +30,7 @@ IConfigurationRoot configuration = new ConfigurationBuilder()
 
 builder.Services.AddDbContext<SessionDbContext>(
         options =>
-        options.UseMySQL(configuration.GetConnectionString("Default"))
+        options.UseMySQL(configuration.GetConnectionString("Test"))
         );
 
 // logic layer
