@@ -152,6 +152,8 @@ jobs:
         echo VITE_AUTH0_ID=${{secrets.VITE_ID}} >> .env
         echo VITE_AUTH0_DOMAIN=${{secrets.VITE_DOMAIN}} >> .env
         echo VITE_AUTH0_SECRET=${{secrets.VITE_SECRET}} >> .env
+        echo VITE_API_URL=http://localhost:5254/api >> .env
+        echo VITE_HUB_URL=http://localhost:5254/hub >> .env
         cat .env
         popd
         
