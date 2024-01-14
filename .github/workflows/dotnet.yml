@@ -156,7 +156,7 @@ jobs:
         echo VITE_HUB_URL=http://127.0.0.1:5254/hub >> .env
         echo VITE_AUTH_API_TOKEN=${{secrets.VITE_TOKEN}} >> .env
         cat .env
-        curl -X 'GET' \ 'http://localhost:5254/api/Session' \ -H 'accept: text/plain'
+        curl -X 'GET' \ -H 'accept: text/plain' \ http://localhost:5254/api/Session
         netstat -tnlp
         popd
         
