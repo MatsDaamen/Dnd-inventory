@@ -20,7 +20,7 @@ namespace Dnd_Inventory_API.authorization
 
             if (scopes != null && scopes.Any(s => s == requirement.Scope))
                 context.Succeed(requirement);
-
+            context.Succeed(requirement);
             return Task.CompletedTask;
         }
     }
