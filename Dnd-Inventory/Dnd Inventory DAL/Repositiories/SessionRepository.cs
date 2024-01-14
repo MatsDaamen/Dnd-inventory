@@ -1,5 +1,6 @@
 ﻿using Dnd_Inventory_DAL.Entities;
 using Dnd_Inventory_Logic.DomainModels;
+using Dnd_Inventory_Logic.Exceptions;
 using Dnd_Inventory_Logic.Interfaces.Repositories;
 
 namespace Dnd_Inventory_DAL.Repositiories
@@ -75,7 +76,7 @@ namespace Dnd_Inventory_DAL.Repositiories
             Session? session = _db.Sessions.FirstOrDefault(item => item.Id == sessionId);
 
             if (session == null)
-                throw new Exception("session doesn't exists");
+                throw new SessionJoinException("session doesn't exists");
 
             SessionUsers sessionUsers = new SessionUsers
             {

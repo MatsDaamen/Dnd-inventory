@@ -40,7 +40,7 @@
             </Button>
         </div>
     </div>
-    <Table data-testid="session-table">
+    <Table>
         <TableHead class="bg-primary-500">
             <TableHeadCell>Name</TableHeadCell>
             <TableHeadCell>session owner</TableHeadCell>
@@ -48,7 +48,7 @@
         </TableHead>
         <TableBody>
             {#each sessions as session}
-            <TableBodyRow>
+            <TableBodyRow data-testid="session-table">
                 <TableBodyCell>{session.name}</TableBodyCell>
                 <TableBodyCell>{session.createrName}</TableBodyCell>
                 <TableBodyCell>
@@ -66,8 +66,7 @@
         open={showCreateModal}
         on:close={() => showCreateModal = false}>
         <form action="?/create" method="post">
-            <p>Name:</p>
-            <input name="sessionName" type="text"/>
+            <label>Name: <input name="sessionName" type="text"/></label>
             <input name="createdBy" type="hidden" value="{userId}"/>
             <Button type="submit" color="primary">Create</Button>
         </form>

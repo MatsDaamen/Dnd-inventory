@@ -1,8 +1,9 @@
+using Dnd_Inventory_Logic.Exceptions;
 using Dnd_Inventory_Logic.Interfaces.Services;
 using Dnd_Inventory_Logic.Services;
 using Moq;
 
-namespace Tests
+namespace Tests.Unit_Tests
 {
     [TestClass]
     public class SessionTests
@@ -11,6 +12,60 @@ namespace Tests
         public void initialization()
         {
             
+        }
+
+        [TestMethod]
+        public void TestGetCollection()
+        {
+            var sessionStub = new Mock<ISessionRepository>();
+            var sessionUserStub = new Mock<ISessionUsersRepository>();
+            var joinKeyStub = new Mock<IJoinKeyRepository>();
+
+            int sessionId = 1;
+
+            SessionModel expectedSession = new SessionModel(sessionId, "test", "userId")
+            {
+                SessionJoinKeys = new List<SessionJoinKeyModel>
+                {
+                    new SessionJoinKeyModel
+                    {
+                        Id = 1,
+                        SessionId = sessionId,
+                        JoinKey = new Guid()
+                    },
+                    new SessionJoinKeyModel
+                    {
+                        Id = 2,
+                        SessionId = sessionId,
+                        JoinKey = new Guid()
+                    }
+                },
+                SessionUsers = new List<SessionUserModels>
+                {
+                    new SessionUserModels
+                    {
+                        SessionId = sessionId,
+                        UserId = "user 1"
+                    },
+                    new SessionUserModels
+                    {
+                        SessionId = sessionId,
+                        UserId = "user 2"
+                    }
+                }
+            };
+            
+            sessionStub.Setup(x => x.Get(sessionId)).Returns(expectedSession);
+            joinKeyStub.Setup(x => x.GetAllJoinKeys(sessionId)).Returns(expectedSession.SessionJoinKeys);
+            sessionUserStub.Setup(x => x.GetAllBySessionId(sessionId)).Returns(expectedSession.SessionUsers);
+
+
+            ISessionService _sessionService = new SessionService(sessionStub.Object, joinKeyStub.Object, sessionUserStub.Object);
+
+
+            SessionModel sessionModel = _sessionService.Get(sessionId);
+
+            Assert.AreEqual(expectedSession, sessionModel);
         }
 
         [TestMethod]
@@ -31,7 +86,7 @@ namespace Tests
                 JoinKey = Guid.NewGuid()
             };
 
-            Assert.ThrowsException<Exception>(() => _sessionService.CreateJoinKey(joinKey, "10"));
+            Assert.ThrowsException<JoinKeyCreationExecption>(() => _sessionService.CreateJoinKey(joinKey, "10"));
         }
 
         [TestMethod]

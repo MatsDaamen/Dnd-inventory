@@ -1,5 +1,6 @@
 ﻿using Dnd_Inventory_DAL.Entities;
 using Dnd_Inventory_Logic.DomainModels;
+using Dnd_Inventory_Logic.Exceptions;
 using Dnd_Inventory_Logic.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
@@ -61,7 +62,7 @@ namespace Dnd_Inventory_DAL.Repositiories
             SessionJoinKey? joinKey = _db.JoinKeys.FirstOrDefault(joinkey => joinkey.JoinKey == sessionJoinKey);
 
             if (joinKey is null || joinKey.UsesLeft <= 0)
-                throw new Exception("joinKey not valid");
+                throw new SessionJoinException("joinKey not valid");
 
             SessionJoinKeyModel joinKeyModel = new SessionJoinKeyModel()
             {

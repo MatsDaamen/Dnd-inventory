@@ -1,4 +1,5 @@
 ﻿using Dnd_Inventory_Logic.DomainModels;
+using Dnd_Inventory_Logic.Exceptions;
 using Dnd_Inventory_Logic.Interfaces.Repositories;
 using Dnd_Inventory_Logic.Interfaces.Services;
 
@@ -52,7 +53,7 @@ namespace Dnd_Inventory_Logic.Services
             SessionModel session = Get(sessionJoinKey.SessionId);
 
             if (session.CreatedBy != createdBy)
-                throw new Exception("not owner of session");
+                throw new JoinKeyCreationExecption("not owner of session");
 
             sessionJoinKey.JoinKey = Guid.NewGuid();
 

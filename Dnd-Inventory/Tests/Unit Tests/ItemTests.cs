@@ -2,7 +2,7 @@
 using Dnd_Inventory_Logic.Services;
 using Moq;
 
-namespace Tests
+namespace Tests.Unit_Tests
 {
     [TestClass]
     public class ItemTests
@@ -92,6 +92,53 @@ namespace Tests
             List<ItemModel> itemModels = _itemService.GetAll(sessionId);
 
             Assert.IsTrue(itemModels.All(x => x.sessionId == sessionId));
+        }
+
+        [TestMethod]
+        public void testGet()
+        {
+            var itemRepositoryMock = new Mock<IItemRepository>();
+
+            int itemId = 1;
+
+            ItemModel expectedItem = new ItemModel
+            {
+                Id = itemId,
+                Name = "expected",
+                Description = "Test",
+                Type = "Test",
+                Price = 1,
+                Weight = 1,
+                Amount = 1
+            };
+
+            itemRepositoryMock.Setup(x => x.Get(itemId)).Returns(expectedItem);
+            itemRepositoryMock.Setup(x => x.Get(itemId + 1)).Returns(new ItemModel
+            {
+                Id = itemId + 1,
+                Name = "not expected",
+                Description = "Test",
+                Type = "Test",
+                Price = 1,
+                Weight = 1,
+                Amount = 1
+            });
+            itemRepositoryMock.Setup(x => x.Get(itemId + 2)).Returns(new ItemModel
+            {
+                Id = itemId + 3,
+                Name = "not expected",
+                Description = "Test",
+                Type = "Test",
+                Price = 1,
+                Weight = 1,
+                Amount = 1
+            });
+
+            IItemService _itemService = new ItemService(itemRepositoryMock.Object);
+
+            ItemModel itemModel = _itemService.Get(itemId);
+
+            Assert.AreEqual(expectedItem, itemModel);
         }
     }
 }
