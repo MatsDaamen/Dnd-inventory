@@ -1,7 +1,5 @@
 import { expect, test } from '@playwright/test';
 
-
-
 test.describe.parallel('sessions and session page tests', () => {
 	test('Session table not to be empty', async ({ page }) => {
 
