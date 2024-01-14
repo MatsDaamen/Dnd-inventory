@@ -15,7 +15,7 @@ namespace Dnd_Inventory_API.WebSocket
 
         public async Task UpdateInventory(List<InventoryDto> inventory)
         {
-            await _context.Clients.All.SendAsync("updateInventory", Newtonsoft.Json.JsonConvert.SerializeObject(inventory));
+            await _context.Clients.All.SendAsync("sendUpdateInventory", Newtonsoft.Json.JsonConvert.SerializeObject(inventory));
         }
     }
 }

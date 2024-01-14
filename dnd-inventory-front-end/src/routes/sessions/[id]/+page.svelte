@@ -57,21 +57,20 @@
 
         await hubconnection.invoke("OnConnection", userId, hubconnection.connectionId);
 
-        hubconnection.on("updateInventory", async (inventory : string) => {
+        hubconnection.on("sendUpdateInventory", async (inventory : string) => {
 
             let newInventories : inventory[] = JSON.parse(inventory);
 
-            if(inventories.some(x => newInventories.some(y => x.userId == y.userId)))
-                return;
+            if(newInventories.some(x => inventories.some(y => y.userId == x.userId))){
+                if(session.createdBy != userId)
+                    newInventories = newInventories.splice(0, newInventories.length, newInventories.find(inv => inv.userId == userId))
 
-            if(session.createdBy != userId)
-                newInventories = newInventories.splice(0, newInventories.length, newInventories.find(inv => inv.userId == userId))
-
-            for (let i = 0; i < newInventories.length; i++) {
-                newInventories[i].ownerName = await getUserName(newInventories[i].userId);
-            }
+                for (let i = 0; i < newInventories.length; i++) {
+                    newInventories[i].ownerName = await getUserName(newInventories[i].userId);
+                }
             
-            inventories = newInventories;
+                inventories = newInventories;
+            }
         });
 	});
 </script>
@@ -99,7 +98,7 @@
                     </div>
                 {:else}
                     <div class="block">
-                        <InventoryTable data-testid="inventory" inventory={inventories.find(inv => inv.userId == userId)} sessionUsers={session.users} />
+                        <InventoryTable inventory={inventories.find(inv => inv.userId == userId)} sessionUsers={session.users} />
                     </div>
                 {/if}
                 <div class="block">
