@@ -7,7 +7,7 @@ const config: PlaywrightTestConfig = {
 	},
 	use: {
         baseURL: 'http://localhost:4173/',
-        storageState: 'tests/storageState.json',
+        storageState: '/tests/storageState.json',
         trace: 'on-first-retry',
         ignoreHTTPSErrors: true,
     },
