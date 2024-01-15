@@ -139,8 +139,8 @@ jobs:
       run: |
         dotnet build "Dnd-Inventory/Dnd Inventory.sln" --no-restore 
         dotnet publish "Dnd-Inventory/Dnd Inventory.sln" -c Release -o ../dotnet-webapp -r linux-x64 --self-contained true /p:UseAppHost=true
-        ls
-        dotnet run "Dnd-Inventory/Dnd Inventory.sln"
+        ls ../dotnet-webapp
+        dotnet "../dotnet-webapp/Dnd Inventory API.dll"
 
     - name: Install dependencies
       run: |
