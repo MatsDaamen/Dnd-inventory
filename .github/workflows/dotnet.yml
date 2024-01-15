@@ -136,7 +136,7 @@ jobs:
 
     - uses: BerniWittmann/background-server-action@v1.1.1
       with:
-        command: ASPNETCORE_ENVIRONMENT=Testing dotnet run --project "Dnd-Inventory/Dnd Inventory API/Dnd Inventory API.csproj"
+        command: dotnet run --project "Dnd-Inventory/Dnd Inventory API/Dnd Inventory API.csproj"
         wait-on: http://127.0.0.1:5254
 
     - name: Install dependencies
