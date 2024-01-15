@@ -31,7 +31,6 @@ IConfigurationRoot configuration = new ConfigurationBuilder()
 
 if (builder.Environment.EnvironmentName == "Testing")
 {
-    Console.WriteLine("RUNNING TESTING DATABASE: " + configuration.GetConnectionString("Test"));
     builder.Services.AddDbContext<SessionDbContext>(
     options =>
     options.UseMySQL(configuration.GetConnectionString("Test"))
@@ -41,7 +40,7 @@ else
 {
     builder.Services.AddDbContext<SessionDbContext>(
     options =>
-    options.UseMySQL(configuration.GetConnectionString("Default"))
+    options.UseMySQL(configuration.GetConnectionString("Test"))
     );
 }
 // logic layer
