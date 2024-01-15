@@ -137,7 +137,7 @@ jobs:
     - name: Action run in background
       uses: miguelteixeiraa/action-run-in-background@v1
       with:
-        script: ASPNETCORE_ENVIRONMENT=testing dotnet run --project "Dnd-Inventory/Dnd Inventory API/Dnd Inventory API.csproj"
+        script: dotnet run --project "Dnd-Inventory/Dnd Inventory API/Dnd Inventory API.csproj" environment=testing
 
     - name: Install dependencies
       run: |
