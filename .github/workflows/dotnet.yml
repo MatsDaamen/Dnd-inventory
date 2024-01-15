@@ -134,11 +134,10 @@ jobs:
       with:
         dotnet-version: 6.0.x
 
-    - uses: BerniWittmann/background-server-action@v1.1.1
+    - name: Action run in background
+      uses: miguelteixeiraa/action-run-in-background@v1
       with:
-        start: dotnet run --project "Dnd-Inventory/Dnd Inventory API/Dnd Inventory API.csproj"
-        wait-for: http://127.0.0.1:5254
-        
+        script: dotnet run --project "Dnd-Inventory/Dnd Inventory API/Dnd Inventory API.csproj"
 
     - name: Install dependencies
       run: |
