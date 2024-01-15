@@ -133,10 +133,10 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
-    - name: Run
-      run: |
-        ASPNETCORE_ENVIRONMENT=Testing
-        dotnet run --project "Dnd-Inventory/Dnd Inventory API/Dnd Inventory API.csproj"
+
+    - uses: BerniWittmann/background-server-action@v1.1.1
+      with:
+        command: ASPNETCORE_ENVIRONMENT=Testing dotnet run --project "Dnd-Inventory/Dnd Inventory API/Dnd Inventory API.csproj"
 
     - name: Install dependencies
       run: |
