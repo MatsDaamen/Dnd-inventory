@@ -1,5 +1,17 @@
 services:
 
+  api:
+    build: ..\Dnd-Inventory
+    container_name: api
+    image: dotnet/sdk
+    ports:
+      - 5254:5254
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+      mysql-test-db:
+        condition: service_healthy
+
   mysql-db:
     container_name: dnd-inventory-mysql
     image: mysql/mysql-server:latest
@@ -27,7 +39,7 @@ services:
       - MYSQL_ROOT_PASSWORD=RootSqlHost
       - MYSQL_ROOT_HOST=%
     ports:
-      - '3307:3306'
+      - '3307:3307'
     volumes:
       - mysql-test-db:/var/lib/mysql
       - ./mysql-test-db/init.sql:/docker-entrypoint-initmysql-test-db.d/init.sql
