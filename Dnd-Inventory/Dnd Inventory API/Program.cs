@@ -29,7 +29,7 @@ IConfigurationRoot configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
 .Build();
 
-if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Testing")
+if (Environment.GetEnvironmentVariable("TestType") == "end2end")
 {
     builder.Services.AddDbContext<SessionDbContext>(
     options =>
@@ -140,8 +140,8 @@ using (var scope = app.Services.CreateScope())
     var service = scope.ServiceProvider;
     var context = service.GetService<SessionDbContext>();
 
-    if (context is not null)
-        context.Database.EnsureCreated();
+    //if (context is not null)
+        //context.Database.EnsureCreated();
 }
 
 app.Run();
