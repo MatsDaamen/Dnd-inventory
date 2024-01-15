@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,13 +27,22 @@ builder.Services.AddSwaggerGen();
 IConfigurationRoot configuration = new ConfigurationBuilder()
     .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
     .AddJsonFile("appsettings.json")
-    .Build();
+.Build();
 
-builder.Services.AddDbContext<SessionDbContext>(
-        options =>
-        options.UseMySQL(configuration.GetConnectionString("Default"))
-        );
-
+if (builder.Environment.EnvironmentName == "Testing")
+{
+    builder.Services.AddDbContext<SessionDbContext>(
+    options =>
+    options.UseMySQL(configuration.GetConnectionString("Test"))
+    );
+}
+else
+{
+    builder.Services.AddDbContext<SessionDbContext>(
+    options =>
+    options.UseMySQL(configuration.GetConnectionString("Default"))
+    );
+}
 // logic layer
 builder.Services.AddScoped<ISessionService, SessionService>();
 builder.Services.AddScoped<IInventoryService, InventoryService>();
