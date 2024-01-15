@@ -29,20 +29,12 @@ IConfigurationRoot configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
 .Build();
 
-if (Environment.GetEnvironmentVariable("TestType") == "end2end")
-{
-    builder.Services.AddDbContext<SessionDbContext>(
-    options =>
-    options.UseMySQL(configuration.GetConnectionString("Test"))
-    );
-}
-else
-{
-    builder.Services.AddDbContext<SessionDbContext>(
-    options =>
-    options.UseMySQL(configuration.GetConnectionString("Default"))
-    );
-}
+builder.Services.AddDbContext<SessionDbContext>(
+options =>
+options.UseMySQL(configuration.GetConnectionString("Default"))
+);
+
+
 // logic layer
 builder.Services.AddScoped<ISessionService, SessionService>();
 builder.Services.AddScoped<IInventoryService, InventoryService>();
@@ -140,8 +132,8 @@ using (var scope = app.Services.CreateScope())
     var service = scope.ServiceProvider;
     var context = service.GetService<SessionDbContext>();
 
-    //if (context is not null)
-        //context.Database.EnsureCreated();
+    if (context is not null)
+        context.Database.EnsureCreated();
 }
 
 app.Run();

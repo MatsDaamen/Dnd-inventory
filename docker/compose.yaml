@@ -31,24 +31,6 @@ services:
     volumes:
       - mysql-test-db:/var/lib/mysql
       - ./mysql-test-db/init.sql:/docker-entrypoint-initmysql-test-db.d/init.sql
-
-  api:
-    build: 
-      context: ./
-      dockerfile: ../Dnd-Inventory/Dockerfile
-    container_name: api
-    ports:
-      - 5254:5254
-    depends_on:
-      mysql-db:
-        condition: service_healthy
-    environment:
-      NODE_ENV: production
-      DB_HOST: mysql-db
-      DB_PORT: 3306
-      DB_USER: root
-      DB_PASSWORD: RootSqlHost
-      DB_NAME: dndinventory
       
 volumes:
   mysql-db:
