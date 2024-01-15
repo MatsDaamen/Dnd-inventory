@@ -133,14 +133,10 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore "Dnd-Inventory/Dnd Inventory.sln"
     - name: Build
       run: |
-        dotnet build "Dnd-Inventory/Dnd Inventory.sln" --no-restore 
         dotnet publish "Dnd-Inventory/Dnd Inventory.sln" -c Release -o ../dotnet-webapp -r linux-x64 --self-contained true /p:UseAppHost=true
-        ls ../dotnet-webapp
-        dotnet "../dotnet-webapp/Dnd Inventory API.dll"
+        dotnet run "../dotnet-webapp/Dnd Inventory API.dll" --no-restore
 
     - name: Install dependencies
       run: |
