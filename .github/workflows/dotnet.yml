@@ -92,11 +92,11 @@ jobs:
     - name: Setup MySQL
       uses: mirromutth/mysql-action@v1.1
       with:
-        host port: 3306
-        container port: 3306
+        host port: 3307
+        container port: 3307
         mysql user: 'root'
         mysql root password: ${{ secrets.DB_PASS }}
-        mysql database: 'dndinventory'
+        mysql database: 'dndtestinventory'
     - name: Build and analyze
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
@@ -122,11 +122,11 @@ jobs:
     - name: Setup MySQL
       uses: mirromutth/mysql-action@v1.1
       with:
-        host port: 3307
-        container port: 3307
+        host port: 3306
+        container port: 3306
         mysql user: 'root'
         mysql root password: ${{ secrets.DB_PASS }}
-        mysql database: 'dndtestinventory'
+        mysql database: 'dndinventory'
 
     - uses: actions/checkout@v4
     - name: Setup .NET
