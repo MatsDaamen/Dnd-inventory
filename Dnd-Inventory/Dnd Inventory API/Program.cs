@@ -29,7 +29,7 @@ IConfigurationRoot configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
 .Build();
 
-if (builder.Environment.EnvironmentName == "Testing")
+if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Testing")
 {
     builder.Services.AddDbContext<SessionDbContext>(
     options =>
