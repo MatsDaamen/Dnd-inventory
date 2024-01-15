@@ -45,11 +45,11 @@ jobs:
     - name: Setup MySQL
       uses: mirromutth/mysql-action@v1.1
       with:
-        host port: 3306
-        container port: 3306
+        host port: 3307
+        container port: 3307
         mysql user: 'root'
         mysql root password: ${{ secrets.DB_PASS }}
-        mysql database: 'dndinventory'
+        mysql database: 'dndtestinventory'
     - name: Restore dependencies
       run: dotnet restore "Dnd-Inventory/Integration test/Integration test.csproj"    
     - name: Tests
@@ -122,11 +122,11 @@ jobs:
     - name: Setup MySQL
       uses: mirromutth/mysql-action@v1.1
       with:
-        host port: 3307
-        container port: 3307
+        host port: 3306
+        container port: 3306
         mysql user: 'root'
         mysql root password: ${{ secrets.DB_PASS }}
-        mysql database: 'dndtestinventory'
+        mysql database: 'dndinventory'
 
     - uses: actions/checkout@v4
     - name: Setup .NET
