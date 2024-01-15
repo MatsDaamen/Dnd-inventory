@@ -17,10 +17,4 @@ test.describe.parallel('sessions and session page tests', () => {
 
 		await expect(table).toContainText(sessionName);
 	});
-	test('inventory table not to be empty', async ({ page }) => {
-		await page.context().storageState({ path: '$/tests/storageState.json' });
-	});
-	test('settings tab is not empty', async ({ page }) => {
-		await page.context().storageState({ path: '$/tests/storageState.json' });
-	});
 });
