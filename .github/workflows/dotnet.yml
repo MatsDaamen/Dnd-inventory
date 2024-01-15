@@ -134,7 +134,7 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Run
-      run: dotnet run --project "Dnd-Inventory/Dnd Inventory.sln"
+      run: dotnet run --project "Dnd-Inventory/Dnd Inventory API/Dnd Inventory API.csproj"
 
     - name: Install dependencies
       run: |
