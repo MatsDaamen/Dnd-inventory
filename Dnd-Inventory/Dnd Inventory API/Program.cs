@@ -40,7 +40,7 @@ else
 {
     builder.Services.AddDbContext<SessionDbContext>(
     options =>
-    options.UseMySQL(configuration.GetConnectionString("Test"))
+    options.UseMySQL(configuration.GetConnectionString("Default"))
     );
 }
 // logic layer
