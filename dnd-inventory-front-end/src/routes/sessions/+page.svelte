@@ -77,8 +77,7 @@
         open={showJoinModal}
         on:close={() => showJoinModal = false}>
         <form action="?/join" method="post">
-            <p>Join Key:</p>
-            <input name="joinkey" type="text"/>
+            <label>Join Key:<input name="joinkey" type="text"/></label>
             <input name="userid" type="hidden" value="{userId}"/>
             <Button type="submit" color="primary">Join</Button>
         </form>

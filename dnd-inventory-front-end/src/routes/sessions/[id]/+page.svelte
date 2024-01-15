@@ -153,7 +153,7 @@
                         <TableBody>
                             {#each session.joinKeys as joinCode}
                             <TableBodyRow>
-                                <TableBodyCell>{joinCode.joinKey}</TableBodyCell>
+                                <TableBodyCell data-testid="join-key">{joinCode.joinKey}</TableBodyCell>
                                 <TableBodyCell>{joinCode.usesLeft}</TableBodyCell>
                                 <TableBodyCell>
                                     <Button on:click={() => copyJoinCode(joinCode.joinKey)} color="primary">
@@ -194,8 +194,7 @@
     action="?/create" 
     method="post">
         <div class="flex gap-2">
-            <p>amount of uses:</p>
-            <input name="amountOfUses" type="number"/>
+            <label>amount of uses:<input name="amountOfUses" type="number"/></label>
         </div>
         <input name="sessionId" type="hidden" value="{session.id}"/>
         <input name="createdBy" type="hidden" value="{userId}"/>
