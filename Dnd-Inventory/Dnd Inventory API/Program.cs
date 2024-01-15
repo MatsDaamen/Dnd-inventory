@@ -31,11 +31,11 @@ IConfigurationRoot configuration = new ConfigurationBuilder()
 
 if (builder.Environment.EnvironmentName == "Testing")
 {
+    Console.WriteLine("RUNNING TESTING DATABASE: " + configuration.GetConnectionString("Test"));
     builder.Services.AddDbContext<SessionDbContext>(
     options =>
     options.UseMySQL(configuration.GetConnectionString("Test"))
     );
-    Console.WriteLine("RUNNING TESTING DATABASE: " + configuration.GetConnectionString("Test"));
 }
 else
 {
