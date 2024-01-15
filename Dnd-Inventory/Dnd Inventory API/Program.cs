@@ -35,6 +35,7 @@ if (builder.Environment.EnvironmentName == "Testing")
     options =>
     options.UseMySQL(configuration.GetConnectionString("Test"))
     );
+    Console.WriteLine("RUNNING TESTING DATABASE: " + configuration.GetConnectionString("Test"));
 }
 else
 {
