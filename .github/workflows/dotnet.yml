@@ -134,7 +134,7 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Run
-      run: dotnet run --project "../dotnet-webapp/Dnd Inventory API.dll" --no-restore
+      run: dotnet run --project "Dnd-Inventory/Dnd Inventory.sln" --no-restore
 
     - name: Install dependencies
       run: |
