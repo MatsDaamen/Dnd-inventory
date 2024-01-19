@@ -26,9 +26,13 @@ test.describe.serial('sessions and session page tests', () => {
 
 		await page.goto(await page.locator("a").last().getAttribute('href') ?? "");
 
+		await page.getByText(' members and invite code').click();
+
 		await page.getByRole('button', { name: 'create new code'}).click();
 		await page.getByLabel('amount of uses:').fill("1");
 		await page.getByRole('button', { name: 'Create', exact: true}).click();
+
+		await page.getByText(' members and invite code').click();
 
 		const joinTableEntry = await page.getByTestId("join-key").first();
 
