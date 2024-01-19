@@ -11,9 +11,10 @@
 		TableHeadCell,
         Toast,
         TabItem,
-        Tabs
+        Tabs,
+        Tooltip
 	} from 'flowbite-svelte';
-    import { PlusSolid, TrashBinSolid, ClipboardCheckSolid, InfoCircleSolid, ArrowLeftSolid, CheckCircleSolid } from 'flowbite-svelte-icons';
+    import { PlusSolid, TrashBinSolid, ClipboardCheckSolid, InfoCircleSolid, ArrowLeftSolid, CheckCircleSolid, UserCircleSolid, BriefcaseSolid } from 'flowbite-svelte-icons';
     import type { Session, joinKey } from '$lib/API/sessions';
     import { fly } from 'svelte/transition';
     import InventoryTable from '$lib/Components/InventoryTable.svelte';
@@ -76,7 +77,6 @@
 </script>
 
 <div class="grid grid-rows-[max-content,1fr] text-xs md:text-base lg:text-lg p-4 md:p-12 gap-4">
-
 	<div class="flex flex-col md:flex-row gap-4 md:gap-0 md:justify-between">
         <div class="block">
             <Button href="/sessions">
@@ -88,7 +88,11 @@
 		</div>
     </div>
     <Tabs style="underline">
-        <TabItem open={session.createdBy !== userId} title="inventories">
+        <TabItem open={true}>
+            <div slot="title" class="flex items-center gap-2">
+                <BriefcaseSolid size="sm" />
+                Inventories
+            </div>
             <div class="flex flex-col md:flex-row gap-2 md:gap-0 md:justify-between">
                 {#if session.createdBy === userId}
                     <div class="block">
@@ -106,7 +110,11 @@
             </div>
         </TabItem>
         {#if session.createdBy === userId}
-        <TabItem open={session.createdBy === userId} title="members and invite code">
+        <TabItem>
+            <div slot="title" class="flex items-center gap-2">
+                <UserCircleSolid size="sm" />
+                members and invite code
+            </div>
             <div class="flex flex-col md:flex-row gap-2 md:gap-0 md:justify-between">
                 <div class="block">
                     <Table>
@@ -156,9 +164,10 @@
                                 <TableBodyCell data-testid="join-key">{joinCode.joinKey}</TableBodyCell>
                                 <TableBodyCell>{joinCode.usesLeft}</TableBodyCell>
                                 <TableBodyCell>
-                                    <Button on:click={() => copyJoinCode(joinCode.joinKey)} color="primary">
+                                    <Button on:click={() => copyJoinCode(joinCode.joinKey)} tooltip="Copy code" color="primary">
                                         <ClipboardCheckSolid/>
                                     </Button>
+                                    <Tooltip>Copy code</Tooltip>
                                     <Button on:click={() => selectedJoinCode = joinCode} color="red">
                                         <TrashBinSolid/>
                                     </Button>

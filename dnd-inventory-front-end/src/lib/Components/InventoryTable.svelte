@@ -11,7 +11,8 @@
 		TableHead,
 		TableHeadCell,
         Select,
-        Label
+        Label,
+        Tooltip
 	} from 'flowbite-svelte';
     import { ForwardSolid } from 'flowbite-svelte-icons';
     import { slide } from 'svelte/transition';
@@ -51,9 +52,11 @@
                 <Button on:click={()=> itemSelectedForTransfer = item} color="blue">
                     <ForwardSolid/>
                 </Button>
+                <Tooltip>transfer</Tooltip>
                 {/if}
             </TableBodyCell>
         </TableBodyRow>
+        <Tooltip>Click for more info</Tooltip>
         {#if openRow === i}
         <TableBodyRow>
             <TableBodyCell colspan="50" class="p-0">
@@ -102,8 +105,20 @@ class="flex items-center flex-col gap-4"
 action="?/transferItem" 
 method="post">
     <div class="flex gap-2">
+    <h>
+        item name:
+        <p>{itemSelectedForTransfer?.name}</p>
+    </h>
+    </div>
+    <div class="flex gap-2">
+        <h>
+            item amount:
+            <p>{itemSelectedForTransfer?.amount}</p>
+        </h>
+    </div>
+    <div class="flex gap-2">
         <p>amount of items:</p>
-        <input name="amountOfItems" type="number" min="1" max="{itemSelectedForTransfer?.amount}"/>
+        <input name="amountOfItems" type="number" placeholder="1" min="1" max="{itemSelectedForTransfer?.amount}"/>
     </div>
     <input name="sessionId" type="hidden" value="{inventory.sessionId}"/>
     <input name="userId" type="hidden" value="{inventory.userId}"/>
@@ -119,6 +134,6 @@ method="post">
     </Label>
 
     <Button class="flex gap-2" type="submit" color="primary">transfer</Button>
-    <Button on:click={()=> itemSelectedForTransfer = null} color="red">No</Button>
+    <Button on:click={()=> itemSelectedForTransfer = null} color="red">Cancel</Button>
 </form>
 </Modal>

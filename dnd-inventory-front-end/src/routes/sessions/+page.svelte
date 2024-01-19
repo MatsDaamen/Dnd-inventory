@@ -7,7 +7,8 @@
 		TableBodyCell,
 		TableBodyRow,
 		TableHead,
-		TableHeadCell
+		TableHeadCell,
+        Tooltip
 	} from 'flowbite-svelte';
     import { PlusSolid, OpenBookSolid } from 'flowbite-svelte-icons';
     import type { PageData } from './$types'
@@ -55,6 +56,7 @@
                     <Button color="primary" href="/sessions/{session.id}">
                     <OpenBookSolid />
                     </Button>
+                    <Tooltip>Go to session</Tooltip>
                 </TableBodyCell>
             </TableBodyRow>
             {/each}
@@ -69,6 +71,7 @@
             <label>Name: <input name="sessionName" type="text"/></label>
             <input name="createdBy" type="hidden" value="{userId}"/>
             <Button type="submit" color="primary">Create</Button>
+            <Button on:click={()=> showCreateModal = false} color="red">Cancel</Button>
         </form>
     </Modal>
 
@@ -80,6 +83,7 @@
             <label>Join Key:<input name="joinkey" type="text"/></label>
             <input name="userid" type="hidden" value="{userId}"/>
             <Button type="submit" color="primary">Join</Button>
+            <Button on:click={()=> showJoinModal = false} color="red">Cancel</Button>
         </form>
     </Modal>
 </div>
